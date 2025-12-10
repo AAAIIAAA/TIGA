@@ -1,0 +1,440 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+@{
+    ViewBag.Title = "Programacion Final";
+    Layout = "~/Views/Shared/_Layout_Plan_Anual.cshtml";
+}
+
+<div class="card shadow">
+    <div class="row card-header py-3">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <h5 class="m-0 font-weight-bold text-dark text-center">Programación Final</h5>
+        </div>
+        <div class="col-lg-3 text-center">
+            <span class="badge badge-pill badge-danger text-wrap font-weight-normal" @((ViewBag.FlagEdicionPlan == 0) ? "" : "hidden")>
+                <i class="fas fa-info-circle"></i> Edición deshabilitada
+            </span>
+            <span class="badge badge-pill badge-warning text-wrap font-weight-normal" @((ViewBag.FlagFaltaVotacion == 0) ? "hidden" : "")>
+                <i class="fas fa-exclamation-triangle"></i> Evaluaciones pendientes de votación
+            </span>
+        </div>
+    </div>
+
+    <div class="card-body mb-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-3">
+                Plan Anual: <br />
+                <select class="form-control" id="selectIdPlan" name="idPlanAnual" onchange="cambioSeleccion()">
+                    @foreach (var Item in Model.DPA_Plan_Anual)
+                    {
+                        <option value="@Item.ID_Plan_Anual" @(Item.ID_Plan_Anual == ViewBag.PlanAnualSeleccionado.ID_Plan_Anual ? "selected" : "")>@Item.Anio_Plan</option>
+                    }
+                </select>
+            </div>
+            <div class="col-lg-3">
+                Negocio: <br />
+                <select class="form-control" id="selectIdNegocio" name="idNegocio" onchange="cambioSeleccion()">
+                    @foreach (var Item in Model.DPA_Negocio)
+                    {
+                        <option value="@Item.ID_Negocio" @(Item.ID_Negocio == ViewBag.IdNegocioSeleccionado ? "selected" : "")>@Item.Negocio</option>
+                    }
+                </select>
+            </div>
+            <div class="col-lg-2 text-center">
+                <br />
+                <button type="button" class="btn btn-info btn-filter" onclick="irCalendarioTrabajo();">
+                    <i class="fas fa-calendar"></i> Calendario de trabajo
+                </button>
+            </div>
+
+
+            @if (ViewBag.idRol == 5)
+            {
+
+                <div class="custom-control custom-switch" style="margin-top: 20px;">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch1" @(ViewBag.FlagEdicionPlan == 1 ? "checked" : "") data-id="1" onchange="toggleFlagEdicionPlan('@ViewBag.PlanAnualSeleccionado.ID_Plan_Anual', this.checked)">
+                    <label class="custom-control-label" for="customSwitch1">Activar Edición</label>
+                </div>
+
+
+            }
+
+
+
+
+
+            </div>
+
+
+        <div class="table-responsive mt-4">
+            <table class="table table-sm table-bordered display" id="programacion-final" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center align-middle table-active"> ID </th>
+                        <th class="text-center align-middle table-active"> Evaluación </th>
+                        <th class="text-center align-middle table-success"> Riesgo Primario </th>
+                        <th class="text-center align-middle table-success"> Puntaje Primario </th>
+                        <th class="text-center align-middle table-warning"> Riesgo Secundario </th>
+                        <th class="text-center align-middle table-warning"> Puntaje Secundario </th>
+                        <th class="text-center align-middle table-dark"> Criticidad Elegida </th>
+                        <th class="text-center align-middle table-primary"> Valor Criticidad </th>
+                        <th class="text-center align-middle table-active"> Puntaje Criticidad </th>
+                        <th class="text-center align-middle table-dark"> Puntaje Scoring </th>
+                        <th class="text-center align-middle table-primary"> Nivel de Complejidad </th>
+                        <th class="text-center align-middle table-active"> Días Scoring </th>
+                        <th class="text-center align-middle table-active"> N° Aud. Scoring </th>
+                        <th class="text-center align-middle table-active"> Total Días Scoring  </th>
+                        <th class="text-center align-middle table-dark"> Total Días Programado (Ajustado) </th>
+                        <th class="text-center align-middle table-dark"> N° Auditores (Ajustado) </th>
+                        <th class="text-center align-middle table-primary"> Días Auditor (Ajustado) </th>
+                        <th class="text-center align-middle table-dark"> Fecha Inicio </th>
+                        <th class="text-center align-middle table-primary"> Fecha Fin </th>
+                        <th class="text-center align-middle table-active"> Auditores </th>
+                        <th class="text-center align-middle table-primary"> Programado @ViewBag.PlanAnualSeleccionado.Anio_Plan </th>
+                        <th class="text-center align-middle table-active"> Programado @(ViewBag.PlanAnualSeleccionado.Anio_Plan - 1) </th>
+                        <th class="text-center align-middle table-active"> Programado @(ViewBag.PlanAnualSeleccionado.Anio_Plan - 2) </th>
+                        <th class="text-center align-middle table-active"> Programado @(ViewBag.PlanAnualSeleccionado.Anio_Plan - 3) </th>
+                        <th class="text-center align-middle bg-danger text-light"> Programado @ViewBag.PlanAnualSeleccionado.Anio_Plan Final </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.SP_DPA_Programacion_Final)
+                    {
+                        <tr>
+                            <td class="text-nowrap text-center"> <span>@item.ID_Evaluacion</span> </td>
+                            <td class="ellipsis" title="@item.Evaluacion" style="min-width: 35vw;"> <span>@item.Evaluacion</span> </td>
+                            <td class="text-nowrap text-center"> <span>@(item.Riesgo_Primario != null ? item.Riesgo_Primario : "-")</span> </td>
+                            <td class="text-nowrap text-center"> <span>@(item.Puntaje_Primario != null ? item.Puntaje_Primario : 0)</span> </td>
+                            <td class="text-nowrap text-center"> <span>@(item.Riesgo_Secundario != null ? item.Riesgo_Secundario : "-")</span> </td>
+                            <td class="text-nowrap text-center"> <span>@(item.Puntaje_Secundario != null ? item.Puntaje_Secundario : 0)</span> </td>
+                            @*ACA TAMBEN TIENE Q VER LO DE CRITICIDAD*@
+                            <td class="text-nowrap text-center" title="@(item.Cantidad_Votos == 0 ? "Falta relizar votación" : "")" onclick="llamarEditarCriticidad('@item.ID_Evaluacion_Plan', '@item.Criticidad_Elegida');"
+                                data-toggle="modal" data-target="@(item.Cantidad_Votos == 0 ? "" : "#modal-editar-criticidad")" style="cursor: @(item.Cantidad_Votos == 0 ? "not-allowed" : "pointer")">
+                                <span>@(item.Criticidad_Elegida != null ? item.Criticidad_Elegida : "-")</span>
+                            </td>
+                            <td class="text-nowrap text-center"> <span>@(item.Valor_Criticidad != null ? item.Valor_Criticidad : "-")</span> </td>
+                            <td class="text-nowrap text-center"> <span>@(item.Puntaje_Criticidad != null ? item.Puntaje_Criticidad : 0)</span> </td>
+                            <td class="text-nowrap text-center" title="@(item.Criticidad_Elegida != null ? "" : "No se ha seleccionado una criticidad")" onclick="llamarEditarScoring('@item.ID_Evaluacion_Plan');"
+                                data-toggle="modal" data-target="@(item.Criticidad_Elegida != null ? "#modal-editar-scoring" : "")" style="cursor: @(item.Criticidad_Elegida != null ? "pointer" : "not-allowed")">
+                                <span>@(item.Puntaje_Scoring != null ? item.Puntaje_Scoring : 0)</span>
+                            </td>
+                            <td class="text-nowrap text-center"> <span>@(item.Complejidad_Scoring != null ? item.Complejidad_Scoring : "-")</span> </td>
+                            <td class="text-nowrap text-center"> <span>@(item.Dias_Scoring != null ? item.Dias_Scoring : 0)</span> </td>
+                            <td class="text-nowrap text-center"> <span>@(item.N_Aud_Scoring != null ? item.N_Aud_Scoring : 0)</span> </td>
+                            <td class="text-nowrap text-center"> <span>@(item.Total_Dias_Scoring != null ? item.Total_Dias_Scoring : 0)</span> </td>
+                            <td class="text-nowrap text-center" title="@(item.Puntaje_Scoring != null ? "" : "No se ha relizado scoring")" onclick="llamarEditarDiasAjustado('@item.ID_Evaluacion_Plan', '@item.Dias_Ajustado');"
+                                data-toggle="modal" data-target="@(item.Puntaje_Scoring != null ? "#modal-editar-dias-ajustado" : "")" style="cursor: @(item.Puntaje_Scoring != null ? "pointer" : "not-allowed")">
+                                <span>@(item.Dias_Ajustado != null ? item.Dias_Ajustado : 0)</span>
+                            </td>
+                            <td class="text-nowrap text-center" title="@(item.Puntaje_Scoring != null ? "" : "No se ha relizado scoring")" onclick="llamarEditarNAudAjustado('@item.ID_Evaluacion_Plan', '@item.N_Aud_Ajustado');"
+                                data-toggle="modal" data-target="@(item.Puntaje_Scoring != null ? "#modal-editar-n-aud-ajustado" : "")" style="cursor: @(item.Puntaje_Scoring != null ? "pointer" : "not-allowed")">
+                                <span>@(item.N_Aud_Ajustado != null ? item.N_Aud_Ajustado : 0)</span>
+                            </td>
+                            <td class="text-nowrap text-center"> <span>@(item.Dias_Aud_Ajustado != null ? item.Dias_Aud_Ajustado : 0)</span> </td>
+                            <td class="text-nowrap text-center" title="@(item.Dias_Aud_Ajustado != null ? "" : "No se han ingresado la cantidad de días auditor ajustado")" onclick="llamarEditarFechaInicio('@item.ID_Evaluacion_Plan', '@item.Fecha_Inicio');"
+                                data-toggle="modal" data-target="@(item.Dias_Aud_Ajustado != null ? "#modal-editar-fecha-inicio" : "")" style="cursor: @(item.Dias_Aud_Ajustado != null ? "pointer" : "not-allowed")">
+                                <span>@(item.Fecha_Inicio != null ? Convert.ToDateTime(item.Fecha_Inicio).ToShortDateString() : "-")</span>
+                            </td>
+                            <td class="text-nowrap text-center"> <span>@(item.Fecha_Fin != null ? Convert.ToDateTime(item.Fecha_Fin).ToShortDateString() : "-")</span> </td>
+                            <td class="text-nowrap"> <span>@(item.Auditores != null ? item.Auditores : "-")</span> </td>
+                            <td class="text-nowrap text-center"> <span>@(item.Programado_Actual != null ? item.Programado_Actual : "-")</span> </td>
+                            <td class="text-nowrap text-center"> <span>@(item.Programado_1 != null ? item.Programado_1 : "-")</span> </td>
+                            <td class="text-nowrap text-center"> <span>@(item.Programado_2 != null ? item.Programado_2 : "-")</span> </td>
+                            <td class="text-nowrap text-center"> <span>@(item.Programado_3 != null ? item.Programado_3 : "-")</span> </td>
+                            <td class="text-nowrap text-center table-danger" onclick="llamarEditarProgramadoFinal('@item.ID_Evaluacion_Plan', '@item.Programado_Final');"
+                                data-toggle="modal" data-target="#modal-editar-programado-final" style="cursor:pointer;">
+                                <span>@(item.Programado_Final != null ? item.Programado_Final : "-")</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@*MODAL EDITAR CRITICIDAD - pantalla emergente*@
+<div class="modal fade" id="modal-editar-criticidad" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Editar Cricidad</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            @using (Html.BeginForm("PV_EditarCriticidad", "WebPlanAnual", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="modal-body">
+                    <input id="inputIdEvaluacionPlan" type="number" name="idEvaluacionPlan" hidden />
+
+                    <select id="selectCriticidad" class="form-control form-control-sm" name="criticidad" required>
+                        <option disabled value=""> -- Seleccionar -- </option>
+                        <option> Primaria </option>
+                        <option> Secundaria </option>
+                    </select>
+
+                    <div class="form-group text-center pt-3">
+                        <button type="submit" class="btn btn-filter btn-info btn-group-toggle" @(ViewBag.FlagEdicionPlan == 0 ? "disabled" : "")>
+                            <i class="fas fa-save"></i> Guardar
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@*MODAL EDITAR SCORING*@
+<div class="modal fade" id="modal-editar-scoring" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Editar Scoring - Plan Anual @ViewBag.PlanAnualSeleccionado.Anio_Plan</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="resultado-editar-scoring"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL EDITAR DIAS AJUSTADO*@
+<div class="modal fade" id="modal-editar-dias-ajustado" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Total de Días Programado (Ajustado)</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            @using (Html.BeginForm("PV_EditarDiasAjustado", "WebPlanAnual", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="modal-body">
+                    <input id="inputIdEvaluacionPlan2" type="number" name="idEvaluacionPlan" hidden />
+
+                    <input id="inputDiasAjustado" class="form-control" type="number" name="diasAjustado" required />
+
+                    <div class="form-group text-center pt-3">
+                        <button type="submit" class="btn btn-filter btn-info btn-group-toggle" @(ViewBag.FlagEdicionPlan == 0 ? "disabled" : "")>
+                            <i class="fas fa-save"></i> Guardar
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@*MODAL EDITAR DIAS AJUSTADO*@
+<div class="modal fade" id="modal-editar-n-aud-ajustado" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">N° de Auditores (Ajustado)</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            @using (Html.BeginForm("PV_EditarNAudAjustado", "WebPlanAnual", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="modal-body">
+                    <input id="inputIdEvaluacionPlan3" type="number" name="idEvaluacionPlan" hidden />
+
+                    <input id="inputNAudAjustado" class="form-control" type="number" name="nAudAjustado" required />
+
+                    <div class="form-group text-center pt-3">
+                        <button type="submit" class="btn btn-filter btn-info btn-group-toggle" @(ViewBag.FlagEdicionPlan == 0 ? "disabled" : "")>
+                            <i class="fas fa-save"></i> Guardar
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@*MODAL EDITAR FECHA INICIO*@
+<div class="modal fade" id="modal-editar-fecha-inicio" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Editar Fecha de Inicio</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            @using (Html.BeginForm("PV_EditarFechaInicio", "WebPlanAnual", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="modal-body">
+                    <input id="inputIdEvaluacionPlan4" type="number" name="idEvaluacionPlan" hidden />
+
+                    <div class="input-group date" id="fecha-inicio">
+                        <input class="form-control form-control-sm" id="inputFechaInicio" name="fechaInicio" type="text" required />
+                        <span class="input-group-append">
+                            <span class="input-group-text bg-white">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                        </span>
+                    </div>
+
+
+                    <div class="form-group text-center pt-3">
+                        <button type="submit" class="btn btn-filter btn-info btn-group-toggle" @(ViewBag.FlagEdicionPlan == 0 ? "disabled" : "")>
+                            <i class="fas fa-save"></i> Guardar
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@*MODAL EDITAR PROGRAMADO FINAL*@
+<div class="modal fade" id="modal-editar-programado-final" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Editar Programado Final</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            @using (Html.BeginForm("PV_EditarProgramadoFinal", "WebPlanAnual", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="modal-body">
+                    <input id="inputIdEvaluacionPlan5" type="number" name="idEvaluacionPlan" hidden />
+
+                    <select id="selectProgramadoFinal" class="form-control form-control-sm" name="programadoFinal" required>
+                        <option disabled value=""> -- Seleccionar -- </option>
+                        <option> SI </option>
+                        <option> NO </option>
+                    </select>
+
+                    <div class="form-group text-center pt-3">
+                        <button type="submit" class="btn btn-filter btn-info btn-group-toggle" @(ViewBag.FlagEdicionPlan == 0 ? "disabled" : "")>
+                            <i class="fas fa-save"></i> Guardar
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" class="init">
+    $(document).ready(function () {
+        $('#programacion-final').dataTable({
+            "dom": "<'row pb-1'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4 text-center'i><'col-sm-12 col-md-4'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-12 col-md-5'><'col-sm-12 col-md-7'p>>",
+            "order": [[1, 'asc']],
+            "searching": true,
+            "paging": false,
+            "scrollY": "48vh",
+            "scrollX": true,
+            "scrollCollapse": true,
+            "buttons": [
+                {
+                    extend: 'copyHtml5',
+                    text: '<span class="font-weight-normal"><i class="fas fa-copy"></i> Copiar</span>',
+                    titleAttr: 'Copy'
+                },
+                {
+                    extend: 'excelHtml5',
+                    text: '<span class="font-weight-normal"><i class="fas fa-file-excel"></i> Excel</span>',
+                    titleAttr: 'Excel'
+                }
+            ],
+            "language": {
+                "zeroRecords": "No hay datos disponibles para los filtros seleccionados",
+                "info": "Mostrandose _TOTAL_ registros",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros)",
+                "search": "Buscar:"
+            }
+        });
+    });
+
+    function cambioSeleccion() {
+        var idPlan = document.getElementById("selectIdPlan").value;
+        var idNegocio = document.getElementById("selectIdNegocio").value;
+        window.location.href = "../WebPlanAnual/ProgramacionFinal?pa=" + idPlan + "&ne=" + idNegocio;
+    }
+    //ACA VA EL CAMBIO DE SWITCH
+
+    
+    function toggleFlagEdicionPlan(idplan, flagEdicionPlan) {
+        var nuevaVariable = flagEdicionPlan ? 1 : 0;
+        
+        
+        
+        // Realiza una solicitud AJAX para actualizar el valor en el controlador
+        $.ajax({
+            type: "POST",
+            url: "/WebPlanAnual/ActualizarFlagEdicionPlan",
+            data: { idplan: idplan, flagEdicionPlan: nuevaVariable },
+            success: function (data) {
+
+                console.log(flagEdicionPlan);
+        },
+            error: function () {
+            console.log("error de flag")
+        }
+        });
+    }
+
+
+
+
+
+    function llamarEditarCriticidad(idEvaluacionPlan, criterio) {
+        document.getElementById("inputIdEvaluacionPlan").setAttribute('value', idEvaluacionPlan);
+        document.getElementById("selectCriticidad").value = criterio;
+    }
+    function llamarEditarScoring(idEvaluacionPlan) {
+        var laURLDeLaVista = '@Url.Action("PV_EditarScoring", "WebPlanAnual")';
+        $.ajax({
+        cache: false,
+        async: true,
+        type: "GET",
+        url: laURLDeLaVista,
+        data: { idEvaluacionPlan: idEvaluacionPlan },
+        success: function (response) {
+        $('#resultado-editar-scoring').html('');
+        $('#resultado-editar-scoring').html(response);
+        }
+        });
+        }
+        function llamarEditarDiasAjustado(idEvaluacionPlan, diasAjustado) {
+        document.getElementById("inputIdEvaluacionPlan2").setAttribute('value', idEvaluacionPlan);
+        if (diasAjustado != null) {
+        document.getElementById("inputDiasAjustado").value = diasAjustado;
+        }
+        }
+        function llamarEditarNAudAjustado(idEvaluacionPlan, nAudAjustado) {
+        document.getElementById("inputIdEvaluacionPlan3").setAttribute('value', idEvaluacionPlan);
+        if (nAudAjustado != null) {
+        document.getElementById("inputNAudAjustado").value = nAudAjustado;
+        }
+        }
+        function llamarEditarFechaInicio(idEvaluacionPlan, fechaInicio) {
+        document.getElementById("inputIdEvaluacionPlan4").setAttribute('value', idEvaluacionPlan);
+        if (fechaInicio != null) {
+        document.getElementById("inputFechaInicio").value = fechaInicio;
+        }
+        }
+        function llamarEditarProgramadoFinal(idEvaluacionPlan, programadoFinal) {
+        document.getElementById("inputIdEvaluacionPlan5").setAttribute('value', idEvaluacionPlan);
+        document.getElementById("selectProgramadoFinal").value = programadoFinal;
+        }
+        function irCalendarioTrabajo() {
+        var idPlan = document.getElementById("selectIdPlan").value;
+        window.location.href = '../WebPlanAnual/CalendarioTrabajo?pa=' + idPlan;
+        }
+        </script>
+
+

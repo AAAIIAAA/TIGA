@@ -1,0 +1,74 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+
+@{ 
+    var listaNiveles = new List<int> { 0, 1, 2, 3, 4, 5 };
+}
+
+<div class="container pt-3">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <input type="text" class="form-control col-md-7" name="ID" value="@ViewBag.UnidadSeleccionada.ID" hidden>
+
+        <div class="form-group mb-2 row justify-content-md-center">
+            <label for="exampleFormControlInput1" class="col-md-3 col-form-label">Nivel Gerencia: </label>
+            <select class="form-control col-md-7" name="Nivel" onchange="cambiarEditarUnidad(@ViewBag.UnidadSeleccionada.ID, this.value)" required>
+                @foreach (var item in listaNiveles)
+                {
+                    if (item == ViewBag.NivelSeleccionado)
+                    {
+                        <option selected>@item</option>
+                    }
+                    else
+                    {
+                        <option>@item</option>
+                    }
+                }
+            </select>
+        </div><div class="form-group mb-2 row justify-content-md-center">
+            <label for="exampleFormControlInput1" class="col-md-3 col-form-label">Gerencia Padre: </label>
+            <select class="form-control col-md-7" name="ID_Padre" required>
+                @if (ViewBag.NivelSeleccionado == 0)
+                {
+                    <option value="0" selected>-</option>
+                }
+                else
+                {
+                    if (ViewBag.CambioNivel == 1)
+                    {
+                        <option selected disabled value="">-- Seleccione --</option>
+                    }
+                    foreach (var Item in ViewBag.GerenciasPadre)
+                    {
+                        if (Item.ID == ViewBag.UnidadSeleccionada.ID_Padre)
+                        {
+                            <option value="@Item.ID" selected>@Item.Nombre</option>
+                        }
+                        else
+                        {
+                            <option value="@Item.ID">@Item.Nombre</option>
+                        }
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="form-group mb-2 row justify-content-md-center">
+            <label for="exampleFormControlInput1" class="col-md-3 col-form-label">Nombre de Gerencia: </label>
+            <input type="text" class="form-control col-md-7" name="Nombre" value="@ViewBag.UnidadSeleccionada.Nombre" required>
+        </div>
+
+        <div class="form-group text-center pt-3">
+            <button type="submit" class="btn btn-info btn-group-toggle" style="background-color :lightseagreen">
+                <i class="fas fa-save"></i> Guardar Cambios
+            </button>
+        </div>
+    }
+</div>
+
+
+
+
+

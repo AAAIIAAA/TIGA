@@ -1,0 +1,227 @@
+﻿
+@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+@{
+    Layout = "~/Views/Shared/_Layout_Home.cshtml";
+    string user = Convert.ToString(Session["IdUser"]);
+    string habilitar = "";
+    string cursor = "";
+    string img = "";
+    string url = "";
+    string descripcion = "";
+}
+    <html>
+    <head>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstr apcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+        <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+        <script src="https://smtpjs.com/v3/smtp.js"></script>
+    </head>
+
+    <body>
+
+
+        <!-- Header -->
+        <header class="masthead">
+            <div class="container">
+
+                <div class="intro-text">
+                    <div class="intro-lead-in"> @ViewBag.Bienvenido </div>
+
+                    <div class="intro-heading text-uppercase">@ViewBag.nombre </div>
+
+                    <a class="btn btn-primary  btn-xl text-uppercase js-scroll-trigger" href="#portfolio">Empezar</a>
+
+                </div>
+            </div>
+        </header>
+
+        <!-- Portfolio Grid -->
+
+        <section class="bg-light page-section" id="portfolio">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <h2 class="section-heading text-uppercase">MÓDULOS DE  AUDITORIA</h2>
+                        <h3 class="section-subheading text-muted">A continuación se muestran los módulos utilizados en auditoría interna Pacífico.</h3>
+                    </div>
+                </div>
+                <div class="row">
+
+                    @foreach (var item in Model.SP_MODULOS_USUARIOS_Result)
+                    {
+                        if (item.habilitado == 1)
+                        {
+
+
+
+                            img = item.IMG;
+                            if (item.activo != 1)
+                            {
+                                habilitar = "disable";
+                                cursor = "cursor: not-allowed;color:black;";
+                                url = "#";
+
+                            }
+                            else
+                            {
+                                habilitar = "";
+                                cursor = "";
+                                url = item.Enlace;
+
+                            }
+
+                            descripcion = item.Descripcion;
+                        <div class="col-md-3 col-sm-6 portfolio-item">
+                            <a class="portfolio-link" data-toggle="modal" title="@descripcion" disabled="@habilitar" style="@cursor" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" href="@url">
+
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content">
+                                        <i class="fa-3x"></i>
+
+                                    </div>
+                                </div>
+                                <img class="img-fluid" src="~/img/portfolio/@img" alt="">
+                            </a>
+                            <div class="portfolio-caption">
+                                <h4>@item.Nombre</h4>
+                                <p class="text-muted">Web</p>
+                            </div>
+                        </div>}
+                    }
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <section class="page-section" id="contact">
+            <div class="site-section" id="contact-section" data-aos="fade">
+
+                <div class="container">
+                    <div class="text-center">
+                        <h2 class="section-heading text-uppercase">CONTÁCTANOS</h2>
+                        <h3 class="section-subheading text-muted text-white">Por esta sección podras comunicarte con nosotros para poder habilitar algun módulo o problema con la WEBTIGA.</h3>
+                    </div>
+                    <form id="contact" method="post" >
+                        <div class="row align-items-stretch mb-5">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                  
+                                    <input id="email_subject" type="text" class="form-control" placeholder="Ingresa el Asunto.">
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="form-group">
+                                 
+                                    <select id="email_address" type="email" class="form-control" >
+                                        @foreach (var Item in Model.Persona)
+                                        {
+                                        <option selected>Ingresa tu Email</option>
+                                            <option  value="@Item.Email">@Item.Email</option>
+                                        }
+                                    </select>
+
+
+
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div id="toast_success" class="alert alert-success fade show" role="alert">
+                                    Tu mensaje  se envio correctamente
+
+                                </div>
+                                <div id="toast_danger" class="alert alert-danger fade show" role="alert">
+                                    Llene todos los campos
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-group-textarea mb-md-0">
+                                    <textarea id="email_message" class="form-control" id="" cols="30" rows="10"
+                                              placeholder="Escribe tu mensaje aqui."></textarea>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <div class="text-center">
+                            <input id="send" type="button" class="btn btn-primary py-3 px-5 btn-block" value="Enviar Mensaje">
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            
+        </section>
+
+    </body>
+</html>
+
+<script>
+  jQuery(document).ready(function($) {
+	"use strict";
+	let email = ""
+    let subject = ""
+    let message = ""
+
+    const sendBtnNode = document.getElementById("send")
+	const toastSuccess = $('#toast_success')
+	const toastDanger = $('#toast_danger')
+	toastSuccess.hide()
+	toastDanger.hide()
+
+	function setFieldValues(id,value){
+		switch (id) {
+		  case "email_address":
+			  email = value
+			break;
+		  case "email_subject":
+			  subject = value         
+			break;
+		  case "email_message":
+			  message = value
+			break;
+		
+		  default: console.log("error")
+			break;
+		}
+	  }
+
+	  
+
+	function sendEmail() {
+	  
+		if(email.length > 0 && subject.length > 0 && message.length > 0){
+			Email.send({
+				SecureToken : "14ffee4b-e850-4b49-a155-52e9b1ad5997",
+				To : 'soporteauditoria@pacifico.com.pe',
+				From : email,
+				Subject : subject,
+				Body : message
+			  }).then(
+			  ()=>{
+				  toastSuccess.show()
+				  setTimeout(()=>{toastSuccess.hide()}, 2500);
+			  }
+			)
+			 }
+		else{
+			
+			toastDanger.show()
+			setTimeout(()=>{toastDanger.hide()}, 1000);
+		}
+    
+	}
+
+	const form  = document.getElementById("contact");
+    sendBtnNode.addEventListener("click",()=>{sendEmail()})
+    form.addEventListener("input",(event)=>{
+        setFieldValues(event.target.id,event.target.value)
+    })
+
+});
+</script>

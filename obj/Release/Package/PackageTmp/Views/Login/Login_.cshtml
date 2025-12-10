@@ -1,0 +1,142 @@
+﻿
+@model WebTIGA.Models.UserLogin
+
+
+@{
+    Layout = "~/Views/Shared/_Layout_Login.cshtml";
+}
+
+
+<html>
+<head>
+   
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstr apcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+
+</head>
+
+<body>
+    <div class="row justify-content-center">
+        <div class="col-xl-10 col-lg-12 col-md-9">
+            <br /> <br /> <br />
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    
+                    <div class="row">
+
+                        <div class="bg-gradient-info col-lg-6 d-none d-lg-block align-content-xl-between" style="background-image: url('http://172.30.5.41/WebTEC/img/team/Logo_tiga.jpeg')"></div>
+
+
+                        <div class="col-lg-6">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Iniciar sesión</h1>
+                                </div>
+                                <div style="color:red;">
+                                    @ViewBag.Message1
+                                </div>
+                                <br />
+                                <form class="signup-form" method="post" action="#">
+                                    @using (Html.BeginForm("Login_", "Login", FormMethod.Post, new { @class = "form-group", ReturnUrl = ViewBag.ReturnUrl }))
+                                    {
+
+                                        <div class="form-group ">
+                                            <div class="input-group  mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="inputGroup-sizing-sm"><i class="fas fa-user"></i></span>
+                                                </div>
+                                                @Html.TextBoxFor(d1 => d1.UsuarioWT, new { @class = "form-control form-control-user", @placeholder = "Usuario" })
+
+                                            </div>
+                                            @Html.ValidationMessageFor(d1 => d1.UsuarioWT, "", new { @class = "text-danger", @font_size = "1" })
+
+                                        </div>
+
+                                        <div class="form-group ">
+                                            <div class="input-group  mb-0">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="inputGroup-sizing-sm"><i class="fas fa-unlock-alt"></i></span>
+                                                </div>
+                                                @Html.PasswordFor(d1 => d1.Contraseña, new { @class = "form-control form-control-user ", @placeholder = "Contraseña" })
+                                            </div>
+                                            @Html.ValidationMessageFor(d1 => d1.Contraseña, "", new { @class = "text-danger" })
+
+                                        </div>
+
+                                        <input type="submit" value="Login" class="btn btn-info btn-user btn-block" />
+                                    }
+                                </form>
+                                <hr>
+                                <div class="text-center ">
+                                    @Html.ActionLink("¿Olvidaste tu contraseña?", "Forgot_Password", new { @style = "color:a" })
+                                </div>
+
+                                <style>
+                                    a {
+                                        color: #1f99a4;
+                                        text-decoration: none;
+                                    }
+
+
+                                        a:hover {
+                                            color: #63c6c6;
+                                        }
+                                </style>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (@ViewBag.Comunicado != null)
+    {
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Web TIGA | Notificación</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @ViewBag.Comunicado
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info" data-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    }
+
+
+
+</body>
+
+
+</html>
+
+
+
+<script>
+    window.onload = function deshabilitaRetroceso() {
+        $('#exampleModal').modal('toggle')
+        window.location.hash = "no-back-button";
+        window.location.hash = "Again-No-back-button"
+        window.onhashchange = function () { window.location.hash = "no-back-button"; }
+    };
+</script>
+
+
+
+
+

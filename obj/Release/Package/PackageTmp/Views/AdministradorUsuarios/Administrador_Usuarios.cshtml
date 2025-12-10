@@ -1,0 +1,202 @@
+﻿@using WebTIGA;
+
+@model WebTIGA.Models.ContenedorModelos
+@{
+    ViewBag.Title = "Administrador_Usuarios";
+    Layout = "~/Views/Shared/_Layout_Administrador.cshtml";
+}
+
+<style>
+    #btn-icon {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
+    }
+</style>
+
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-dark text-center">ADMINISTRADOR DE USUARIOS</h6>
+    </div>
+
+    <div class="card-body">
+        <div class="text-center">
+            <a class="btn btn-info" style="background-color :lightseagreen" href="@Url.Action("CrearUsuario", "AdministradorUsuarios")">
+                <i class="fas fa-plus"></i> Nuevo Usuario
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="display nowrap" id="table-usuarios" width="100%">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Usuario</th>
+                        <th>Email</th>
+                        <th>Estado</th>
+                        <th style="width:280px;"></th>
+                    </tr>
+                <thead>
+
+                <tbody>
+                    @foreach (var item in Model.View_AU_Administrador_Usuarios)
+                    {
+                        <tr>
+                            <td>@item.Nombre</td>
+                            <td>@item.Usuario</td>
+                            <td>@item.Email</td>
+                            @if (item.Estado == 1)
+                            {
+                                <td>Activo</td>
+                            }
+                            else
+                            {
+                                <td>Inactivo</td>
+                            }
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <button id="btn-icon" class="pr-3" onclick="window.location.href='../AdministradorUsuarios/Administrador_Rotacion?idPersona='+@item.IdPersona" title="Editar Rotación">
+                                        <i class="fas fa-sync-alt text-info"></i>
+                                    </button>
+                                    <button id="btn-icon" class="pr-3" onclick="llamarEditarUsuario(@item.IdUsuario);" data-toggle="modal" data-target="#modalEditarUsuario" title="Editar">
+                                        <i class="fas fa-edit text-warning"></i>
+                                    </button>
+                                    <button id="btn-icon" onclick="llamarEliminarUsuario(@item.IdUsuario);" data-toggle="modal" data-target="#modalEliminarUsuario" title="Eliminar">
+                                        <i class="fas fa-trash-alt text-danger"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                <tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EDITAR CUENTA USUARIO -->
+<div class="modal fade" id="modalEditarUsuario" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">EDITAR CUENTA DE USUARIO</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="resultado"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL ELIMINAR USUARIO*@
+<div class="modal fade" id="modalEliminarUsuario" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("EliminarUsuario", "AdministradorUsuarios", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    ¿Estás seguro que deseas eliminar esta información? Esta operación es irreversible.
+                    <input id="inputEliminarUsuario" name="idUsuario" type="text" hidden />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" style="background-color :lightseagreen">Eliminar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" class="init">
+    function llamarEditarUsuario(id) {
+        var laURLDeLaVista = '@Url.Action("PV_EditarUsuario", "AdministradorUsuarios")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { idUsuario: id},
+                success: function (response) {
+                    $('#resultado').html('');
+                    $('#resultado').html(response);
+                }
+            });
+    }
+
+    function llamarEliminarUsuario(idUsuario) {
+        document.getElementById("inputEliminarUsuario").setAttribute('value', idUsuario);
+    }
+
+
+    $(document).ready(function () {
+        $('#table-usuarios').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'excelHtml5',
+            ]
+        });
+
+        if ('@ViewBag.Alerta' == "creado") {
+            Swal.fire({
+                title: 'Creación Exitosa',
+                text: 'Se ha realizado la creación del usuario correctamente',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }
+        else if ('@ViewBag.Alerta' == "editado") {
+            Swal.fire({
+                title: 'Edición Exitosa',
+                text: 'Se ha realizado la edición del usuario correctamente',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }
+        else if ('@ViewBag.Alerta' == "error-edicion") {
+            Swal.fire({
+                title: 'Error',
+                text: 'El usuario ya existe en la base de datos.',
+                icon: 'error',
+                confirmButtonColor: 'lightseagreen'
+            });
+        }
+        else if ('@ViewBag.Alerta' == "eliminado") {
+            Swal.fire({
+                title: 'Usuario Eliminado',
+                text: 'Se ha eliminado el usuario de la base de datos correctamente',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }
+        else if ('@ViewBag.Alerta' == "error") {
+            Swal.fire({
+                title: 'Error',
+                text: 'Ha ocurrido un error en la operación, inténtelo nuevamente',
+                icon: 'error',
+                confirmButtonColor: 'lightseagreen'
+            });
+        }
+    });
+</script>

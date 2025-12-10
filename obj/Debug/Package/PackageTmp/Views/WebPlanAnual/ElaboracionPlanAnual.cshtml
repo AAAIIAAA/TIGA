@@ -1,0 +1,103 @@
+﻿@model WebTIGA.Models.ContenedorModelos
+@{
+    ViewBag.Title = "ElaboracionPlanAnual";
+    Layout = "~/Views/Shared/_Layout_Plan_Anual.cshtml";
+}
+
+<body>
+
+    <header>
+        <h1>Elaboración del Plan Anual</h1>
+        <p>Módulo para realizar la administración y planificación del Plan Anual de las evaluaciones de Auditoría Interna</p>
+    </header>
+    <div class="container-plan-anual">
+        @if (ViewBag.idRol == 5)
+        {
+            <div class="box" onclick="window.location.href='../WebPlanAnual/CargaPlanAnual'">
+                <h3>Carga del Universo</h3>
+                <p>Registra un nuevo plan anual en base a otro seleccionado</p>
+                <div class="row justify-content-end mt-auto">
+                    <div class="col-lg-4">
+                        <img src="~/img/plan-anual/icon-carga-plan.png" class="img-fluid" />
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="box" onclick="window.location.href='../WebPlanAnual/GestionEvaluaciones'">
+            <h3>Gestión del Universo</h3>
+            <p>Administra las evaluaciones registradas en la base de datos</p>
+            <div class="row justify-content-end">
+                <div class="col-lg-4">
+                    <img src="~/img/plan-anual/icon-evaluaciones.png" class="img-fluid" />
+                </div>
+            </div>
+        </div>
+
+        <div class="box" onclick="window.location.href='../WebPlanAnual/MantenimientoPlan'">
+            <h3>Mantenimiento del Plan</h3>
+            <p>Realiza los cambios en las evaluaciones de un plan anual</p>
+            <div class="row justify-content-end">
+                <div class="col-lg-4">
+                    <img src="~/img/plan-anual/icon-mantenimiento.png" class="img-fluid" />
+                </div>
+            </div>
+        </div>
+
+        <div class="box" onclick="window.location.href='../WebPlanAnual/VotacionAuditor'">
+            <h3>Votación de Evaluaciones</h3>
+            <p>Gestiona las votaciones realizadas en las evaluaciones de un plan anual</p>
+            <div class="row justify-content-end">
+                <div class="col-lg-4">
+                    <img src="~/img/plan-anual/icon-votacion.png" class="img-fluid" />
+                </div>
+            </div>
+        </div>
+
+        @if (ViewBag.idRol == 5)
+        {
+            <div class="box">
+                <h3>Carga de Proyectos</h3>
+                <p>Migración de la información de los proyectos al TeamMate</p>
+                <div class="row justify-content-end mt-auto">
+                    <div class="col-lg-4">
+                        <img src="~/img/plan-anual/icon-carga-proyectos.png" class="img-fluid" />
+                    </div>
+                </div>
+            </div>
+
+        }
+
+
+
+        <div class="box" onclick="window.location.href='../WebPlanAnual/ProgramacionFinal'">
+            <h3>Programación Final</h3>
+            <p>Realiza el scoring y programación de las evaluaciones del plan anual</p>
+            <div class="row justify-content-end mt-auto">
+                <div class="col-lg-4">
+                    <img src="~/img/plan-anual/icon-programacion.png" class="img-fluid" />
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

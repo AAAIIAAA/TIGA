@@ -1,0 +1,434 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+@{
+    ViewBag.Title = "Mantenimiento del Plan";
+    Layout = "~/Views/Shared/_Layout_Plan_Anual.cshtml";
+}
+
+
+
+<div class="card shadow">
+
+    <div class="row card-header py-3">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <h5 class="m-0 font-weight-bold text-dark text-center">Mantenimiento y Ajustes del Plan Anual</h5>
+        </div>
+        <div class="col-lg-2 text-center">
+            <span class="badge badge-pill badge-danger text-wrap font-weight-normal" @((ViewBag.FlagEdicionPlan == 0) ? "" : "hidden")>
+                <i class="fas fa-info-circle"></i> Edición deshabilitada
+            </span>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="row justify-content-center">
+            <div class="col-lg-3">
+                Plan Anual: <br />
+                <select class="form-control" id="selectIdPlan" name="idPlanAnual" onchange="cambioSeleccion()">
+                    @foreach (var Item in Model.DPA_Plan_Anual)
+                    {
+                        <option value="@Item.ID_Plan_Anual" @(Item.ID_Plan_Anual == ViewBag.PlanAnualSeleccionado.ID_Plan_Anual ? "selected" : "")>@Item.Anio_Plan</option>
+                    }
+                </select>
+            </div>
+            <div class="col-lg-3">
+                Negocio: <br />
+                <select class="form-control" id="selectIdNegocio" name="idNegocio" onchange="cambioSeleccion()">
+                    @foreach (var Item in Model.DPA_Negocio)
+                    {
+                        <option value="@Item.ID_Negocio" @(Item.ID_Negocio == ViewBag.NegocioSeleccionado.ID_Negocio ? "selected" : "")>@Item.Negocio</option>
+                    }
+                </select>
+            </div>
+            <div class="col-lg-4 text-center">
+                <br />
+                <button type="button" class="btn btn-info btn-filter" @((ViewBag.FlagEdicionPlan == 1) ? "" : "disabled")
+                        onclick="llamarCrearEvaluacionPlan(@ViewBag.PlanAnualSeleccionado.ID_Plan_Anual, @ViewBag.NegocioSeleccionado.ID_Negocio);" data-toggle="modal" data-target="#modal-crear-evaluacion-plan">
+                    <i class="fas fa-plus"></i> Evaluación
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-filter" onclick="window.location.href='../WebPlanAnual/VotacionAuditor'">
+                    <i class="fas fa-vote-yea"></i> Votaciones
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-filter" onclick="llamarLogEvaluacionPlan();" data-toggle="modal" data-target="#modal-log-evaluacion-plan">
+                    <i class="fas fa-list"></i> Log Cambios
+                </button>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <table class="table table-sm table-bordered table-hover display" id="mantenimiento-plan">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="text-center align-middle"> ID </th>
+                        <th class="text-center align-middle"> Evaluación </th>
+                        <th class="text-center align-middle"> Acciones </th>
+                        <th class="text-center align-middle"> Estado </th>
+                        <th class="text-center align-middle"> Último Calificativo </th>
+                        <th class="text-center align-middle"> Macroproceso </th>
+                        <th class="text-center align-middle"> Objetivo </th>
+                        <th class="text-center align-middle"> Centro de Costo </th>
+                        <th class="text-center align-middle"> Atributo Universo </th>
+                        <th class="text-center align-middle"> Riesgo Asociado </th>
+                        <th class="text-center align-middle"> Tipo de Evaluación </th>
+                        <th class="text-center align-middle"> Equipo Responsable </th>
+                        <th class="text-center align-middle"> PAC? </th>
+                        <th class="text-center align-middle"> Anexo 30? </th>
+                        <th class="text-center align-middle"> Regulatorio? </th>
+                        <th class="text-center align-middle"> N° SBS </th>
+                        <th class="text-center align-middle"> Evaluación SBS </th>
+                        <th class="text-center align-middle"> SOX </th>
+                        <th class="text-center align-middle"> Fase SOX </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.SP_DPA_Mantenimiento_Plan)
+                    {
+                        <tr class="@(item.FlagRetirado == 1 ? "table-secondary" : "")">
+                            <td class="text-nowrap text-center"> <span>@item.ID_Evaluacion</span> </td>
+                            <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item.Evaluacion" style="min-width: 35vw;"> <span>@item.Evaluacion</span> </td>
+                            <td class="text-center">
+                                <div class="dropdown dropright">
+                                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor:pointer;"><span class="fas fa-cog"></span></a>
+                                    <div class="dropdown-menu">
+                                        @if (item.FlagRetirado == 0)
+                                        {
+                                            <a class="dropdown-item @((ViewBag.FlagEdicionPlan == 1) ? "" : "disabled")" href="#" onclick="llamarEditarEvaluacionPlan(@item.ID_Evaluacion_Plan, @ViewBag.NegocioSeleccionado.ID_Negocio);" data-toggle="modal" data-target="#modal-editar-evaluacion-plan">
+                                                <i class="fas fa-pen"></i>&emsp;Editar
+                                            </a>
+                                            <a class="dropdown-item @((ViewBag.FlagEdicionPlan == 1) ? "" : "disabled")" href="#" onclick="llamarFusionarEvaluacionPlan(@item.ID_Evaluacion_Plan);" data-toggle="modal" data-target="#modal-fusionar-evaluacion-plan">
+                                                <i class="fas fa-object-group"></i>&emsp;Fusionar
+                                            </a>
+                                            <a class="dropdown-item @((ViewBag.FlagEdicionPlan == 1) ? "" : "disabled")" href="#" onclick="llamarDividirEvaluacionPlan(@item.ID_Evaluacion_Plan);" data-toggle="modal" data-target="#modal-dividir-evaluacion-plan">
+                                                <i class="fas fa-object-ungroup"></i>&emsp;Dividir
+                                            </a>
+                                            <a class="dropdown-item @((ViewBag.FlagEdicionPlan == 1) ? "" : "disabled")" href="#" onclick="llamarRetirarEvaluacion('@item.ID_Evaluacion_Plan', '@item.Evaluacion');" data-toggle="modal" data-target="#modal-retirar-evaluacion">
+                                                <i class="fas fa-trash"></i>&emsp; Retirar
+                                            </a>
+                                            //Aca debo cambiar para que llame a las funciones de reemplazo
+                                            <a class="dropdown-item @((ViewBag.FlagEdicionPlan == 1) ? "" : "disabled")" href="#" onclick="llamarReemplazarEvaluacionPlan(@item.ID_Evaluacion_Plan);" data-toggle="modal" data-target="#modal-reemplazar-evaluacion-plan">
+                                                <i class="fa-solid fa-right-to-bracket"></i>&emsp; Reemplazar
+                                            </a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#" onclick="llamarVotacionEvaluacion('@item.ID_Evaluacion_Plan', '@Request.Url.AbsolutePath');" data-toggle="modal" data-target="#modal-votacion-evaluacion">
+                                                <i class="fas fa-vote-yea"></i>&emsp;Votaciones <span class="badge badge-dark align-middle"> @item.Cantidad_Votos </span>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a class="dropdown-item @((ViewBag.FlagEdicionPlan == 1) ? "" : "disabled")" href="#" onclick="llamarRestablecerEvaluacion('@item.ID_Evaluacion_Plan', '@item.Evaluacion');" data-toggle="modal" data-target="#modal-restablecer-evaluacion-plan">
+                                                <i class="fas fa-undo"></i>&emsp; Restablecer evaluación
+                                            </a>
+                                        }
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-nowrap text-center"> <span> @((item.Estado == null) ? "-" : item.Estado) </span> </td>
+                            <td class="text-nowrap text-center"> <span>@item.Ultimo_Calificativo</span> </td>
+                            <td class="text-nowrap text-center"> <span>@item.Macroproceso</span> </td>
+                            <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item.Objetivo" style="min-width: 12vw;"> <span>@item.Objetivo</span> </td>
+                            <td class="text-nowrap text-center"> <span>@item.Centro_Costo</span> </td>
+                            <td class="text-nowrap text-center"> <span>@item.Atributo_Universo</span> </td>
+                            <td class="text-nowrap text-center"> <span>@item.Riesgo_Asociado</span> </td>
+                            <td class="text-nowrap text-center"> <span>@item.Tipo_Evaluacion</span> </td>
+                            <td class="text-nowrap text-center"> <span>@item.Equipo_Responsable</span> </td>
+                            <td class="text-nowrap text-center"> <span>@item.PAC</span> </td>
+                            <td class="text-nowrap text-center"> <span>@item.Anexo_30</span> </td>
+                            <td class="text-nowrap text-center"> <span>@item.Regulatorio</span> </td>
+                            <td class="text-nowrap text-center"> <span>@item.N_SBS</span> </td>
+                            <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item.Evaluacion_SBS" style="min-width: 12vw;"> <span>@item.Evaluacion_SBS</span> </td>
+                            <td class="text-nowrap text-center"> <span>@item.SOX</span> </td>
+                            <td class="text-nowrap text-center"> <span>@item.Fase_SOX</span> </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@*MODAL VER LOG EVALUACION*@
+<div class="modal fade" id="modal-log-evaluacion-plan" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Log de Cambios</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="resultado-log-evaluacion-plan"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL CREAR EVALUACION PLAN*@
+<div class="modal fade" id="modal-crear-evaluacion-plan" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Agregar Evaluación al Plan Anual @ViewBag.PlanAnualSeleccionado.Anio_Plan - @ViewBag.NegocioSeleccionado.Negocio</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="resultado-crear-evaluacion-plan"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL EDITAR EVALUACION PLAN*@
+<div class="modal fade" id="modal-editar-evaluacion-plan" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Editar Evaluación del Plan Anual @ViewBag.PlanAnualSeleccionado.Anio_Plan - @ViewBag.NegocioSeleccionado.Negocio</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="resultado-editar-evaluacion-plan"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL RETIRAR EVALUACION*@
+<div class="modal fade" id="modal-retirar-evaluacion" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Retirar Evaluación del Plan Anual @ViewBag.PlanAnualSeleccionado.Anio_Plan - @ViewBag.NegocioSeleccionado.Negocio</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            @using (Html.BeginForm("RetirarEvaluacionPlan", "WebPlanAnual", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <span id="spanRetirarEvaluacion"></span>
+                    <input id="inputIdEvaluacionPlan" name="idEvaluacionPlan" type="text" hidden />
+
+                    <div class="form-group text-center pt-3">
+                        <button type="button" class="btn font-weight-normal btn-outline-secondary btn-group-toggle mr-2" data-dismiss="modal">
+                            <i class="fas fa-times-circle"></i> Cancelar
+                        </button>
+                        <button type="submit" class="btn font-weight-normal btn-danger btn-group-toggle">
+                            <i class="fas fa-trash-alt"></i> Retirar evaluación
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@*MODAL RESTABLECER EVALUACION*@
+<div class="modal fade" id="modal-restablecer-evaluacion-plan" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Restablecer Evaluación del Plan Anual @ViewBag.PlanAnualSeleccionado.Anio_Plan - @ViewBag.NegocioSeleccionado.Negocio</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            @using (Html.BeginForm("RestablecerEvaluacionPlan", "WebPlanAnual", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <span id="spanRestablecerEvaluacion"></span>
+                    <input id="inputRestIdEvaluacionPlan" name="idEvaluacionPlan" type="text" hidden />
+
+                    <div class="form-group text-center pt-3">
+                        <button type="button" class="btn font-weight-normal btn-outline-secondary btn-group-toggle mr-2" data-dismiss="modal">
+                            <i class="fas fa-times-circle"></i> Cancelar
+                        </button>
+                        <button type="submit" class="btn font-weight-normal btn-info btn-group-toggle">
+                            <i class="fas fa-undo"></i> Restablecer evaluación
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@*MODAL FUSIONAR EVALUACION PLAN*@
+<div class="modal fade" id="modal-fusionar-evaluacion-plan" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Fusionar Evaluaciones del Plan Anual @ViewBag.PlanAnualSeleccionado.Anio_Plan - @ViewBag.NegocioSeleccionado.Negocio</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="resultado-fusionar-evaluacion-plan"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL REEMPLAZAR*@
+
+<div class="modal fade" id="modal-reemplazar-evaluacion-plan" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Reemplazar Evaluacion del Plan Anual @ViewBag.PlanAnualSeleccionado.Anio_Plan - @ViewBag.NegocioSeleccionado.Negocio</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="resultado-reemplazar-evaluacion-plan"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL DIVIDIR EVALUACION PLAN*@
+<div class="modal fade" id="modal-dividir-evaluacion-plan" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Dividir Evaluaciones del Plan Anual @ViewBag.PlanAnualSeleccionado.Anio_Plan - @ViewBag.NegocioSeleccionado.Negocio</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="resultado-dividir-evaluacion-plan"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" class="init">
+    $(document).ready(function () {
+        $('#mantenimiento-plan').dataTable({
+            "dom": "<'row pb-1'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4 text-center'i><'col-sm-12 col-md-4'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-12 col-md-5'><'col-sm-12 col-md-7'p>>",
+            "order": [[1, 'asc']],
+            "searching": true,
+            "paging": false,
+            "scrollX": true,
+            "scrollY": "52vh",
+            "buttons": [
+                {
+                    extend: 'copyHtml5',
+                    text: '<span class="font-weight-normal"><i class="fas fa-copy"></i> Copiar</span>',
+                    titleAttr: 'Copy'
+                },
+                {
+                    extend: 'excelHtml5',
+                    text: '<span class="font-weight-normal"><i class="fas fa-file-excel"></i> Excel</span>',
+                    titleAttr: 'Excel'
+                }
+            ],
+            "language": {
+                "zeroRecords": "No hay datos disponibles para los filtros seleccionados",
+                "info": "Mostrandose _TOTAL_ registros",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros)",
+                "search": "Buscar:"
+            }
+        });
+    });
+
+    function llamarLogEvaluacionPlan() {
+        var laURLDeLaVista = '@Url.Action("PV_LogEvaluacionPlan", "WebPlanAnual")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                success: function (response) {
+                    $('#resultado-log-evaluacion-plan').html('');
+                    $('#resultado-log-evaluacion-plan').html(response);
+                }
+            });
+    }
+    function cambioSeleccion() {
+        var idPlan = document.getElementById("selectIdPlan").value;
+        var idNegocio = document.getElementById("selectIdNegocio").value;
+        window.location.href = "../WebPlanAnual/MantenimientoPlan?pa=" + idPlan + "&ne=" + idNegocio;
+    }
+    function llamarCrearEvaluacionPlan(idPlanAnual, idNegocio) {
+        var laURLDeLaVista = '@Url.Action("PV_CrearEvaluacionPlan", "WebPlanAnual")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { idPlanAnual: idPlanAnual, idNegocio: idNegocio },
+                success: function (response) {
+                    $('#resultado-crear-evaluacion-plan').html('');
+                    $('#resultado-crear-evaluacion-plan').html(response);
+                }
+            });
+    }
+    function llamarEditarEvaluacionPlan(idEvaluacionPlan, idNegocio) {
+        var laURLDeLaVista = '@Url.Action("PV_EditarEvaluacionPlan", "WebPlanAnual")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { idEvaluacionPlan: idEvaluacionPlan, idNegocio: idNegocio },
+                success: function (response) {
+                    $('#resultado-editar-evaluacion-plan').html('');
+                    $('#resultado-editar-evaluacion-plan').html(response);
+                }
+            });
+    }
+    function llamarRetirarEvaluacion(idEvaluacionPlan, evaluacion) {
+        document.getElementById("inputIdEvaluacionPlan").setAttribute('value', idEvaluacionPlan);
+        document.getElementById("spanRetirarEvaluacion").textContent = "¿Estás seguro que deseas retirar la evaluación " + evaluacion + " del plan anual?";
+    }
+    function llamarRestablecerEvaluacion(idEvaluacionPlan, evaluacion) {
+        document.getElementById("inputRestIdEvaluacionPlan").setAttribute('value', idEvaluacionPlan);
+        document.getElementById("spanRestablecerEvaluacion").textContent = "¿Estás seguro que deseas restablecer la evaluación " + evaluacion + " del plan anual?";
+    }
+    function llamarFusionarEvaluacionPlan(idEvaluacionPlan) {
+        var laURLDeLaVista = '@Url.Action("PV_FusionarEvaluacionPlan", "WebPlanAnual")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { idEvaluacionPlan: idEvaluacionPlan },
+                success: function (response) {
+                    $('#resultado-fusionar-evaluacion-plan').html('');
+                    $('#resultado-fusionar-evaluacion-plan').html(response);
+                }
+            });
+    }
+    /*REEMPLAZAR*/
+    function llamarReemplazarEvaluacionPlan(idEvaluacionPlan) {
+        var laURLDeLaVista = '@Url.Action("PV_ReemplazarEvaluacionPlan", "WebPlanAnual")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { idEvaluacionPlan: idEvaluacionPlan },
+                success: function (response) {
+                    $('#resultado-reemplazar-evaluacion-plan').html('');
+                    $('#resultado-reemplazar-evaluacion-plan').html(response);
+                }
+            });
+    }
+    function llamarDividirEvaluacionPlan(idEvaluacionPlan) {
+        var laURLDeLaVista = '@Url.Action("PV_DividirEvaluacionPlan", "WebPlanAnual")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { idEvaluacionPlan: idEvaluacionPlan },
+                success: function (response) {
+                    $('#resultado-dividir-evaluacion-plan').html('');
+                    $('#resultado-dividir-evaluacion-plan').html(response);
+                }
+            });
+    }
+
+</script>
+
+

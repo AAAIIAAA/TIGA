@@ -1,0 +1,451 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+@{
+    ViewBag.Title = "Calendario de Trabajo";
+    Layout = "~/Views/Shared/_Layout_Plan_Anual.cshtml";
+    ViewBag.Valor = "color:red";
+    ViewBag.FlagAlertaCruce = 0;
+    var valor = 0;
+}
+
+<div class="card shadow">
+    <div class="row card-header py-3">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <h5 class="m-0 font-weight-bold text-dark text-center">Calendario de Trabajo</h5>
+        </div>
+        <div class="col-lg-2 text-center">
+            <span class="badge badge-pill badge-danger text-wrap font-weight-normal" @((ViewBag.FlagEdicionPlan == 0) ? "" : "hidden")>
+                <i class="fas fa-info-circle"></i> Edición deshabilitada
+            </span>            
+        </div>
+    </div>
+
+    <div class="card-body mb-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-3">
+                Plan Anual: <br />
+                <select class="form-control" id="selectIdPlan" name="idPlanAnual" onchange="cambioSeleccion()" disabled>
+                    @foreach (var Item in Model.DPA_Plan_Anual)
+                    {
+                        <option value="@Item.ID_Plan_Anual" @(Item.ID_Plan_Anual == ViewBag.PlanAnualSeleccionado.ID_Plan_Anual ? "selected" : "")>@Item.Anio_Plan</option>
+                    }
+                </select>
+            </div>
+            <div class="col-lg-3">
+                Auditor: <br />
+                <select class="form-control" id="selectIdPersona" name="idPersona" onchange="cambioSeleccion()">
+                    @foreach (var Item in Model.Persona)
+                    {
+                        <option value="@Item.IdPersona" @(Item == ViewBag.personaSeleccionada ? "selected" : "")>@(Item.Nombres.Trim() + " " + Item.Apellidos.Trim())</option>
+                    }
+                </select>
+            </div>
+            <div class="col-lg-2 text-center">
+                <br />
+                <button type="button" class="btn btn-secondary btn-filter" onclick="window.location.href='../WebPlanAnual/ProgramacionFinal?pa=' + @ViewBag.PlanAnualSeleccionado.ID_Plan_Anual">
+                    <i class="fas fa-clipboard-list"></i> Programación Final
+                </button>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-7">
+                <div id='calendar' style="max-height: 60vh"></div>
+            </div>
+
+            <div class="col-5" style="max-height: 60vh">
+
+                <div style="height: 45%;">
+                    <div class="row justify-content-between pb-2">
+                        <div class="col-5 font-italic">Proyectos Asignados</div>
+                        <div class="col-4 text-center">
+                            <button type="button" class="btn btn-info btn-filter" onclick="llamarCrearAuditorEvaluacion();"
+                                    data-toggle="modal" data-target="#modal-crear-auditor-evaluacion" @(ViewBag.FlagEdicionPlan == 0 ? "disabled" : "")>
+                                <i class="fas fa-plus"></i> Asignar Proyecto
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive" style="max-height: 80%;">
+                        <table class="table table-sm table-hover display" id="tabla-proyectos-auditor" width="100%">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th class="text-center align-middle" style="width: 40%; "> Evaluación </th>
+                                    <th class="text-center align-middle"> Fecha Inicio </th>
+                                    <th class="text-center align-middle"> Fecha Fin </th>
+                                    <th class="text-center align-middle"> Duración </th>
+                                    @if (ViewBag.FlagEdicionPlan == 1)
+                                    {
+                                        <th class="text-center align-middle" style="width: 10%;">  </th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.ProyectosAuditor)
+                                {
+
+                                    <tr>
+                                        <td style="@((item.Cruce == 0) ? "" : "color:red")" class="ellipsis" data-toggle="tooltip" title="@item.Nombre"> <span>@item.Nombre</span> </td>
+                                        <td style="@((item.Cruce == 0) ? "" : "color:red")" class="text-nowrap text-center"> <span>@(item.Fecha_Inicio != null ? Convert.ToDateTime(item.Fecha_Inicio).ToShortDateString() : "-")</span> </td>
+                                        <td style="@((item.Cruce == 0) ? "" : "color:red")" class="text-nowrap text-center"> <span>@(item.Fecha_Fin != null ? Convert.ToDateTime(item.Fecha_Fin).ToShortDateString() : "-")</span> </td>
+                                        <td style="@((item.Cruce == 0) ? "" : "color:red")" class="text-nowrap text-center"> <span>@item.Duracion</span> </td>
+                                        @if (ViewBag.FlagEdicionPlan == 1)
+                                        {
+                                            <td class="text-center">
+                                                <div class="btn-group">
+                                                    <button class="btn-icon" title="Eliminar" onclick="llamarEliminarAuditorEvaluacion('@item.ID_ER', '@item.Nombre');"
+                                                            data-toggle="modal" data-target="#modal-eliminar-auditor-evaluacion">
+                                                        <i class="fas fa-trash-alt text-danger"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div class="pt-4" style="height: 45%;">
+                    <div class="row justify-content-between pb-2">
+                        <div class="col-5 font-italic">Actividades Extra</div>
+                        <div class="col-4 text-center">
+                            <button type="button" class="btn btn-info btn-filter" onclick="llamarCrearAuditorTiempoExtra();"
+                                    data-toggle="modal" data-target="#modal-crear-auditor-tiempo-extra" @(ViewBag.FlagEdicionPlan == 0 ? "disabled" : "")>
+                                <i class="fas fa-plus"></i> Registrar Actividad
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive" style="max-height: 80%;">
+                        <table class="table table-sm table-hover display" id="tabla-tiempos-extra" width="100%">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th class="text-center align-middle"> Actividad </th>
+                                    <th class="text-center align-middle"> Fecha Inicio </th>
+                                    <th class="text-center align-middle"> Fecha Fin </th>
+                                    <th class="text-center align-middle"> Duración </th>
+                                    @if (ViewBag.FlagEdicionPlan == 1)
+                                    {
+                                        <th class="text-center align-middle" style="width: 10%;"> </th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.TiemposExtraAuditor)
+                                {
+                                    <tr>
+                                        <td style="@((item.Cruce == 0) ? "" : "color:red")" class="text-nowrap"> <span>@item.Nombre</span> </td>
+                                        <td style="@((item.Cruce == 0) ? "" : "color:red")" class="text-nowrap text-center"> <span>@(item.Fecha_Inicio != null ? Convert.ToDateTime(item.Fecha_Inicio).ToShortDateString() : "-")</span> </td>
+                                        <td style="@((item.Cruce == 0) ? "" : "color:red")" class="text-nowrap text-center"> <span>@(item.Fecha_Fin != null ? Convert.ToDateTime(item.Fecha_Fin).ToShortDateString() : "-")</span> </td>
+                                        <td style="@((item.Cruce == 0) ? "" : "color:red")" class="text-nowrap text-center"> <span>@item.Duracion</span> </td>
+                                        @if (ViewBag.FlagEdicionPlan == 1)
+                                        {
+                                            <td class="text-center">
+                                                <div class="btn-group">
+                                                    <button class="btn-icon pr-3" title="Editar" onclick="llamarEditarAuditorTiempoExtra('@item.ID_ER');"
+                                                            data-toggle="modal" data-target="#modal-editar-auditor-tiempo-extra">
+                                                        <i class="fas fa-edit text-warning"></i>
+                                                    </button>
+                                                    <button class="btn-icon" title="Eliminar" onclick="llamarEliminarAuditorTiempoExtra('@item.ID_ER', '@item.Nombre');"
+                                                            data-toggle="modal" data-target="#modal-eliminar-auditor-tiempo-extra">
+                                                        <i class="fas fa-trash-alt text-danger"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="text-center pt-4">
+                    <small>Leyenda:</small> 
+                    <span id="alertacruce" class="badge badge-pill text-wrap font-weight-normal" style="color:red;background-color:white">
+                        <i class="fas fa-info-circle"></i> Cruce de horario
+                    </span>
+                </div>
+
+
+            </div>
+            </div>
+
+        </div>
+    </div>
+
+    @*MODAL CREAR AUDITOR EVALUACION*@
+    <div class="modal fade" id="modal-crear-auditor-evaluacion" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title">Asignar Evaluación</h6>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="resultado-crear-auditor-evaluacion"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*MODAL ELIMINAR AUDITOR EVALUACION*@
+    <div class="modal fade" id="modal-eliminar-auditor-evaluacion" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title">Eliminar Evaluación Asignada</h6>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                @using (Html.BeginForm("PV_EliminarAuditorEvaluacion", "WebPlanAnual", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="modal-body">
+                        <span id="spanEliminarAuditorEvaluacion"></span>
+                        <input id="inputEliminarAuditorEvaluacion" name="idAuditorEvaluacion" type="text" hidden />
+
+                        <div class="form-group text-center pt-3">
+                            <button type="button" class="btn font-weight-normal btn-outline-secondary btn-group-toggle mr-2" data-dismiss="modal">
+                                <i class="fas fa-times-circle"></i> Cancelar
+                            </button>
+                            <button type="submit" class="btn font-weight-normal btn-danger btn-group-toggle">
+                                <i class="fas fa-trash-alt"></i> Eliminar
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    @*MODAL CREAR AUDITOR TIEMPO EXTRA*@
+    <div class="modal fade" id="modal-crear-auditor-tiempo-extra" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title">Registrar Tiempo Extra</h6>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="resultado-crear-auditor-tiempo-extra"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*MODAL EDITAR AUDITOR TIEMPO EXTRA*@
+    <div class="modal fade" id="modal-editar-auditor-tiempo-extra" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title">Editar Actividad Extra</h6>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="resultado-editar-auditor-tiempo-extra"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*MODAL ELIMINAR AUDITOR TIEMPO EXTRA*@
+    <div class="modal fade" id="modal-eliminar-auditor-tiempo-extra" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title">Eliminar Actividad Extra</h6>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                @using (Html.BeginForm("PV_EliminarAuditorTiempoExtra", "WebPlanAnual", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="modal-body">
+                        <span id="spanEliminarAuditorTiempoExtra"></span>
+                        <input id="inputEliminarAuditorTiempoExtra" name="idAuditorTiempoExtra" type="text" hidden />
+                        <input id="inputIdPlanAnual" name="idPlanAnual" type="text" hidden />
+
+                        <div class="form-group text-center pt-3">
+                            <button type="button" class="btn font-weight-normal btn-outline-secondary btn-group-toggle mr-2" data-dismiss="modal">
+                                <i class="fas fa-times-circle"></i> Cancelar
+                            </button>
+                            <button type="submit" class="btn font-weight-normal btn-danger btn-group-toggle">
+                                <i class="fas fa-trash-alt"></i> Eliminar
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" class="init">
+    $(function () {
+        var data = JSON.parse('@Html.Raw(Json.Encode(Model.SP_DPA_Fechas_Auditor))');
+        var dataSource = [];
+
+        for (var i = 0; i < data.length; i++) {
+            var event = {
+                id: data[i].ID,
+                name: data[i].Nombre,
+                startDate: new Date(parseInt(data[i].Fecha_Inicio.substr(6))),
+                endDate: new Date(parseInt(data[i].Fecha_Fin.substr(6))),
+                color: data[i].Tipo == 1 ? 'rgb(44, 143, 201)' : 'rgb(245, 187, 0)',
+                type: data[i].Descripcion_Tipo
+            }
+            dataSource.push(event);
+        }
+
+        var fechasNoLaborables = JSON.parse('@Html.Raw(Json.Encode(Model.SP_DPA_Fechas_No_Laborables))');
+        var fechasNoLaborablesDS = [];
+
+        for (var i = 0; i < fechasNoLaborables.length; i++) {
+            var newDate = new Date(parseInt(fechasNoLaborables[i].Fecha.substr(6)));
+            fechasNoLaborablesDS.push(newDate);
+        }
+
+        var planAnual = document.getElementById("selectIdPlan");
+        var anioPlan = planAnual.options[planAnual.selectedIndex].text;
+
+        new Calendar('#calendar', {
+            language: 'es',
+            displayHeader: false,
+            startYear: anioPlan,
+            disabledDays: fechasNoLaborablesDS,
+            mouseOnDay: function (e) {
+                if (e.events.length > 0) {
+                    var content = '';
+
+                    for (var i in e.events) {
+                        content += '<div class="event-tooltip-content">'
+                            + '<div class="event-name" style="color:' + e.events[i].color + '">' + e.events[i].name + '</div>'
+                            + '<div class="event-type font-italic">' + e.events[i].type + '</div>'
+                            + '</div>';
+                    }
+
+                    $(e.element).popover({
+                        trigger: 'manual',
+                        container: 'body',
+                        html: true,
+                        content: content
+                    });
+
+                    $(e.element).popover('show');
+                }
+            },
+            mouseOutDay: function (e) {
+                if (e.events.length > 0) {
+                    $(e.element).popover('hide');
+                }
+            },
+            dataSource: dataSource
+        })
+    });
+
+    $(document).ready(function () {
+        $('#tabla-proyectos-auditor').dataTable({
+            "ordering": false,
+            "searching": false,
+            "paging": false,
+            "info": false,
+            "language": {
+                "zeroRecords": "No hay datos disponibles para los filtros seleccionados",
+                "info": "Mostrandose _TOTAL_ registros",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros)"
+            }
+        });
+        $('#tabla-tiempos-extra').dataTable({
+            "ordering": false,
+            "searching": false,
+            "paging": false,
+            "info": false,
+            "language": {
+                "zeroRecords": "No hay datos disponibles para los filtros seleccionados",
+                "info": "Mostrandose _TOTAL_ registros",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros)"
+            }
+        });
+    });
+
+    function ocultar() {
+
+            alertacruce.style.visibility = "hidden";
+
+        }
+    function cambioSeleccion() {
+        var idPlan = document.getElementById("selectIdPlan").value;
+        var idPersona = document.getElementById("selectIdPersona").value;
+        window.location.href = "../WebPlanAnual/CalendarioTrabajo?pa=" + idPlan + "&pe=" + idPersona;
+    }
+    function llamarCrearAuditorEvaluacion() {
+        var idPlanAnual = document.getElementById("selectIdPlan").value;
+        var idPersona = document.getElementById("selectIdPersona").value;
+
+        var laURLDeLaVista = '@Url.Action("PV_CrearAuditorEvaluacion", "WebPlanAnual")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { idPersona: idPersona, idPlanAnual: idPlanAnual },
+                success: function (response) {
+                    $('#resultado-crear-auditor-evaluacion').html('');
+                    $('#resultado-crear-auditor-evaluacion').html(response);
+                }
+            });
+    }
+    function llamarEliminarAuditorEvaluacion(idAuditorEvaluacion, nombreEvaluacion) {
+        document.getElementById("inputEliminarAuditorEvaluacion").setAttribute('value', idAuditorEvaluacion);
+        document.getElementById("spanEliminarAuditorEvaluacion").textContent = "¿Estás seguro que deseas eliminar la asignación a la evaluación " + nombreEvaluacion + "?";
+    }
+    function llamarCrearAuditorTiempoExtra() {
+        var idPlanAnual = document.getElementById("selectIdPlan").value;
+        var idPersona = document.getElementById("selectIdPersona").value;
+
+        var laURLDeLaVista = '@Url.Action("PV_CrearAuditorTiempoExtra", "WebPlanAnual")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { idPersona: idPersona, idPlanAnual: idPlanAnual  },
+                success: function (response) {
+                    $('#resultado-crear-auditor-tiempo-extra').html('');
+                    $('#resultado-crear-auditor-tiempo-extra').html(response);
+                }
+            });
+    }
+    function llamarEditarAuditorTiempoExtra(idAuditorTiempoExtra) {
+        var idPlanAnual = document.getElementById("selectIdPlan").value;
+
+        var laURLDeLaVista = '@Url.Action("PV_EditarAuditorTiempoExtra", "WebPlanAnual")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { idAuditorTiempoExtra: idAuditorTiempoExtra, idPlanAnual: idPlanAnual  },
+                success: function (response) {
+                    $('#resultado-editar-auditor-tiempo-extra').html('');
+                    $('#resultado-editar-auditor-tiempo-extra').html(response);
+                }
+            });
+    }
+    function llamarEliminarAuditorTiempoExtra(idAuditorTiempoExtra, nombreActividad) {
+        var idPlanAnual = document.getElementById("selectIdPlan").value;
+
+        document.getElementById("inputEliminarAuditorTiempoExtra").setAttribute('value', idAuditorTiempoExtra);
+        document.getElementById("inputIdPlanAnual").setAttribute('value', idPlanAnual);
+        document.getElementById("spanEliminarAuditorTiempoExtra").textContent = "¿Estás seguro que deseas eliminar la actividad " + nombreActividad + "?";
+    }
+
+    </script>
+
+
+

@@ -1,0 +1,352 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MultiserviciosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'PROYECTOSIAV2.dbo.View_BC_Hojas_Cargadas' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="View_BC_Hojas_Cargadas">
+          <Property Name="ID" Type="bigint" />
+          <Property Name="AÑO" Type="int" />
+          <Property Name="PERIODO" Type="int" />
+          <Property Name="FECHA_CARGA" Type="datetime" />
+        </EntityType>-->
+        <Function Name="SP_GRAF_HORAS_TOTAL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FECHA_INICIO" Type="date" Mode="In" />
+          <Parameter Name="FECHA_FIN" Type="date" Mode="In" />
+        </Function>
+        <Function Name="SP_GRAF_MEDIDA_DE_TIEMPO2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FECHA_INICIO" Type="date" Mode="In" />
+          <Parameter Name="FECHA_FIN" Type="date" Mode="In" />
+        </Function>
+        <Function Name="SP_GRAF_TABLA_HORAS2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FECHA_INICIO" Type="date" Mode="In" />
+          <Parameter Name="FECHA_FIN" Type="date" Mode="In" />
+        </Function>
+        <Function Name="SP_TBL_DETALLE_GENERAL_TEC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FECHA_INICIO" Type="date" Mode="In" />
+          <Parameter Name="FECHA_FIN" Type="date" Mode="In" />
+        </Function>
+        <Function Name="SP_TT_DETALLE_ETAPAS_FASES_ACTIVIDADES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FECHA" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_TT_DETALLE_FILTRAR_PROYECTO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="YEAR" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_TT_DETALLE_PROYECTO_ACTIVIDAD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FECHA" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_TT_DIAS_CONTROL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="YEAR" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_TT_DISTR_DIAS_AUDITOR_POR_CONTROL_EQUIPO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="YEAR" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_TT_DISTR_DIAS_AUDITOR_POR_FASE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="YEAR" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_TT_EQUIPO_ETAPAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FECHA" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_TT_ERROR_FASES_DISTRIBUCION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="INICIO" Type="date" Mode="In" />
+          <Parameter Name="FIN" Type="date" Mode="In" />
+        </Function>
+        <EntityContainer Name="MultiserviciosModelStoreContainer" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MultiserviciosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MultiserviciosEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="SP_GRAF_TABLA_HORAS2" ReturnType="Collection(MultiserviciosModel.SP_GRAF_TABLA_HORAS2_Result)">
+            <Parameter Name="FECHA_INICIO" Mode="In" Type="DateTime" />
+            <Parameter Name="FECHA_FIN" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GRAF_MEDIDA_DE_TIEMPO2" ReturnType="Collection(MultiserviciosModel.SP_GRAF_MEDIDA_DE_TIEMPO2_Result)">
+            <Parameter Name="FECHA_INICIO" Mode="In" Type="DateTime" />
+            <Parameter Name="FECHA_FIN" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GRAF_HORAS_TOTAL" ReturnType="Collection(MultiserviciosModel.SP_GRAF_HORAS_TOTAL_Result)">
+            <Parameter Name="FECHA_INICIO" Mode="In" Type="DateTime" />
+            <Parameter Name="FECHA_FIN" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TBL_DETALLE_GENERAL_TEC" ReturnType="Collection(MultiserviciosModel.SP_TBL_DETALLE_GENERAL_TEC_Result)">
+            <Parameter Name="FECHA_INICIO" Mode="In" Type="DateTime" />
+            <Parameter Name="FECHA_FIN" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TT_DISTR_DIAS_AUDITOR_POR_FASE" ReturnType="Collection(MultiserviciosModel.SP_TT_DISTR_DIAS_AUDITOR_POR_FASE_Result)">
+          <Parameter Name="YEAR" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TT_DISTR_DIAS_AUDITOR_POR_CONTROL_EQUIPO" ReturnType="Collection(MultiserviciosModel.SP_TT_DISTR_DIAS_AUDITOR_POR_CONTROL_EQUIPO_Result)">
+          <Parameter Name="YEAR" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TT_DETALLE_PROYECTO_ACTIVIDAD" ReturnType="Collection(MultiserviciosModel.SP_TT_DETALLE_PROYECTO_ACTIVIDAD_Result)">
+          <Parameter Name="FECHA" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TT_DETALLE_ETAPAS_FASES_ACTIVIDADES" ReturnType="Collection(MultiserviciosModel.SP_TT_DETALLE_ETAPAS_FASES_ACTIVIDADES_Result)">
+          <Parameter Name="FECHA" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TT_EQUIPO_ETAPAS" ReturnType="Collection(MultiserviciosModel.SP_TT_EQUIPO_ETAPAS_Result)">
+          <Parameter Name="FECHA" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TT_DETALLE_FILTRAR_PROYECTO" ReturnType="Collection(MultiserviciosModel.SP_TT_DETALLE_FILTRAR_PROYECTO_Result)">
+          <Parameter Name="YEAR" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TT_DIAS_CONTROL" ReturnType="Collection(MultiserviciosModel.SP_TT_DIAS_CONTROL_Result)">
+          <Parameter Name="YEAR" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TT_ERROR_FASES_DISTRIBUCION" ReturnType="Collection(MultiserviciosModel.SP_TT_ERROR_FASES_DISTRIBUCION_Result)">
+            <Parameter Name="INICIO" Mode="In" Type="DateTime" />
+            <Parameter Name="FIN" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_GRAF_TABLA_HORAS2_Result">
+          <Property Type="String" Name="Equipo" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="Horas_Planificadas" Nullable="true" />
+          <Property Type="Double" Name="Horas_Registradas" Nullable="true" />
+          <Property Type="Decimal" Name="Cumplimiento" Nullable="true" Precision="10" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="SP_GRAF_MEDIDA_DE_TIEMPO2_Result">
+          <Property Type="Int32" Name="Porcentaje" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_GRAF_HORAS_TOTAL_Result">
+          <Property Type="Int32" Name="Porcentaje" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_TBL_DETALLE_GENERAL_TEC_Result">
+          <Property Type="String" Name="Equipo" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="Nombre_Ape" Nullable="false" MaxLength="50" />
+          <Property Type="Double" Name="Horas_Aprobadas" Nullable="true" />
+          <Property Type="Int32" Name="Semanas_Aprobadas" Nullable="true" />
+          <Property Type="Int32" Name="Hojas_Aprobadas" Nullable="true" />
+          <Property Type="Int32" Name="Hojas_Pendientes" Nullable="true" />
+          <Property Type="Int32" Name="Hojas_Rechazadas" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_TT_DISTR_DIAS_AUDITOR_POR_FASE_Result">
+          <Property Type="String" Name="Equipo" Nullable="true" MaxLength="200" />
+          <Property Type="Decimal" Name="Otros" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="PLANIFICACIÓN" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="EJECUCIÓN" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="INFORME" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="PLAN_ANUAL" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="PAMC" Nullable="true" Precision="38" Scale="6" />
+          </ComplexType>
+        <ComplexType Name="SP_TT_DISTR_DIAS_AUDITOR_POR_CONTROL_EQUIPO_Result">
+          <Property Type="String" Name="Equipo" Nullable="true" MaxLength="200" />
+          <Property Type="Decimal" Name="Dias_Auditor" Nullable="true" Precision="38" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="SP_TT_DETALLE_PROYECTO_ACTIVIDAD_Result">
+          <Property Type="String" Name="Code" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="Title" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Fase" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Actividades" Nullable="true" MaxLength="255" />
+          <Property Type="Double" Name="Horas" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_TT_DETALLE_ETAPAS_FASES_ACTIVIDADES_Result">
+          <Property Type="String" Name="Fase" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Actividades" Nullable="false" MaxLength="255" />
+          <Property Type="Double" Name="Total_Horas" Nullable="true" />
+          <Property Type="Decimal" Name="Días_Auditor" Nullable="true" Precision="18" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="SP_TT_EQUIPO_ETAPAS_Result">
+          <Property Type="String" Name="Equipo" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Fase" Nullable="true" MaxLength="255" />
+          <Property Type="Double" Name="Total_Horas" Nullable="true" />
+          <Property Type="Decimal" Name="Días_Auditor" Nullable="true" Precision="18" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="SP_TT_DETALLE_FILTRAR_PROYECTO_Result">
+          <Property Type="String" Name="Equipo" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Código" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="Evaluación" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Estado_Proyecto" Nullable="true" MaxLength="18" />
+          <Property Type="Double" Name="Horas_Planificación" Nullable="true" />
+          <Property Type="Decimal" Name="Porcentaje_HP" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Double" Name="Horas_Ejecución" Nullable="true" />
+          <Property Type="Decimal" Name="Porcentaje_HE" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Double" Name="Horas_Informe" Nullable="true" />
+          <Property Type="Decimal" Name="Porcentaje_HI" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Double" Name="Horas_Otros" Nullable="true" />
+          <Property Type="Decimal" Name="Porcentaje_HO" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Int32" Name="Total_Controles" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_TT_DIAS_CONTROL_Result">
+          <Property Type="String" Name="Equipo" Nullable="true" MaxLength="200" />
+          <Property Type="Double" Name="TOT_HORAS" Nullable="true" />
+          <Property Type="Decimal" Name="DIAS_AUDITOR" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="TOT_CONTROLES" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="DIAS_X_CONTROL" Nullable="true" Precision="10" Scale="2" />
+          </ComplexType>
+        <ComplexType Name="SP_TT_ERROR_FASES_DISTRIBUCION_Result">
+          <Property Type="String" Name="Usuario" Nullable="true" MaxLength="101" />
+          <Property Type="DateTime" Name="Fecha_Inicio" Nullable="true" />
+          <Property Type="DateTime" Name="Fecha_Fin" Nullable="true" />
+          <Property Type="String" Name="Fase" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Actividad" Nullable="false" MaxLength="255" />
+          <Property Type="Double" Name="Total_de_Horas" Nullable="true" />
+          <Property Type="String" Name="Estado" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Hoja_Estado" Nullable="true" MaxLength="9" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MultiserviciosModelStoreContainer" CdmEntityContainer="MultiserviciosEntities" >
+          <FunctionImportMapping FunctionImportName="SP_GRAF_TABLA_HORAS2" FunctionName="MultiserviciosModel.Store.SP_GRAF_TABLA_HORAS2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MultiserviciosModel.SP_GRAF_TABLA_HORAS2_Result">
+                <ScalarProperty Name="Equipo" ColumnName="Equipo" />
+                <ScalarProperty Name="Horas_Planificadas" ColumnName="Horas Planificadas" />
+                <ScalarProperty Name="Horas_Registradas" ColumnName="Horas Registradas" />
+                <ScalarProperty Name="Cumplimiento" ColumnName="Cumplimiento" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GRAF_MEDIDA_DE_TIEMPO2" FunctionName="MultiserviciosModel.Store.SP_GRAF_MEDIDA_DE_TIEMPO2" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MultiserviciosModel.SP_GRAF_MEDIDA_DE_TIEMPO2_Result">
+                <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GRAF_HORAS_TOTAL" FunctionName="MultiserviciosModel.Store.SP_GRAF_HORAS_TOTAL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MultiserviciosModel.SP_GRAF_HORAS_TOTAL_Result">
+                <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_TBL_DETALLE_GENERAL_TEC" FunctionName="MultiserviciosModel.Store.SP_TBL_DETALLE_GENERAL_TEC">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MultiserviciosModel.SP_TBL_DETALLE_GENERAL_TEC_Result">
+                <ScalarProperty Name="Equipo" ColumnName="Equipo" />
+                <ScalarProperty Name="Nombre_Ape" ColumnName="Nombre_Ape" />
+                <ScalarProperty Name="Horas_Aprobadas" ColumnName="Horas Aprobadas" />
+                <ScalarProperty Name="Semanas_Aprobadas" ColumnName="Semanas Aprobadas" />
+                <ScalarProperty Name="Hojas_Aprobadas" ColumnName="Hojas Aprobadas" />
+                <ScalarProperty Name="Hojas_Pendientes" ColumnName="Hojas Pendientes" />
+                <ScalarProperty Name="Hojas_Rechazadas" ColumnName="Hojas Rechazadas" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_TT_DISTR_DIAS_AUDITOR_POR_FASE" FunctionName="MultiserviciosModel.Store.SP_TT_DISTR_DIAS_AUDITOR_POR_FASE">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MultiserviciosModel.SP_TT_DISTR_DIAS_AUDITOR_POR_FASE_Result">
+                <ScalarProperty Name="Equipo" ColumnName="Equipo" />
+                <ScalarProperty Name="Otros" ColumnName="Otros" />
+                <ScalarProperty Name="PLANIFICACIÓN" ColumnName="PLANIFICACIÓN" />
+                <ScalarProperty Name="EJECUCIÓN" ColumnName="EJECUCIÓN" />
+                <ScalarProperty Name="INFORME" ColumnName="INFORME" />
+                <ScalarProperty Name="PLAN_ANUAL" ColumnName="PLAN ANUAL" />
+                <ScalarProperty Name="PAMC" ColumnName="PAMC" />
+                </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_TT_DISTR_DIAS_AUDITOR_POR_CONTROL_EQUIPO" FunctionName="MultiserviciosModel.Store.SP_TT_DISTR_DIAS_AUDITOR_POR_CONTROL_EQUIPO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MultiserviciosModel.SP_TT_DISTR_DIAS_AUDITOR_POR_CONTROL_EQUIPO_Result">
+                <ScalarProperty Name="Equipo" ColumnName="Equipo" />
+                <ScalarProperty Name="Dias_Auditor" ColumnName="Dias Auditor" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_TT_DETALLE_PROYECTO_ACTIVIDAD" FunctionName="MultiserviciosModel.Store.SP_TT_DETALLE_PROYECTO_ACTIVIDAD">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MultiserviciosModel.SP_TT_DETALLE_PROYECTO_ACTIVIDAD_Result">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Fase" ColumnName="Fase" />
+                <ScalarProperty Name="Actividades" ColumnName="Actividades" />
+                <ScalarProperty Name="Horas" ColumnName="Horas" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_TT_DETALLE_ETAPAS_FASES_ACTIVIDADES" FunctionName="MultiserviciosModel.Store.SP_TT_DETALLE_ETAPAS_FASES_ACTIVIDADES">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MultiserviciosModel.SP_TT_DETALLE_ETAPAS_FASES_ACTIVIDADES_Result">
+                <ScalarProperty Name="Fase" ColumnName="Fase" />
+                <ScalarProperty Name="Actividades" ColumnName="Actividades" />
+                <ScalarProperty Name="Total_Horas" ColumnName="Total Horas" />
+                <ScalarProperty Name="Días_Auditor" ColumnName="Días Auditor" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_TT_EQUIPO_ETAPAS" FunctionName="MultiserviciosModel.Store.SP_TT_EQUIPO_ETAPAS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MultiserviciosModel.SP_TT_EQUIPO_ETAPAS_Result">
+                <ScalarProperty Name="Equipo" ColumnName="Equipo" />
+                <ScalarProperty Name="Fase" ColumnName="Fase" />
+                <ScalarProperty Name="Total_Horas" ColumnName="Total Horas" />
+                <ScalarProperty Name="Días_Auditor" ColumnName="Días Auditor" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_TT_DETALLE_FILTRAR_PROYECTO" FunctionName="MultiserviciosModel.Store.SP_TT_DETALLE_FILTRAR_PROYECTO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MultiserviciosModel.SP_TT_DETALLE_FILTRAR_PROYECTO_Result">
+                <ScalarProperty Name="Equipo" ColumnName="Equipo" />
+                <ScalarProperty Name="Código" ColumnName="Código" />
+                <ScalarProperty Name="Evaluación" ColumnName="Evaluación" />
+                <ScalarProperty Name="Estado_Proyecto" ColumnName="Estado Proyecto" />
+                <ScalarProperty Name="Horas_Planificación" ColumnName="Horas Planificación" />
+                <ScalarProperty Name="Porcentaje_HP" ColumnName="Porcentaje HP" />
+                <ScalarProperty Name="Horas_Ejecución" ColumnName="Horas Ejecución" />
+                <ScalarProperty Name="Porcentaje_HE" ColumnName="Porcentaje HE" />
+                <ScalarProperty Name="Horas_Informe" ColumnName="Horas Informe" />
+                <ScalarProperty Name="Porcentaje_HI" ColumnName="Porcentaje HI" />
+                <ScalarProperty Name="Horas_Otros" ColumnName="Horas Otros" />
+                <ScalarProperty Name="Porcentaje_HO" ColumnName="Porcentaje HO" />
+                <ScalarProperty Name="Total_Controles" ColumnName="Total Controles" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_TT_DIAS_CONTROL" FunctionName="MultiserviciosModel.Store.SP_TT_DIAS_CONTROL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MultiserviciosModel.SP_TT_DIAS_CONTROL_Result">
+                <ScalarProperty Name="Equipo" ColumnName="Equipo" />
+                <ScalarProperty Name="TOT_HORAS" ColumnName="TOT_HORAS" />
+                <ScalarProperty Name="DIAS_AUDITOR" ColumnName="DIAS_AUDITOR" />
+                <ScalarProperty Name="TOT_CONTROLES" ColumnName="TOT_CONTROLES" />
+                <ScalarProperty Name="DIAS_X_CONTROL" ColumnName="DIAS_X_CONTROL" />
+                </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_TT_ERROR_FASES_DISTRIBUCION" FunctionName="MultiserviciosModel.Store.SP_TT_ERROR_FASES_DISTRIBUCION">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MultiserviciosModel.SP_TT_ERROR_FASES_DISTRIBUCION_Result">
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Fecha_Inicio" ColumnName="Fecha Inicio" />
+                <ScalarProperty Name="Fecha_Fin" ColumnName="Fecha Fin" />
+                <ScalarProperty Name="Fase" ColumnName="Fase" />
+                <ScalarProperty Name="Actividad" ColumnName="Actividad" />
+                <ScalarProperty Name="Total_de_Horas" ColumnName="Total de Horas" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Hoja_Estado" ColumnName="Hoja Estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

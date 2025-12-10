@@ -1,0 +1,250 @@
+﻿
+
+@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+
+
+@foreach (var item in ViewBag.actividad)
+{
+
+    <div style="font-size: 0.8rem !important">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+
+            <div class="form-row">
+
+                <div class="form-group col-md-6">
+                    <label>Actividad</label>
+                    <input type="text" class="form-control form-control-sm tu_clase_actividad" name="id_actividad" value="@item.Actividad" disabled>
+
+
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>Último Día (mm/dd/aaaa) </label>
+
+                    @{
+                        var ultimo_dia = Convert.ToDateTime(item.UltimoDia);
+                        var ultimo_diaFormateada = (item.UltimoDia != null && item.UltimoDia != DateTime.MinValue && ultimo_dia != new DateTime(1900, 1, 1))
+                            ? ultimo_dia.ToString("yyyy-MM-dd")
+                            : string.Empty;
+                    }
+                    <input type="date" class="form-control form-control-sm" name="fecha_ultimo_dia" value="@ultimo_diaFormateada" disabled>
+                </div>
+
+
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group col-md-12">
+                    <label>Justificación</label>
+                    <select class="form-control form-control-sm justificacion" id="justificacion" name="justificacion">
+                        <option value="" @(string.IsNullOrEmpty(item.Justificacion) || item.Justificacion.Length < 3 ? "selected" : "")>--select--</option>
+                        @foreach (var justificacion in Model.TG_Actividad_Justificacion)
+                        {
+                            <option value="@justificacion.IdActividadJustificacion" @(justificacion.Texto.ToString() == item.Justificacion.ToString() ? "selected" : "")>@justificacion.Texto</option>
+                        }
+                    </select>
+                </div>
+
+
+
+
+
+
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group col-md-6">
+                    <label>Estado</label>
+                    <input type="text" class="form-control form-control-sm tu_clase_estado" name="estado" id="estado" value="@item.Estado" disabled>
+
+
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>Ejecución Real</label>
+
+                    @{
+                        var fechaejecucion_real = Convert.ToDateTime(item.EjecucionReal);
+                        var fechaejecucion_realFormateada = (item.EjecucionReal != null && item.EjecucionReal != DateTime.MinValue && fechaejecucion_real != new DateTime(1900, 1, 1))
+                            ? fechaejecucion_real.ToString("yyyy-MM-dd")
+                            : string.Empty;
+                    }
+                    <input type="date" class="form-control form-control-sm fechaejecreal " name="fecha_ejecucion_real" id="fechaejecreal" value="@fechaejecucion_realFormateada">
+                </div>
+
+
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group col-md-6">
+                    <label>Fecha Revisión (mm/dd/aaaa) </label>
+                    <input type="date" class="form-control fecharevision" id="fecharevision" name="fecharevision" style="margin-bottom: 10px;" disabled>
+
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>Revisor</label>
+                    <input type="text" class="form-control form-control-sm tu_clase_revisor" id="revisor" name="revisor" value="@ViewBag.nombre" disabled>
+
+
+                </div>
+                    
+
+
+            </div>
+
+
+
+
+
+
+
+            <div class="form-group text-center">
+
+                <button type="button" class="btn btn-sm btn-info btn-group-toggle font-weight-normal" id="miBotonActividad" onclick="guardarActividad(@item.IdProyectoActividadInforme)">
+                    <i class="fas fa-save"></i> Guardar Cambios
+                </button>
+            </div>
+
+
+
+
+        }
+
+    </div>
+}
+
+
+<script type="text/javascript" class="init">
+
+
+    $(document).ready(function () {
+        //$('#miBotonActividad').on('click', function () {
+        //    guardarActividad();
+        //});
+
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('fecharevision').value = today;
+
+        var estadoInicial = $('#estado').val();
+
+        $('#justificacion').change(function () {
+            var justificacion = $("option:selected", this).text();
+
+            if (justificacion == "--select--" || justificacion.length < 3) {
+
+
+                $('#estado').val(estadoInicial);
+            } else {
+                
+                $('#estado').val('Conforme');
+            }
+        });
+
+
+
+        });
+
+
+
+
+
+
+    function guardarActividad(idproyectoactividad) {
+
+        var estado = $('.tu_clase_estado').val();
+        console.log(estado);
+
+        var fechaejecreal = $('.fechaejecreal').val();
+        var fecharevision = $('.fecharevision').val();
+
+        var revisor = $('.tu_clase_revisor').val();
+
+        var justificacion = $('.justificacion').val();
+        console.log(estado);
+        console.log(fechaejecreal);
+        console.log(fecharevision);
+        console.log(revisor);
+        console.log(justificacion);
+
+
+
+        var laURLDeLaVista = '@Url.Action("PV_Actividad_Guardar", "WebPlanAnual")';
+        $.ajax({
+            cache: false,
+            async: true,
+            type: "POST",
+            url: laURLDeLaVista,
+            data: {
+                idproyacti: idproyectoactividad,
+                estado: estado,
+                fechaejecreal: fechaejecreal,
+                fecharevision: fecharevision,
+                revisor: revisor,
+                justificacion: justificacion
+
+
+
+
+        },
+
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Cambios guardados',
+                        text: 'Se han guardado los cambios satisfactoriamente',
+                        confirmButtonText: 'Aceptar'
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ha ocurrido un error en la operación, inténtelo nuevamente',
+                        confirmButtonText: 'Aceptar'
+                    });
+                }
+                console.log(response);
+            },
+            error: function (xhr, status, error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Ha ocurrido un error en la operación por un error interno, inténtelo nuevamente. Detalles: ' + xhr.responseText,
+                    confirmButtonText: 'Aceptar'
+                });
+                console.error("Error en la petición AJAX:");
+                console.log(xhr);
+                console.log("Estado: " + status);
+                console.log("Error: " + error);
+
+
+            }
+
+        });
+
+
+
+    }
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+

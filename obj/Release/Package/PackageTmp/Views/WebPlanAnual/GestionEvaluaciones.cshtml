@@ -1,0 +1,221 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+@{
+    ViewBag.Title = "Gestión de Evaluaciones";
+    Layout = "~/Views/Shared/_Layout_Plan_Anual.cshtml";
+}
+
+<div class="card shadow">
+    <div class="card-header py-3">
+        <h5 class="m-0 font-weight-bold text-dark text-center">Gestión del Universo</h5>
+    </div>
+
+    <div class="card-body mb-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-3">
+                Negocio: <br />
+                <select class="form-control" id="Negocio" name="idNegocio" onchange="cambioNegocioSel(this.value)">
+                    @foreach (var Item in Model.DPA_Negocio)
+                    {
+                        <option value="@Item.ID_Negocio" @(Item.ID_Negocio == ViewBag.NegocioSeleccionado.ID_Negocio ? "selected" : "")>@Item.Negocio</option>
+                    }
+                </select>
+            </div>
+            <div class="col-lg-3 text-center">
+                <br />
+                <button type="button" class="btn btn-info btn-filter" onclick="llamarCrearEvaluacion(@ViewBag.NegocioSeleccionado.ID_Negocio);" data-toggle="modal" data-target="#modal-crear-evaluacion">
+                    <i class="fas fa-plus"></i> Nuevo
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-filter" onclick="llamarLogEvaluacion();" data-toggle="modal" data-target="#modal-log-evaluacion">
+                    <i class="fas fa-list"></i> Log Cambios
+                </button>
+            </div>
+        </div>
+
+        <div class="table-responsive mt-4">
+            <table class="table table-sm  table-hover display" id="tabla-evaluaciones" width="100%">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="text-center align-middle"> ID </th>
+                        <th class="text-center align-middle"> Evaluación </th>
+                        <th class="text-center align-middle"> Acciones </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.DPA_Evaluacion)
+                    {
+                        <tr>
+                            <td class="text-nowrap text-center"> <span>@item.ID_Evaluacion</span> </td>
+                            <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item.Evaluacion" style="min-width: 35vw;"> <span>@item.Evaluacion</span> </td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <button class="btn-icon pr-3" title="Editar" onclick="llamarEditarEvaluacion('@item.ID_Evaluacion');"
+                                            data-toggle="modal" data-target="#modal-editar-evaluacion">
+                                        <i class="fas fa-edit text-warning"></i>
+                                    </button>
+                                    @if (ViewBag.idRol == 5)
+                                    {
+                                        <button class="btn-icon" title="Eliminar" onclick="llamarEliminarEvaluacion('@item.ID_Evaluacion', '@item.Evaluacion');"
+                                                data-toggle="modal" data-target="#modal-eliminar-evaluacion">
+                                            <i class="fas fa-trash-alt text-danger"></i>
+                                        </button>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@*MODAL VER LOG EVALUACION*@
+<div class="modal fade" id="modal-log-evaluacion" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Log de Cambios</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="resultado-log-evaluacion"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL CREAR EVALUACION*@
+<div class="modal fade" id="modal-crear-evaluacion" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Crear Evaluación</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="resultado-crear-evaluacion"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL EDITAR EVALUACION*@
+<div class="modal fade" id="modal-editar-evaluacion" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Editar Evaluación</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="resultado-editar-evaluacion"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL ELIMINAR EVALUACION*@
+<div class="modal fade" id="modal-eliminar-evaluacion" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Eliminar Evaluación</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            @using (Html.BeginForm("PV_EliminarEvaluacion", "WebPlanAnual", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="modal-body">
+                    <span id="spanEliminarEvaluacion"></span>
+                    <input id="inputEliminarEvaluacion" name="idEvaluacion" type="text" hidden />
+
+                    <div class="form-group text-center pt-3">
+                        <button type="button" class="btn font-weight-normal btn-outline-secondary btn-group-toggle mr-2" data-dismiss="modal">
+                            <i class="fas fa-times-circle"></i> Cancelar
+                        </button>
+                        <button type="submit" class="btn font-weight-normal btn-danger btn-group-toggle">
+                            <i class="fas fa-trash-alt"></i> Eliminar evaluación
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" class="init">
+    $(document).ready(function () {
+        $('#tabla-evaluaciones').dataTable({
+            "dom": "<'row pb-1'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-12 col-md-5'><'col-sm-12 col-md-7'p>>",
+            "order": [[1, 'asc']],
+            "searching": true,
+            "paging": false,
+            "scrollY": "52vh",
+            "language": {
+                "zeroRecords": "No hay datos disponibles para los filtros seleccionados",
+                "info": "Mostrandose _TOTAL_ registros",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros)",
+                "search": "Buscar:"
+            }
+        });
+    });
+
+    function llamarLogEvaluacion() {
+        var laURLDeLaVista = '@Url.Action("PV_LogEvaluacion", "WebPlanAnual")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                success: function (response) {
+                    $('#resultado-log-evaluacion').html('');
+                    $('#resultado-log-evaluacion').html(response);
+                }
+            });
+    }
+    function cambioNegocioSel(val) {
+        window.location.href = "../WebPlanAnual/GestionEvaluaciones?idNegocio=" + val;
+    }
+    function llamarCrearEvaluacion(idNegocio) {
+        var laURLDeLaVista = '@Url.Action("PV_CrearEvaluacion", "WebPlanAnual")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { idNegocio: idNegocio },
+                success: function (response) {
+                    $('#resultado-crear-evaluacion').html('');
+                    $('#resultado-crear-evaluacion').html(response);
+                }
+            });
+    }
+    function llamarEditarEvaluacion(idEvaluacion) {
+        var laURLDeLaVista = '@Url.Action("PV_EditarEvaluacion", "WebPlanAnual")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { idEvaluacion: idEvaluacion },
+                success: function (response) {
+                    $('#resultado-editar-evaluacion').html('');
+                    $('#resultado-editar-evaluacion').html(response);
+                }
+            });
+    }
+    function llamarEliminarEvaluacion(idEvaluacion, nombreEvaluacion) {
+        document.getElementById("inputEliminarEvaluacion").setAttribute('value', idEvaluacion);
+        document.getElementById("spanEliminarEvaluacion").textContent = "¿Estás seguro que deseas eliminar la evaluación " + nombreEvaluacion + " de la base de datos? Esta operación es irreversible.";
+    }
+
+</script>
+
+
+

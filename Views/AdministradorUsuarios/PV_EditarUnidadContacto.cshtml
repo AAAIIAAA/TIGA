@@ -1,0 +1,68 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+
+<div class="container pt-3">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <input type="text" class="form-control" name="idUnidadAnt" value="@ViewBag.IdUnidadAnterior" hidden>
+        <input type="text" class="form-control" name="idRolAnt" value="@ViewBag.IdRolAnterior" hidden>
+        <input type="text" class="form-control" name="idContactoAnt" value="@ViewBag.IdContactoAnterior" hidden>
+
+        <div class="form-group mb-2 row justify-content-md-center">
+            <label for="exampleFormControlInput1" class="col-md-2 col-form-label">Unidad: </label>
+            <input type="text" class="form-control col-md-7" value="@ViewBag.UnidadSeleccionada.Nombre" readonly>
+        </div>
+        <div class="form-group mb-2 row justify-content-md-center">
+            <label for="exampleFormControlInput1" class="col-md-2 col-form-label">Rol: </label>
+            <select class="form-control col-md-7" name="idNuevoRol" onchange="cambiarEditarRol(@ViewBag.IdUnidadAnterior, @ViewBag.IdRolAnterior, @ViewBag.IdContactoAnterior, this.value)" required>
+                @if (ViewBag.RolSeleccionado.Nombre == null)
+                {
+                    <option selected disabled value="">-- Seleccione --</option>
+                }
+                @foreach (var Item in Model.TS_Rol)
+                {
+                    if (Item.Nombre == ViewBag.RolSeleccionado.Nombre)
+                    {
+                        <option selected value="@Item.ID">@Item.Nombre</option>
+                    }
+                    else
+                    {
+                        <option value="@Item.ID">@Item.Nombre</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-group mb-2 row justify-content-md-center">
+            <label for="exampleFormControlInput1" class="col-md-2 col-form-label">Contacto: </label>
+            <select class="form-control col-md-7" name="idNuevoContacto" required>
+                @if (ViewBag.ContactoSeleccionado.ID == 0)
+                {
+                    <option selected disabled value="">-- Seleccione --</option>
+                }
+                @foreach (var Item in Model.sP_AU_Drop_Contactos)
+                {
+                    if (Item.ID == ViewBag.ContactoSeleccionado.ID)
+                    {
+                        <option selected value="@Item.ID">@Item.Nombre</option>
+                    }
+                    else
+                    {
+                        <option value="@Item.ID">@Item.Nombre</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="form-group text-center pt-3">
+            <button type="submit" class="btn btn-info btn-group-toggle" style="background-color :lightseagreen">
+                <i class="fas fa-save"></i> Guardar Cambios
+            </button>
+        </div>
+    }
+    </div>
+
+
+
+
+

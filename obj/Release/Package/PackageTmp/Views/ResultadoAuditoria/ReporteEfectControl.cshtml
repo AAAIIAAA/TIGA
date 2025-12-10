@@ -1,0 +1,102 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+@{
+    ViewBag.Title = "ReporteEfectControl";
+    Layout = "~/Views/Shared/_Layout_Resultado_Auditoria.cshtml";
+}
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-dark text-center">Reporte de Efectividad de Controles</h6>
+    </div>
+
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+        <div class="row justify-content-center">
+
+            <div class="col-lg-3">
+                Seleccione el Año: <br />
+                <select class="form-control" id="Anio" name="Anio" onchange="callChangeFunc(this.value)">
+                    @foreach (var Anio in ViewBag.ListaAnio)
+                    {
+                        if (Anio == ViewBag.AnioSeleccionado)
+                        {
+                            <option selected>@Anio</option>
+                        }
+                        else
+                        {
+                            <option>@Anio</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-lg-2">
+                <br />
+                <a type="button" class="btn btn-reporte btn-success" href="@Url.Action("DescargarReporteEfectControl", "ResultadoAuditoria", new { anio = ViewBag.AnioSeleccionado})">
+                    <i class="fas fa-file-excel"></i> Descargar Reporte
+                </a>
+            </div>
+        </div>
+        }
+
+        <div class="table-responsive mt-4">
+            <table class="table table-bordered table-hover display tabla-reporte">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="text-center align-middle"> CODIGO </th>
+                        <th class="text-center align-middle"> PROYECTOS </th>
+                        <th class="text-center align-middle"> IFCR Inherente </th>
+                        <th class="text-center align-middle"> Cobertura del IFCR Residual </th>
+                        <th class="text-center align-middle"> EFECTIVOS </th>
+                        <th class="text-center align-middle"> EFECTIVO NO FORMALIZADO </th>
+                        <th class="text-center align-middle"> INEFECTIVO PRUEBA </th>
+                        <th class="text-center align-middle"> INEFECTIVO DISEÑO </th>
+                        <th class="text-center align-middle"> CONTROL INEXISTENTE </th>
+                        <th class="text-center align-middle"> TOTAL </th>
+                        <th class="text-center align-middle"> Tipo </th>
+                        <th class="text-center align-middle"> Estado </th>
+                        <th class="text-center align-middle"> Evaluación </th>
+                        <th class="text-center align-middle"> Calificativo % </th>
+                        <th class="text-center align-middle"> Tipo de Riesgo </th>
+                        <th class="text-center align-middle"> # Observaciones Riesgo Crítico / Alto </th>
+                        <th class="text-center align-middle"> Negocio </th>
+                    </tr>
+                </thead>
+                <tbody >
+                    @foreach (var item in Model.SP_RA_REPORTE_EFECT_CONTROL)
+                    {
+                    <tr>
+                        <td class="text-nowrap"> <span>@item.CODIGO</span> </td>
+                        <td class="text-nowrap"> <span>@item.PROYECTOS</span> </td>
+                        <td class="text-nowrap"> <span>@item.IFC_Inherente</span> </td>
+                        <td class="text-nowrap"> <span>@item.Cobertura_IFC_Residual</span> </td>
+                        <td class="text-nowrap"> <span>@item.EFECTIVOS</span> </td>
+                        <td class="text-nowrap"> <span>@item.EFECTIVO_NO_FORMALIZADO</span> </td>
+                        <td class="text-nowrap"> <span>@item.INEFECTIVO_PRUEBA</span> </td>
+                        <td class="text-nowrap"> <span>@item.INEFECTIVO_DISEÑO</span> </td>
+                        <td class="text-nowrap"> <span>@item.CONTROL_INEXISTENTE</span> </td>
+                        <td class="text-nowrap"> <span>@item.TOTAL_CONTROLES</span> </td>
+                        <td class="text-nowrap"> <span>@item.Tipo</span> </td>
+                        <td class="text-nowrap"> <span>@item.Estado</span> </td>
+                        <td class="text-nowrap"> <span>@item.Calificativo</span> </td>
+                        <td class="text-nowrap"> <span>@item.C__Calificativo</span> </td>
+                        <td class="text-nowrap"> <span>@item.Tipo_de_Riesgo</span> </td>
+                        <td class="text-nowrap"> <span>@item.Obs_Riesgo_Alto</span> </td>
+                        <td class="text-nowrap"> <span>@item.NEGOCIO</span> </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" class="init">
+    function callChangeFunc(val) {
+        window.location.href = "../ResultadoAuditoria/ReporteEfectControl?anio=" + val;
+    }
+</script>
+
+

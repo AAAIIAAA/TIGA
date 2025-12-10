@@ -1,0 +1,82 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
+
+
+body, h1, h2, h3, h4, h5, h6, p {
+    font-family: 'Poppins', Arial, Helvetica, sans-serif !important;
+}
+
+.sticky-footer {
+    border-top: 1px solid #e7eaec !important;
+    position: absolute !important;
+    padding: 1.5rem 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+}
+
+h1 {
+    font-weight: 500;
+    margin: 0;
+}
+
+p {
+    color: hsl(229, 6%, 66%)
+}
+
+.card {
+    margin-bottom: 5rem !important;
+}
+
+/*.dataTables_wrapper .dataTables_filter {
+    width: 100% !important;
+    text-align: center !important;
+}
+
+div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+    justify-content: center;
+}*/
+
+/*.btn-filter {
+    font-size: 0.85rem !important;
+    font-weight: normal !important;
+}*/
+
+.btn-icon {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
+
+.buttons-excel {
+    color: #212529 !important;
+    background-color: #f8f9fa !important;
+    font-weight: 400 !important;
+}
+
+/*#tabla-periodos {
+    font-size: 0.9rem !important;
+}*/
+
+
+
+
+@media only screen and (max-width: 1400px) {
+    html {
+        font-size: 81%;
+    }
+    .dataTables_scrollBody {
+        max-height: 39vh !important;
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    html {
+        font-size: 78%;
+    }
+    .dataTables_scrollBody {
+        max-height: 37vh !important;
+    }
+}

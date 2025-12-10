@@ -1,0 +1,79 @@
+﻿@model WebTIGA.Models.ContenedorModelos
+@{
+    ViewBag.Title = "Inicio";
+    Layout = "~/Views/Shared/_Layout_Resultado_Auditoria.cshtml";
+}
+
+<body>
+    <header>
+        <h1>Resultados de Auditoría</h1>
+        <p>Módulo para realizar la generación de reportes obtenidos de los resultados de Auditoría Interna</p>
+    </header>
+    <div class="container-inicio">
+        <div class="box" onclick="window.location.href='../ResultadoAuditoria/ReporteGeneral'">
+            <h3>Riesgos y Controles</h3>
+            <p>Presenta el reporte general de riesgos y controles según la fecha de emisión</p>
+            <img src="~/img/resultado-auditoria/icon-reporte-general.png" />
+        </div>
+        <div class="box" onclick="window.location.href='../ResultadoAuditoria/ReporteClave'">
+            <h3>Controles Clave</h3>
+            <p>Presenta el reporte de controles clave según la fecha de emisión</p>
+            <img src="~/img/resultado-auditoria/icon-reporte-clave.png" />
+        </div>
+        <div class="box" onclick="window.location.href='../ResultadoAuditoria/ReporteSox'">
+            <h3>Controles SOX</h3>
+            <p>Presenta el reporte de controles SOX según la fecha de emisión</p>
+            <img src="~/img/resultado-auditoria/icon-reporte-sox.png" />
+        </div>
+        <div class="box" onclick="window.location.href='../ResultadoAuditoria/ReporteObsCerradas'">
+            <h3>Observaciones Cerradas</h3>
+            <p>Presenta el reporte de las observaciones con estado cerrado según la fecha de cambio de estado</p>
+            <img src="~/img/resultado-auditoria/icon-reporte-obs-cerradas.png" />
+        </div>
+        <div class="box" onclick="window.location.href='../ResultadoAuditoria/ReporteEfectControl'">
+            <h3>Efectividad de Controles</h3>
+            <p>Presenta el reporte de la efectividad de controles por proyecto según el año</p>
+            <img src="~/img/resultado-auditoria/icon-reporte-efectividad.png" />
+        </div>
+        <div class="box" onclick="window.location.href='../ResultadoAuditoria/ReporteStatusActividades'">
+            <h3>Status de Actividades</h3>
+            <p>Presenta el reporte de estado de las actividades de los proyectos según negocio y año de plan anual</p>
+            <img src="~/img/resultado-auditoria/icon-reporte-status.png" />
+        </div>
+        <div class="box" onclick="window.location.href='../ResultadoAuditoria/ReporteMensualCredicorp'">
+            <h3>Reporte Mensual Credicorp</h3>
+            <p>Presenta el reporte que se envía mensualmente a Credicorp equipo y fecha de corte</p>
+            <img src="~/img/resultado-auditoria/icon-reporte-general.png" />
+        </div>
+        <div class="box" onclick="window.location.href='../ResultadoAuditoria/ReporteProyectosRiesgoAlto'">
+            <h3>Proyectos Riesgo Alto</h3>
+            <p>Presenta el reporte de proyectos de riesgo alto según la fecha de corte y el plan anual</p>
+            <img src="~/img/resultado-auditoria/icon-reporte-clave.png" />
+        </div>
+        <div class="box" onclick="window.location.href='../ResultadoAuditoria/ReporteObsRiesgoAlto'">
+            <h3>Observaciones Riesgo Alto</h3>
+            <p>Presenta el reporte de observaciones de riesgo alto según la fecha de corte y el plan anual</p>
+            <img src="~/img/resultado-auditoria/icon-reporte-clave.png" />
+        </div>
+    </div>
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

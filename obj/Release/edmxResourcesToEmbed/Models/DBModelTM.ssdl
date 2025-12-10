@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TeamMateR12Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="TM_User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TMGUID" Type="char" MaxLength="32" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Initials" Type="nvarchar" MaxLength="8" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="32" />
+    <Property Name="Fax" Type="nvarchar" MaxLength="32" />
+    <Property Name="Email" Type="nvarchar" MaxLength="255" />
+    <Property Name="StaffNumber" Type="nvarchar" MaxLength="32" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="32" />
+    <Property Name="Title" Type="nvarchar" MaxLength="255" />
+    <Property Name="OldRID" Type="int" />
+    <Property Name="ActiveStatusLID" Type="int" Nullable="false" />
+    <Property Name="SecurityToken" Type="nvarchar" MaxLength="100" />
+    <Property Name="LMG" Type="char" MaxLength="32" Nullable="false" />
+    <Property Name="LMD" Type="datetime" Nullable="false" />
+    <Property Name="LMU" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="StatusMessage" Type="nvarchar" MaxLength="255" />
+    <Property Name="IsSystem" Type="tinyint" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="TeamMateR12ModelStoreContainer">
+    <EntitySet Name="TM_User" EntityType="Self.TM_User" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,89 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+
+@{
+    var cont = 0;
+}
+
+<div class="container " style="font-size: 0.9rem;">
+
+    <div class="row align-items-center justify-content-center pb-3 font-weight-bold text-center">
+        <div class="col-6">
+            <span>Criterio</span>
+        </div>
+        <div class="col-3">
+            <span>Peso</span>
+        </div>
+        <div class="col-3">
+            <span>Puntaje</span>
+        </div>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        if (ViewBag.FlagNuevo == 1)
+        {
+            foreach (var item in Model.DPA_Criterio_Scoring)
+            {
+                <div class="row align-items-center justify-content-center pb-3">
+                    <div class="col-6">
+                        @item.Criterio
+                    </div>
+                    <div class="col-3 text-center">
+                        @item.Peso
+                    </div>
+                    <div class="col-3">
+                        <input type="number" name="listaScoring[@cont].ID_Evaluacion_Plan" value="@ViewBag.IdEvaluacionPlan" hidden/>
+                        <input type="number" name="listaScoring[@cont].ID_Criterio_Scoring" value="@item.ID_Criterio_Scoring" hidden/>
+                        <input type="number" name="listaScoring[@cont].Scoring" class="form-control form-control-sm text-center" min="1" max="5" maxlength="1" onkeypress="return event.charCode >= 49 && event.charCode <= 53"
+                               oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required />
+                    </div>
+                </div>
+                cont += 1;
+            }
+        }
+        else
+        {
+            foreach (var item in Model.DPA_Scoring_Evaluacion)
+            {
+                <div class="row align-items-center justify-content-center pb-3">
+                    <div class="col-6">
+                        @item.DPA_Criterio_Scoring.Criterio
+                    </div>
+                    <div class="col-3 text-center">
+                        @item.DPA_Criterio_Scoring.Peso
+                    </div>
+                    <div class="col-3">
+                        <input type="number" name="listaScoring[@cont].ID_Scoring_Evaluacion" value="@item.ID_Scoring_Evaluacion" hidden/>
+                        <input type="number" name="listaScoring[@cont].ID_Evaluacion_Plan" value="@ViewBag.IdEvaluacionPlan" hidden/>
+                        <input type="number" name="listaScoring[@cont].ID_Criterio_Scoring" value="@item.ID_Criterio_Scoring" hidden/>
+                        <input type="number" name="listaScoring[@cont].Scoring" class="form-control form-control-sm text-center" min="1" max="5" maxlength="1" onkeypress="return event.charCode >= 49 && event.charCode <= 53" value="@item.Scoring"
+                               oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required />
+                    </div>
+                </div>
+                cont += 1;
+            }
+        }
+
+        <input type="number" name="flagNuevo" value="@ViewBag.FlagNuevo" hidden />
+        <input type="number" name="idEvaluacionPlan" value="@ViewBag.IdEvaluacionPlan" hidden />
+
+        <div class="form-group text-center pt-3">
+            <button type="submit" class="btn btn-filter btn-info btn-group-toggle" @(ViewBag.FlagEdicionPlan == 0 ? "disabled" : "")>
+                <i class="fas fa-save"></i> Guardar
+            </button>
+        </div>
+    }
+</div>
+
+
+
+
+
+
+
+
+
+

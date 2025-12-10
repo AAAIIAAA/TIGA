@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MultiserviciosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="MultiserviciosEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="SP_GRAF_TABLA_HORAS2" ReturnType="Collection(MultiserviciosModel.SP_GRAF_TABLA_HORAS2_Result)">
+      <Parameter Name="FECHA_INICIO" Mode="In" Type="DateTime" />
+      <Parameter Name="FECHA_FIN" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="SP_GRAF_MEDIDA_DE_TIEMPO2" ReturnType="Collection(MultiserviciosModel.SP_GRAF_MEDIDA_DE_TIEMPO2_Result)">
+      <Parameter Name="FECHA_INICIO" Mode="In" Type="DateTime" />
+      <Parameter Name="FECHA_FIN" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="SP_GRAF_HORAS_TOTAL" ReturnType="Collection(MultiserviciosModel.SP_GRAF_HORAS_TOTAL_Result)">
+      <Parameter Name="FECHA_INICIO" Mode="In" Type="DateTime" />
+      <Parameter Name="FECHA_FIN" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="SP_TBL_DETALLE_GENERAL_TEC" ReturnType="Collection(MultiserviciosModel.SP_TBL_DETALLE_GENERAL_TEC_Result)">
+      <Parameter Name="FECHA_INICIO" Mode="In" Type="DateTime" />
+      <Parameter Name="FECHA_FIN" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="SP_TT_DISTR_DIAS_AUDITOR_POR_FASE" ReturnType="Collection(MultiserviciosModel.SP_TT_DISTR_DIAS_AUDITOR_POR_FASE_Result)">
+      <Parameter Name="YEAR" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_TT_DISTR_DIAS_AUDITOR_POR_CONTROL_EQUIPO" ReturnType="Collection(MultiserviciosModel.SP_TT_DISTR_DIAS_AUDITOR_POR_CONTROL_EQUIPO_Result)">
+      <Parameter Name="YEAR" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_TT_DETALLE_PROYECTO_ACTIVIDAD" ReturnType="Collection(MultiserviciosModel.SP_TT_DETALLE_PROYECTO_ACTIVIDAD_Result)">
+      <Parameter Name="FECHA" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_TT_DETALLE_ETAPAS_FASES_ACTIVIDADES" ReturnType="Collection(MultiserviciosModel.SP_TT_DETALLE_ETAPAS_FASES_ACTIVIDADES_Result)">
+      <Parameter Name="FECHA" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_TT_EQUIPO_ETAPAS" ReturnType="Collection(MultiserviciosModel.SP_TT_EQUIPO_ETAPAS_Result)">
+      <Parameter Name="FECHA" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_TT_DETALLE_FILTRAR_PROYECTO" ReturnType="Collection(MultiserviciosModel.SP_TT_DETALLE_FILTRAR_PROYECTO_Result)">
+      <Parameter Name="YEAR" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_TT_DIAS_CONTROL" ReturnType="Collection(MultiserviciosModel.SP_TT_DIAS_CONTROL_Result)">
+      <Parameter Name="YEAR" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_TT_ERROR_FASES_DISTRIBUCION" ReturnType="Collection(MultiserviciosModel.SP_TT_ERROR_FASES_DISTRIBUCION_Result)">
+      <Parameter Name="INICIO" Mode="In" Type="DateTime" />
+      <Parameter Name="FIN" Mode="In" Type="DateTime" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="SP_GRAF_TABLA_HORAS2_Result">
+    <Property Type="String" Name="Equipo" Nullable="false" MaxLength="200" />
+    <Property Type="Int32" Name="Horas_Planificadas" Nullable="true" />
+    <Property Type="Double" Name="Horas_Registradas" Nullable="true" />
+    <Property Type="Decimal" Name="Cumplimiento" Nullable="true" Precision="10" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="SP_GRAF_MEDIDA_DE_TIEMPO2_Result">
+    <Property Type="Int32" Name="Porcentaje" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SP_GRAF_HORAS_TOTAL_Result">
+    <Property Type="Int32" Name="Porcentaje" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SP_TBL_DETALLE_GENERAL_TEC_Result">
+    <Property Type="String" Name="Equipo" Nullable="false" MaxLength="200" />
+    <Property Type="String" Name="Nombre_Ape" Nullable="false" MaxLength="50" />
+    <Property Type="Double" Name="Horas_Aprobadas" Nullable="true" />
+    <Property Type="Int32" Name="Semanas_Aprobadas" Nullable="true" />
+    <Property Type="Int32" Name="Hojas_Aprobadas" Nullable="true" />
+    <Property Type="Int32" Name="Hojas_Pendientes" Nullable="true" />
+    <Property Type="Int32" Name="Hojas_Rechazadas" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SP_TT_DISTR_DIAS_AUDITOR_POR_FASE_Result">
+    <Property Type="String" Name="Equipo" Nullable="true" MaxLength="200" />
+    <Property Type="Decimal" Name="Otros" Nullable="true" Precision="38" Scale="6" />
+    <Property Type="Decimal" Name="PLANIFICACIÓN" Nullable="true" Precision="38" Scale="6" />
+    <Property Type="Decimal" Name="EJECUCIÓN" Nullable="true" Precision="38" Scale="6" />
+    <Property Type="Decimal" Name="INFORME" Nullable="true" Precision="38" Scale="6" />
+    <Property Type="Decimal" Name="PLAN_ANUAL" Nullable="true" Precision="38" Scale="6" />
+    <Property Type="Decimal" Name="PAMC" Nullable="true" Precision="38" Scale="6" />
+  </ComplexType>
+  <ComplexType Name="SP_TT_DISTR_DIAS_AUDITOR_POR_CONTROL_EQUIPO_Result">
+    <Property Type="String" Name="Equipo" Nullable="true" MaxLength="200" />
+    <Property Type="Decimal" Name="Dias_Auditor" Nullable="true" Precision="38" Scale="0" />
+  </ComplexType>
+  <ComplexType Name="SP_TT_DETALLE_PROYECTO_ACTIVIDAD_Result">
+    <Property Type="String" Name="Code" Nullable="true" MaxLength="60" />
+    <Property Type="String" Name="Title" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="Fase" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="Actividades" Nullable="true" MaxLength="255" />
+    <Property Type="Double" Name="Horas" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SP_TT_DETALLE_ETAPAS_FASES_ACTIVIDADES_Result">
+    <Property Type="String" Name="Fase" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="Actividades" Nullable="false" MaxLength="255" />
+    <Property Type="Double" Name="Total_Horas" Nullable="true" />
+    <Property Type="Decimal" Name="Días_Auditor" Nullable="true" Precision="18" Scale="0" />
+  </ComplexType>
+  <ComplexType Name="SP_TT_EQUIPO_ETAPAS_Result">
+    <Property Type="String" Name="Equipo" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Fase" Nullable="true" MaxLength="255" />
+    <Property Type="Double" Name="Total_Horas" Nullable="true" />
+    <Property Type="Decimal" Name="Días_Auditor" Nullable="true" Precision="18" Scale="0" />
+  </ComplexType>
+  <ComplexType Name="SP_TT_DETALLE_FILTRAR_PROYECTO_Result">
+    <Property Type="String" Name="Equipo" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Código" Nullable="true" MaxLength="60" />
+    <Property Type="String" Name="Evaluación" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="Estado_Proyecto" Nullable="true" MaxLength="18" />
+    <Property Type="Double" Name="Horas_Planificación" Nullable="true" />
+    <Property Type="Decimal" Name="Porcentaje_HP" Nullable="true" Precision="10" Scale="2" />
+    <Property Type="Double" Name="Horas_Ejecución" Nullable="true" />
+    <Property Type="Decimal" Name="Porcentaje_HE" Nullable="true" Precision="10" Scale="2" />
+    <Property Type="Double" Name="Horas_Informe" Nullable="true" />
+    <Property Type="Decimal" Name="Porcentaje_HI" Nullable="true" Precision="10" Scale="2" />
+    <Property Type="Double" Name="Horas_Otros" Nullable="true" />
+    <Property Type="Decimal" Name="Porcentaje_HO" Nullable="true" Precision="10" Scale="2" />
+    <Property Type="Int32" Name="Total_Controles" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="SP_TT_DIAS_CONTROL_Result">
+    <Property Type="String" Name="Equipo" Nullable="true" MaxLength="200" />
+    <Property Type="Double" Name="TOT_HORAS" Nullable="true" />
+    <Property Type="Decimal" Name="DIAS_AUDITOR" Nullable="true" Precision="10" Scale="2" />
+    <Property Type="Decimal" Name="TOT_CONTROLES" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="DIAS_X_CONTROL" Nullable="true" Precision="10" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="SP_TT_ERROR_FASES_DISTRIBUCION_Result">
+    <Property Type="String" Name="Usuario" Nullable="true" MaxLength="101" />
+    <Property Type="DateTime" Name="Fecha_Inicio" Nullable="true" />
+    <Property Type="DateTime" Name="Fecha_Fin" Nullable="true" />
+    <Property Type="String" Name="Fase" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="Actividad" Nullable="false" MaxLength="255" />
+    <Property Type="Double" Name="Total_de_Horas" Nullable="true" />
+    <Property Type="String" Name="Estado" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="Hoja_Estado" Nullable="true" MaxLength="9" />
+  </ComplexType>
+</Schema>

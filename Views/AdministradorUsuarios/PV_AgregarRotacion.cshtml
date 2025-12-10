@@ -1,0 +1,154 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+
+@{ 
+    var listaFunciones = new List<string> { "01-Auditor", "02-Jefe de Auditoría", "03-Gerente Adjunto", "04-Gerente", "05-Practicante" };
+    var listaEquipos = new List<string> { "Calidad", "Procesos de Seguros", "Procesos de Prestación", "Procesos de Pensiones", "Procesos de TI" };
+    var listaSubgerencias = new List<string> { "Daniela Del Pilar Rodriguez Diaz", "Romulo Fernando Lomparte Alvarado", "Jorge Portocarrero Colunge", "Miguel Vetter", "Yanina Mercedes Delfin Lazo" };
+    var listaPlanillas = new List<string> { "PS", "EPS", "EPV", "PRI" };
+    var listaCargos = new List<string> { "Analista", "Auditor", "Gerente", "Gerente Adjunto", "Jefe de Auditoría", "Practicante" };
+}
+
+<html lang="en">
+<head>
+   
+
+</head>
+<body>
+    <div class="card shadow mb-2">
+        <div class="container pt-4">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <input type="text" class="form-control" id="inputUsuario" name="idPersona" value="@ViewBag.idPersona" hidden>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputFechaIngreso">Fecha de Ingreso *</label>
+                        <div class="input-group date" id="fecha-ingreso">
+                            <input class="form-control" id="FechaIngreso" name="FechaIngreso" placeholder="dd/mm/yyyy" type="text" autocomplete="off" required />
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-white">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputFechaSalida">Fecha de Salida</label>
+                        <div class="input-group date" id="fecha-salida">
+                            <input class="form-control" id="FechaSalida" name="FechaSalida" placeholder="dd/mm/yyyy" type="text" />
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-white">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputFuncion">Función *</label>
+                        <select class="form-control" id="inputFuncion" name="Función" required>
+                            <option selected disabled value="">-- Seleccione --</option>
+                            @foreach (var Item in listaFunciones)
+                            {
+                                <option>@Item</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputCargo">Cargo *</label>
+                        <select class="form-control" id="inputCargo" name="Cargo" required>
+                            <option selected disabled value="">-- Seleccione --</option>
+                            @foreach (var Item in listaCargos)
+                            {
+                                <option>@Item</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="inputPlanilla">Planilla</label>
+                        <select class="form-control" id="inputPlanilla" name="Planilla" required>
+                            <option selected disabled value="">-- Seleccione --</option>
+                            @foreach (var Item in listaPlanillas)
+                            {
+                                <option>@Item</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputMatricula">Matrícula *</label>
+                        <input type="text" class="form-control" id="inputMatricula" name="Matrícula" placeholder="EPPS\S49013" autocomplete="off" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputEquipo">Equipo *</label>
+                        <select class="form-control" id="inputEquipo" name="Equipo" required>
+                            <option selected disabled value="">-- Seleccione --</option>
+                            @foreach (var Item in listaEquipos)
+                            {
+                                <option>@Item</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group col-md-6">
+                        <label for="inputSubgerencia">SubGerencia *</label>
+                        <select class="form-control" id="inputSubgerencia" name="SubGerencia" required>
+                            <option selected disabled value="">-- Seleccione --</option>
+                            @foreach (var Item in listaSubgerencias)
+                            {
+                                <option>@Item</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputJefeDirecto">Jefe Directo</label>
+                        <select class="form-control" id="inputJefeDirecto" name="IdJefeDirecto" required>
+                            <option selected disabled value="">-- Seleccione --</option>
+                            <option value="112">Daniela Del Pilar Rodriguez Diaz</option>
+                            <option value="88">Jorge Noriega</option>
+                            <option value="2">Jorge Portocarrero Colunge</option>
+                            <option value="20">Miguel Vetter</option>
+                            <option value="131">Yanina Mercedes Delfin Lazo</option>
+                            <option value="1">Guillermo Zegarra Cerna</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group text-center pt-3">
+                    <button type="submit" class="btn btn-info btn-group-toggle" style="background-color :lightseagreen">
+                        <i class="fas fa-save"></i> Agregar Rotación
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+<script>
+
+    $(function () {
+        $('#fecha-ingreso').datepicker({
+            format: 'dd/mm/yyyy'
+        });
+        $('#fecha-salida').datepicker({
+            format: 'dd/mm/yyyy'
+        });
+    });
+
+</script>
+
+
+

@@ -1,0 +1,60 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+
+<div class="container pt-3">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <input type="text" class="form-control" name="ID_Unidad_Responsable" value="@ViewBag.UnidadSeleccionada.ID" hidden>
+
+        <div class="form-group mb-2 row justify-content-md-center">
+            <label for="exampleFormControlInput1" class="col-md-2 col-form-label">Unidad: </label>
+            <input type="text" class="form-control col-md-7" value="@ViewBag.UnidadSeleccionada.Nombre" readonly>
+        </div>
+        <div class="form-group mb-2 row justify-content-md-center">
+            <label for="exampleFormControlInput1" class="col-md-2 col-form-label">Rol: </label>
+            <select class="form-control col-md-7" name="ID_Rol" onchange="cambiarAgregarRol(@ViewBag.UnidadSeleccionada.ID, this.value)" required>
+                @if (ViewBag.RolSeleccionado == null)
+                {
+                    <option selected disabled value="">-- Seleccione --</option>
+                }
+                @foreach (var Item in Model.TG_Rol)
+                {
+                    if (Item.ID != 4) 
+                    {
+                        if (Item.ID == ViewBag.RolSeleccionado)
+                        {
+                            <option selected value="@Item.ID">@Item.Nombre</option>
+                        }
+                        else
+                        {
+                            <option value="@Item.ID">@Item.Nombre</option>
+                        }
+                    }
+                }
+            </select>
+
+        </div>
+        <div class="form-group mb-2 row justify-content-md-center">
+            <label for="exampleFormControlInput1" class="col-md-2 col-form-label">Contacto: </label>
+            <select class="form-control col-md-7" name="ID_Contacto" required>
+                <option selected disabled value="">-- Seleccione --</option>
+                @foreach (var Item in Model.TG_AU_Drop_Contactos)
+                {
+                    <option value="@Item.ID">@Item.Nombre</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group text-center pt-3">
+            <button type="submit" class="btn btn-info btn-group-toggle" style="background-color :lightseagreen">
+                <i class="fas fa-save"></i> Guardar Cambios
+            </button>
+        </div>
+    }
+    </div>
+
+
+
+
+

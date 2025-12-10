@@ -1,0 +1,19 @@
+﻿@model WebTIGA.Models.ContenedorModelos
+
+<div class="editorRow">
+    
+    <select class="form-control form-control-sm" name="ID_Evaluacion_Plan" required>
+        <option value="" selected disabled> -- Seleccione la evaluación -- </option>
+        @foreach (var evaluacionPlan in Model.DPA_Evaluacion_Plan)
+        {
+            <option value="@evaluacionPlan.ID_Evaluacion_Plan" data-toggle="tooltip" data-placement="bottom" title="@evaluacionPlan.DPA_Evaluacion.Evaluacion">
+                @(evaluacionPlan.DPA_Evaluacion.Evaluacion.Length >= 80 ? evaluacionPlan.DPA_Evaluacion.Evaluacion.Substring(0, 80) + "..." : evaluacionPlan.DPA_Evaluacion.Evaluacion )
+            </option>
+        }
+    </select>
+
+    <a href="#" class="deleteRow">delete</a>
+</div>
+
+
+

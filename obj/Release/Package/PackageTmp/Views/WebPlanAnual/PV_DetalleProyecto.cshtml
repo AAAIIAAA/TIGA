@@ -1,0 +1,1512 @@
+﻿﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+
+
+@foreach (var item in Model.SP_DD_Proyecto_Obtener_detalle_v5)
+{
+
+    <div style="font-size: 0.8rem !important">
+
+
+
+        <div class="form-row">
+
+
+            <h4>@item.Evaluacion</h4>
+
+
+
+
+
+        </div>
+
+        <hr class="mt-0 font-weight-bold" />
+
+
+
+        <nav>
+            <div class="nav nav-tabs" role="tablist">
+                <button class="nav-link active" data-toggle="tab" href="#tab-general-editar">Información General</button>
+                <button class="nav-link" data-toggle="tab" href="#tab-actividades-editar">Actividades</button>
+                <button class="nav-link" data-toggle="tab" href="#tab-equipo-editar">Equipo</button>
+                <button class="nav-link" data-toggle="tab" href="#tab-tiempo-editar">Tiempo</button>
+                <button class="nav-link" data-toggle="tab" href="#tab-controles-editar">Riesgos y Controles</button>
+                   
+            </div>
+        </nav>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="tab-general-editar" role="tabpanel">
+                    <div class="container-fluid py-3">
+
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label>Evaluación</label>
+                                <input type="text" class="form-control form-control-sm" name="evaluacion" value="@item.Evaluacion" disabled>
+                            </div>
+
+                        </div>
+                        <div class="form-row">
+
+                            <div class="form-group col-md-2">
+                                <label>IdProyecto</label>
+                                <input type="text" class="form-control form-control-sm tuclase_idproyecto" name="idproyecto" value="@item.IdProyecto" disabled>
+                            </div>
+
+                            <div class="form-group col-md-1">
+                                <label>IdPlanAnual</label>
+
+                                <input type="text" class="form-control form-control-sm tuclase_idplan" name="id_plan" value="@item.IdPlanAnual" disabled>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>Código</label>
+                                <input type="text" class="form-control form-control-sm" name="codigo" value="@item.Codigo" disabled>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>Estado</label>
+                                <input type="text" class="form-control form-control-sm" name="estado" value="@item.Estado" disabled>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>Compañía</label>
+                                <select class="form-control form-control-sm tuclase_compania" name="compañia">
+                                    <option value="" @(item.Compania == null ? "selected" : "")>--select--</option>
+                                    @foreach (var compañia in ViewBag.Compañias)
+                                    {
+
+                                        <option value="@compañia" @(compañia.ToString() == item.Compania ? "selected" : "")>@compañia</option>
+
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>Plan Compañía</label>
+                                @*<select class="form-control form-control-sm" name="plan_compañia">
+                                        <option value="" @(item.PlanNombre.ToString() == null ? "selected" : "")>--select--</option>
+                                        <option value="1" @(item.PlanNombre.ToString() == "PRO" ? "selected" : "")>PRO</option>
+                                        <option value="0" @(item.PlanNombre.ToString() == "NPRO" ? "selected" : "")>NPRO</option>
+
+                                    </select>*@
+                                <input type="text" class="form-control form-control-sm" name="plan_compañia" value="@item.PlanNombre" disabled>
+                            </div>
+
+
+
+
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <label>Macroprocesos</label>
+                                <input type="text" class="form-control form-control-sm" name="macroprocesos" value="@item.Macroproceso" disabled>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>Tipo</label>
+                                <input type="text" class="form-control form-control-sm" name="tipo" value="@item.Tipo" disabled>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>Proceso Evaluado</label>
+                                <select class="form-control form-control-sm tuclase_proceso_evaluado" name="proceso_evaluado">
+                                    <option value="--select--" @(item.ProcesoEvaluado == null ? "selected" : "")>--select--</option>
+                                    @foreach (var proceso_evaluado in Model.TG_Proceso_Evaluado)
+                                    {
+
+                                        <option value="@proceso_evaluado.IdProcesoEvaluado" @(proceso_evaluado.Nombre.ToString() == item.ProcesoEvaluado ? "selected" : "")>@proceso_evaluado.Nombre</option>
+
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>Fecha Bloqueo</label>
+
+                                @{
+                                    var fechabloqueo = Convert.ToDateTime(item.FechaBloqueo);
+                                    var fechabloqueoFormateada = (item.FechaBloqueo != DateTime.MinValue && fechabloqueo != new DateTime(1900, 1, 1))
+                                        ? fechabloqueo.ToString("yyyy-MM-dd")
+                                        : string.Empty;
+                                }
+                                <input type="date" class="form-control form-control-sm tuclase_fecha_bloqueo" name="fecha_bloqueo" value="@fechabloqueoFormateada">
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>Cantidad Pruebas Analíticas</label>
+
+                                <div class="row">
+                                    <div class="col-md-6 d-flex align-items-center justify-content-center">
+                                        <label for="cantidad_pruebas_plan" class="mr-2">Plan</label>
+                                        <input type="text" class="form-control form-control-sm" name="cantidad_pruebas_plan" id="cantidad_pruebas_plan" value="@item.CantPruebasAnaliticas_Plan" disabled>
+                                    </div>
+
+
+                                    <div class="col-md-6 d-flex align-items-center justify-content-center">
+                                        <label for="cantidad_pruebas_real" class="mr-2">Real</label>
+                                        <input type="text" class="form-control form-control-sm tuclase_cantidad_pruebas_real" name="cantidad_pruebas_real" id="cantidad_pruebas_real" value="@item.CantPruebasAnaliticas_Real">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-1 d-flex align-items-center justify-content-center">
+                                <div class="form-check">
+                                    <label class="form-check-label mb-0">
+                                        PAC
+                                    </label>
+                                    <input type="checkbox" class="form-check-input ml-2 tuclase_pac" name="pac" @(item.PAC == 1 ? "checked" : "")>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3 d-flex align-items-center justify-content-center">
+                                <div class="form-check">
+                                    <label class="form-check-label mb-0">
+                                        Mapa de Aseguramiento
+                                    </label>
+                                    <input type="checkbox" class="form-check-input ml-2 tuclase_mapa_aseg" name="mapa_aseg" @(item.MapaAseguramiento == 1 ? "checked" : "")>
+                                </div>
+                            </div>
+
+
+
+
+
+                            <div class="form-group col-md-1 d-flex align-items-center justify-content-center">
+                                <div class="form-check">
+                                    <label class="form-check-label mb-0">
+                                        Anexo 30
+                                    </label>
+                                    <input type="checkbox" class="form-check-input ml-2 tuclase_anexo30" name="anexo_30" @(item.Anexo30 == 1 ? "checked" : "")>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
+
+                            
+
+                            <div class="form-row">
+
+                                <div class="form-group col-md-2">
+                                    <label>Fecha Reemplazo</label>
+
+                                    @{
+                                        var fechareemplazo = Convert.ToDateTime(item.FechaReemplazo);
+                                        var fechaevaluacionFormateada = (item.FechaReemplazo != DateTime.MinValue) ? fechareemplazo.ToString("dd/MM/yyyy") : string.Empty;
+                                    }
+                                    <input type="date" class="form-control form-control-sm tuclase_fecha_reemplazo" name="fecha_ultima_implementación" value="@fechaevaluacionFormateada">
+
+
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label>Proyecto Reemplazo</label>
+                                    <select class="form-control form-control-sm tuclase_proyecto_reemplazo" name="proyecto_reemplazo">
+                                        <option value="" @(item.IdProyectoReemplazo.ToString() == null ? "selected" : "")>--select--</option>
+
+                                        @foreach (var proyecto in Model.TG_Proyecto)
+                                        {
+
+                                            <option value="@proyecto.IdProyecto" @(proyecto.IdProyecto == item.IdProyectoReemplazo ? "selected" : "")>@proyecto.Codigo</option>
+
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label>Fecha de envío</label>
+
+                                    @{
+                                        var fechaEnvio = Convert.ToDateTime(item.FechaEnvio);
+                                        var fechaEnvioFormateada = (item.FechaEnvio != null && item.FechaEnvio != DateTime.MinValue && fechaEnvio != new DateTime(1900, 1, 1))
+                                            ? fechaEnvio.ToString("yyyy-MM-dd")
+                                            : string.Empty;
+                                    }
+                                    <input type="date" class="form-control form-control-sm tuclase_fecha_envio" name="fecha_envio" value="@fechaEnvioFormateada">
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label>Enviado Por</label>
+                                    <select class="form-control form-control-sm tuclase_enviador_por" id="enviado_por" name="enviado_por">
+                                        <option value="" @(string.IsNullOrEmpty(item.Enviadopor) || item.Enviadopor.Length < 3 ? "selected" : "")>--select--</option>
+                                        @foreach (var envio in ViewBag.enviadopor)
+                                        {
+                                            <option value="@envio.NombreSharepoint" @(envio.NombreSharepoint.ToString() == item.Enviadopor.ToString() ? "selected" : "")>@envio.NombreSharepoint</option>
+                                        }
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group col-md-2">
+                                    <label>Presentado CAI</label>
+                                    <select class="form-control form-control-sm tuclase_cai" name="presentado_cai">
+                                        <option value="" @(item.CAI == null ? "selected" : "")>--select--</option>
+                                        @for (DateTime date = new DateTime(2015, 1, 1); date <= DateTime.Now.AddYears(1).AddMonths(-1); date = date.AddMonths(1))
+                                        {
+
+                                            var formattedDate = date.ToString("MMM-yyyy");
+                                            var formattedItemCAI = formattedDate?.Replace(".", "");
+                                            <option value="@formattedItemCAI" @(formattedItemCAI == item.CAI ? "selected" : "")>@formattedItemCAI</option>
+                                        }
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group col-md-2">
+                                    <label>Presentado Cuatrimestral</label>
+                                    <select class="form-control form-control-sm tuclase_cuatrimestral" name="presentado_cuatrimestral">
+                                        <option value="" @(item.Cuatrimestral == null ? "selected" : "")>--select--</option>
+                                        @for (DateTime date = new DateTime(2015, 1, 1); date <= DateTime.Now.AddYears(1).AddMonths(-1); date = date.AddMonths(1))
+                                        {
+
+                                            var formattedDate = date.ToString("MMM-yyyy");
+                                            var formattedItemCAI = formattedDate?.Replace(".", "");
+                                            <option value="@formattedItemCAI" @(formattedItemCAI == item.Cuatrimestral ? "selected" : "")>@formattedItemCAI</option>
+                                        }
+                                    </select>
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="form-row">
+
+                                <div class="form-group col-md-2">
+                                    <label>Cantidad Sprints</label>
+                                    <input type="text" class="form-control form-control-sm tuclase_cantidad_sprint" id="cantidad_sprints" name="cantidad_spints" value="@item.CantidadSprint">
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label>Calificativo</label>
+                                    <input type="text" class="form-control form-control-sm" id="calificativo" name="calificativo" value="@item.Calificativo" disabled>
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label>% Calificativo</label>
+                                    <input type="text" class="form-control form-control-sm" id="por_calificativo" name="por_calificativo" value="@item.CalificativoPorcen" disabled>
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label>IFC Inherente</label>
+                                    <input type="text" class="form-control form-control-sm" id="ifc_inherente" name="ifc_inherente" value="@item.IFCInherente" disabled>
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label>IFC Residual</label>
+                                    <input type="text" class="form-control form-control-sm" id="ifc_residual" name="ifc_residual" value="@item.IFCResidual" disabled>
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label>Covertura del IFC Residual</label>
+                                    <input type="text" class="form-control form-control-sm" id="covertura_ifc_residual" name="covertura_ifc_residual" value="@item.CoberturaIFCResidu" disabled>
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-2">
+                                    <label>Riesgo del Trabajo</label>
+                                    <select class="form-control form-control-sm tuclase_riesgo_trabajo" name="riesgo_del_trabajo">
+                                        <option value="" @(item.RiesgoDelTrabajo == null ? "selected" : "")>--select--</option>
+                                        @foreach (var riesgo_trabajo in Model.TG_Riesgo_Del_Trabajo)
+                                        {
+
+                                            <option value="@riesgo_trabajo.IdRiesgoDelTrabajo" @(riesgo_trabajo.Nombre.ToString() == item.RiesgoDelTrabajo ? "selected" : "--select--")>@riesgo_trabajo.Nombre</option>
+
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label>Riesgo Inherente</label>
+                                    <select class="form-control form-control-sm tuclase_riesgo_inherente" name="riesgo_inherente">
+                                        <option value="" @(item.RiesgoInherente == null ? "selected" : "")>--select--</option>
+                                        @foreach (var riesgo_inherente in Model.TG_RiesgoInherente)
+                                        {
+
+                                            <option value="@riesgo_inherente.IdRiesgoInherente" @(riesgo_inherente.Nombre.ToString() == item.RiesgoInherente ? "selected" : "")>@riesgo_inherente.Nombre</option>
+
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label>Riesgo BCP</label>
+                                    <select class="form-control form-control-sm tuclase_riesgobcp" name="riesgo_bcp">
+                                        <option value="" @(item.RiesgoBCP == null ? "selected" : "")>--select--</option>
+                                        @foreach (var riesgo_bcp in Model.TG_RiesgoBCP)
+                                        {
+
+                                            <option value="@riesgo_bcp.IDTipo" @(riesgo_bcp.Nombre.ToString() == item.RiesgoBCP ? "selected" : "")>@riesgo_bcp.Nombre</option>
+
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label>Administración del Riesgo</label>
+                                    <select class="form-control form-control-sm tuclase_admin_riesgo" name="administracion_riesgo">
+                                        <option value="" @(item.IdAdministracionDelRiesgo.ToString() == null ? "selected" : "")>--select--</option>
+                                        @foreach (var admin_riesgo in Model.TG_AdministraciónDelRiesgo)
+                                        {
+
+                                            <option value="@admin_riesgo.IdAdministraciónDelRiesgo" @(admin_riesgo.IdAdministraciónDelRiesgo == item.IdAdministracionDelRiesgo ? "selected" : "")>@admin_riesgo.Nombre</option>
+
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label>Nivel General del Riesgo</label>
+                                    <input type="text" class="form-control form-control-sm" id="nivel_general_del_riesgo" name="nivel_general_del_riesgo" value="@item.Riesgo" disabled>
+                                </div>
+
+
+                            </div>
+
+
+
+                            <div class="form-row">
+
+
+                                @*<div class="form-group col-md-12">
+                <label>Informe(s)</label>
+                <input type="text" class="form-control form-control-sm" id="informe" name="informe" value="" disabled>
+            </div>*@
+
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-11">
+                                    <label>Observaciones</label>
+                                    <input type="text" class="form-control form-control-sm tuclase_observaciones" id="observaciones" name="observaciones" value="@item.Observaciones">
+                                </div>
+
+                                <button class="btn-icon pr-3" title="Ver detalles" onclick="mostrarDetalleObservacion(event)">
+                                    <i class="fas fa-eye fa-lg text-black"></i>
+                                </button>
+                            </div>
+
+
+
+                        </div>
+
+                </div>
+
+
+
+                <div class="tab-pane fade" id="tab-actividades-editar" role="tabpanel">
+                    <div class="container-fluid py-3">
+
+                        <p class="m-0 font-weight-bold text-dark font-italic pt-2">Actividades del Equipo SCRUM/PO</p>
+                        <hr class="mt-0 font-weight-bold" />
+
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered table-hover display" id="actividades_scrum_po">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="text-center align-middle"> Revisar </th>
+                                        <th class="text-center align-middle"> Actividad </th>
+
+                                        <th class="text-center align-middle"> Plazo </th>
+
+                                        <th class="text-center align-middle"> Último Día </th>
+                                        <th class="text-center align-middle"> Ejecución Real </th>
+
+                                        <th class="text-center align-middle"> Estado </th>
+                                        <th class="text-center align-middle"> Fecha Revisado </th>
+                                        <th class="text-center align-middle"> Revisor </th>
+                                        <th class="text-center align-middle"> Justificación </th>
+                                        <th class="text-center align-middle"> Fecha Primera Modificación </th>
+
+
+
+
+                                    </tr>
+                                </thead>
+
+
+                                <tbody>
+
+                                    @foreach (var item2 in ViewBag.actividades_equipo)
+                                    {
+
+
+                                    <tr>
+                                        <td class="text-center">
+                                            <div class="btn-group">
+                                                <button class="btn-icon pr-3" title="Editar" onclick="llamarEditarActividad(@item2.IdProyectoActividadInforme,@item.IdProyecto,event);"
+                                                        data-toggle="modal" data-target="#modal-editar-actividad">
+                                                    <i class="fas fa-edit text-warning"></i>
+                                                </button>
+
+
+
+                                            </div>
+                                        </td>
+
+                                        <td class="text-nowrap text-center"> <span>@item2.Actividad</span> </td>
+                                        <td class="text-nowrap text-center"> <span>@item2.Plazo</span> </td>
+                                        <td class="text-nowrap text-center">
+                                            <span>
+                                                @if (item2.UltimoDia != null)
+                                                {
+                                                    @item2.UltimoDia.ToString("dd/MM/yyyy")
+                                                }
+                                            </span>
+                                        </td>
+                                        <td class="text-nowrap text-center">
+                                            <span>
+                                                @if (item2.EjecucionReal != null)
+                                                {
+                                                    @item2.EjecucionReal.ToString("dd/MM/yyyy")
+                                                }
+
+                                            </span>
+                                        </td>
+                                        <td class="text-nowrap text-center"> <span>@item2.Estado</span> </td>
+
+
+
+                                        <td class="text-nowrap text-center">
+                                            <span>
+                                                @if (item2.FechaRevisado != null)
+                                                {
+                                                    @item2.FechaRevisado.ToString("dd/MM/yyyy")
+                                                }
+                                            </span>
+                                        </td>
+                                        <td class="text-nowrap text-center"> <span>@item2.Revisor</span> </td>
+                                        <td class="text-nowrap text-center"> <span>@item2.Justificacion</span> </td>
+                                        <td class="text-nowrap text-center">
+                                            <span>
+                                                @if (item2.FechaPrimeraMod != null)
+                                                {
+                                                    @item2.FechaPrimeraMod.ToString("dd/MM/yyyy")
+                                                }
+                                            </span>
+                                        </td>
+
+
+
+
+
+                                    </tr>
+
+
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p class="m-0 font-weight-bold text-dark font-italic pt-2">Actividades SCRUM</p>
+                        <hr class="mt-0 font-weight-bold" />
+
+
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered table-hover display" id="actividades_scrum">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="text-center align-middle"> Revisar </th>
+                                        <th class="text-center align-middle"> Actividad </th>
+
+                                        <th class="text-center align-middle"> Plazo </th>
+
+                                        <th class="text-center align-middle"> Último Día </th>
+                                        <th class="text-center align-middle"> Ejecución Real </th>
+
+                                        <th class="text-center align-middle"> Estado </th>
+                                        <th class="text-center align-middle"> Fecha Revisado </th>
+                                        <th class="text-center align-middle"> Revisor </th>
+                                        <th class="text-center align-middle"> Justificación </th>
+                                        <th class="text-center align-middle"> Fecha Primera Modificación </th>
+
+
+
+
+                                    </tr>
+                                </thead>
+
+
+                                <tbody>
+
+                                    @foreach (var item3 in ViewBag.actividades_scrum)
+                                    {
+
+
+                                    <tr>
+                                        <td class="text-center">
+                                            <div class="btn-group">
+                                                <button class="btn-icon pr-3" title="Editar" onclick="llamarEditarActividad(@item3.IdProyectoActividadInforme,@item.IdProyecto,event);"
+                                                        data-toggle="modal" data-target="#modal-editar-actividad">
+                                                    <i class="fas fa-edit text-warning"></i>
+                                                </button>
+
+
+
+                                            </div>
+                                        </td>
+
+                                        <td class="text-nowrap text-center"> <span>@item3.Actividad</span> </td>
+                                        <td class="text-nowrap text-center"> <span>@item3.Plazo</span> </td>
+                                        <td class="text-nowrap text-center">
+                                            <span>
+                                                @if (item3.UltimoDia != null)
+                                                {
+                                                    @item3.UltimoDia.ToString("dd/MM/yyyy")
+                                                }
+                                            </span>
+                                        </td>
+                                        <td class="text-nowrap text-center">
+                                            <span>
+
+                                                @if (item3.EjecucionReal != null)
+                                                {
+                                                    @item3.EjecucionReal.ToString("dd/MM/yyyy")
+                                                }
+
+
+                                            </span>
+                                        </td>
+                                        <td class="text-nowrap text-center"> <span>@item3.Estado</span> </td>
+
+
+
+                                        <td class="text-nowrap text-center">
+                                            <span>
+                                                @if (item3.FechaRevisado != null)
+                                                {
+                                                    @item3.FechaRevisado.ToString("dd/MM/yyyy")
+                                                }
+                                            </span>
+                                        </td>
+                                        <td class="text-nowrap text-center"> <span>@item3.Revisor</span> </td>
+                                        <td class="text-nowrap text-center"> <span>@item3.Justificacion</span> </td>
+                                        <td class="text-nowrap text-center">
+                                            <span>
+                                                @if (item3.FechaPrimeraMod != null)
+                                                {
+                                                    @item3.FechaPrimeraMod.ToString("dd/MM/yyyy")
+                                                }
+                                            </span>
+                                        </td>
+
+
+
+                                    </tr>
+
+
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        <p class="m-0 font-weight-bold text-dark font-italic pt-2">Actividades del PO o TL</p>
+                        <hr class="mt-0 font-weight-bold" />
+
+
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered table-hover display" id="actividades_po">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="text-center align-middle"> Revisar </th>
+                                        <th class="text-center align-middle"> Actividad </th>
+
+                                        <th class="text-center align-middle"> Plazo </th>
+
+                                        <th class="text-center align-middle"> Último Día </th>
+                                        <th class="text-center align-middle"> Ejecución Real </th>
+
+                                        <th class="text-center align-middle"> Estado </th>
+                                        <th class="text-center align-middle"> Fecha Revisado </th>
+                                        <th class="text-center align-middle"> Revisor </th>
+                                        <th class="text-center align-middle"> Justificación </th>
+                                        <th class="text-center align-middle"> Fecha Primera Modificación </th>
+
+
+
+
+                                    </tr>
+                                </thead>
+
+
+                                <tbody>
+
+                                    @foreach (var item4 in ViewBag.actividades_po)
+                                    {
+
+
+                                    <tr>
+                                        <td class="text-center">
+                                            <div class="btn-group">
+                                                <button class="btn-icon pr-3" title="Editar" onclick="llamarEditarActividad(@item4.IdProyectoActividadInforme,@item.IdProyecto,event);"
+                                                        data-toggle="modal" data-target="#modal-editar-actividad">
+                                                    <i class="fas fa-edit text-warning"></i>
+                                                </button>
+
+
+
+                                            </div>
+                                        </td>
+
+                                        <td class="text-nowrap text-center"> <span>@item4.Actividad</span> </td>
+                                        <td class="text-nowrap text-center"> <span>@item4.Plazo</span> </td>
+                                        <td class="text-nowrap text-center">
+                                            <span>
+                                                @if (item4.UltimoDia != null)
+                                                {
+                                                    @item4.UltimoDia.ToString("dd/MM/yyyy")
+                                                }
+                                            </span>
+                                        </td>
+                                        <td class="text-nowrap text-center">
+                                            <span>
+
+                                                @if (item4.EjecucionReal != null)
+                                                {
+                                                    @item4.EjecucionReal.ToString("dd/MM/yyyy")
+                                                }
+                                            </span>
+                                        </td>
+                                        <td class="text-nowrap text-center"> <span>@item4.Estado</span> </td>
+
+
+
+                                        <td class="text-nowrap text-center">
+                                            <span>
+                                                @if (item4.FechaRevisado != null)
+                                                {
+                                                    @item4.FechaRevisado.ToString("dd/MM/yyyy")
+                                                }
+                                            </span>
+                                        </td>
+                                        <td class="text-nowrap text-center"> <span>@item4.Revisor</span> </td>
+                                        <td class="text-nowrap text-center"> <span>@item4.Justificacion</span> </td>
+                                        <td class="text-nowrap text-center">
+                                            <span>
+                                                @if (item4.FechaPrimeraMod != null)
+                                                {
+                                                    @item4.FechaPrimeraMod.ToString("dd/MM/yyyy")
+                                                }
+                                            </span>
+                                        </td>
+
+
+
+
+                                    </tr>
+
+
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+
+
+                <div class="tab-pane fade" id="tab-equipo-editar" role="tabpanel">
+                    <div class="container-fluid py-3">
+
+                        <p class="m-0 font-weight-bold text-dark font-italic pt-2">Equipo Planificado</p>
+                        <hr class="mt-0 font-weight-bold" />
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-2">
+                                <label>Project Owner</label>
+                                <input type="text" class="form-control form-control-sm po" name="project_owner" value="@item.GerenteAdjunto_plan" disabled>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>SCRUM Máster</label>
+                                <input type="text" class="form-control form-control-sm" name="scrum_master" value="@item.AuditoresSenior_plan" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-2">
+                                <label>SCRUM Team 1</label>
+                                <input type="text" class="form-control form-control-sm" name="scrum_team_1" value="@item.Auditor1_plan" disabled>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>SCRUM Team 2</label>
+                                <input type="text" class="form-control form-control-sm" name="scrum_team_2" value="@item.Auditor2_plan" disabled>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>SCRUM Team 3</label>
+                                <input type="text" class="form-control form-control-sm" name="scrum_team_3" value="@item.Auditor3_plan" disabled>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>SCRUM Team 4</label>
+                                <input type="text" class="form-control form-control-sm" name="scrum_team_4" value="@item.Auditor4_plan" disabled>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>SCRUM Team 5</label>
+                                <input type="text" class="form-control form-control-sm" name="scrum_team_5" value="@item.Auditor5_plan" disabled>
+                            </div>
+
+
+
+                        </div>
+
+                        <p class="m-0 font-weight-bold text-dark font-italic pt-2">Equipo de Trabajo Actual</p>
+                        <hr class="mt-0 font-weight-bold" />
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-2">
+                                <label>Project Owner</label>
+                                <select class="form-control form-control-sm tuclase_project_owner" id="project_owner" name="project_owner">
+                                    <option value="" @(string.IsNullOrEmpty(item.GerenteAdjunto_ejecucion) || item.GerenteAdjunto_ejecucion.Length < 3 ? "selected" : "")>--select--</option>
+                                    @foreach (var po in Model.Persona)
+                                    {
+                                        <option value="@po.NombreSharepoint" @(po.NombreSharepoint.ToString() == item.GerenteAdjunto_ejecucion.ToString() ? "selected" : "")>@po.NombreSharepoint</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>SCRUM Máster</label>
+                                <select class="form-control form-control-sm tuclase_scrum_master" id="scrum_master" name="scrum_master">
+                                    <option value="" @(string.IsNullOrEmpty(item.AuditoresSenior_ejecucion) || item.AuditoresSenior_ejecucion.Length < 3 ? "selected" : "")>--select--</option>
+                                    @foreach (var scrum_master in ViewBag.enviadopor)
+                                    {
+                                        <option value="@scrum_master.NombreSharepoint" @(scrum_master.NombreSharepoint.ToString() == item.AuditoresSenior_ejecucion.ToString() ? "selected" : "")>@scrum_master.NombreSharepoint</option>
+                                    }
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-2">
+                                <label>SCRUM Team 1</label>
+                                <select class="form-control form-control-sm tuclase_scrum1" name="scrum_team_1">
+                                    <option value="" @(string.IsNullOrEmpty(item.Auditor1_ejecucion) || item.Auditor1_ejecucion.Length < 3 ? "selected" : "")>--select--</option>
+                                    @foreach (var auditor1 in ViewBag.auditores_2)
+                                    {
+
+                                        <option value="@auditor1.NombreSharepoint" @(auditor1.NombreSharepoint.ToString() == item.Auditor1_ejecucion ? "selected" : "")>@auditor1.NombreSharepoint</option>
+
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>SCRUM Team 2</label>
+                                <select class="form-control form-control-sm tuclase_scrum2" name="scrum_team_2">
+                                    <option value="" @(string.IsNullOrEmpty(item.Auditor2_ejecucion) || item.Auditor2_ejecucion.Length < 3 ? "selected" : "")>--select--</option>
+                                    @foreach (var auditor2 in ViewBag.auditores_2)
+                                    {
+
+                                        <option value="@auditor2.NombreSharepoint" @(auditor2.NombreSharepoint.ToString() == item.Auditor2_ejecucion ? "selected" : "")>@auditor2.NombreSharepoint</option>
+
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>SCRUM Team 3</label>
+                                <select class="form-control form-control-sm tuclase_scrum3" name="scrum_team_3">
+                                    <option value="" @(string.IsNullOrEmpty(item.Auditor3_ejecucion) || item.Auditor3_ejecucion.Length < 3 ? "selected" : "")>--select--</option>
+                                    @foreach (var auditor3 in ViewBag.auditores_2)
+                                    {
+
+                                        <option value="@auditor3.NombreSharepoint" @(auditor3.NombreSharepoint.ToString() == item.Auditor3_ejecucion ? "selected" : "")>@auditor3.NombreSharepoint</option>
+
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>SCRUM Team 4</label>
+                                <select class="form-control form-control-sm tuclase_scrum4" name="scrum_team_4">
+                                    <option value="" @(string.IsNullOrEmpty(item.Auditor4_ejecucion) || item.Auditor4_ejecucion.Length < 3 ? "selected" : "")>--select--</option>
+                                    @foreach (var auditor4 in ViewBag.auditores_2)
+                                    {
+
+                                        <option value="@auditor4.NombreSharepoint" @(auditor4.NombreSharepoint.ToString() == item.Auditor4_ejecucion ? "selected" : "")>@auditor4.NombreSharepoint</option>
+
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>SCRUM Team 5</label>
+                                <select class="form-control form-control-sm tuclase_scrum5" name="scrum_team_5">
+                                    <option value="" @(string.IsNullOrEmpty(item.Auditor5_ejecucion) || item.Auditor5_ejecucion.Length < 3 ? "selected" : "")>--select--</option>
+                                    @foreach (var auditor5 in ViewBag.auditores_2)
+                                    {
+
+                                        <option value="@auditor5.NombreSharepoint" @(auditor5.NombreSharepoint.ToString() == item.Auditor5_ejecucion ? "selected" : "")>@auditor5.NombreSharepoint</option>
+
+                                    }
+                                </select>
+                            </div>
+
+
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+                <div class="tab-pane fade" id="tab-tiempo-editar" role="tabpanel">
+                    <div class="container-fluid py-3">
+
+
+                        <p class="m-0 font-weight-bold text-dark font-italic pt-2">Fechas Planificadas</p>
+                        <hr class="mt-0 font-weight-bold" />
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-2">
+                                <label>Fecha Inicio Plan</label>
+
+                                @{
+                                    var fechainicioplan = Convert.ToDateTime(item.FechaInicioPlan);
+                                    var fechainicioplanFormateada = (item.FechaInicioPlan != null && item.FechaInicioPlan != DateTime.MinValue && fechainicioplan != new DateTime(1900, 1, 1))
+                                        ? fechainicioplan.ToString("yyyy-MM-dd")
+                                        : string.Empty;
+                                }
+                                <input type="date" class="form-control form-control-sm" name="fecha_inicio_plan" value="@fechainicioplanFormateada" disabled>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>Fecha Fin Plan</label>
+
+                                @{
+                                    var fechafinplan = Convert.ToDateTime(item.FechaFinPlan);
+                                    var fechafinplanFormateada = (item.FechaFinPlan != null && item.FechaFinPlan != DateTime.MinValue && fechafinplan != new DateTime(1900, 1, 1))
+                                        ? fechafinplan.ToString("yyyy-MM-dd")
+                                        : string.Empty;
+                                }
+                                <input type="date" class="form-control form-control-sm" name="fecha_fin_plan" value="@fechafinplanFormateada" disabled>
+                            </div>
+
+
+
+                            <div class="form-group col-md-2">
+                                <label>Cant. Días Gerencia Adj.</label>
+                                <input type="text" class="form-control form-control-sm" name="cant_dias_plan" value="@item.DiasPlanGA" disabled>
+                            </div>
+                        </div>
+
+
+                        <p class="m-0 font-weight-bold text-dark font-italic pt-2">Fechas Ejecutadas</p>
+                        <hr class="mt-0 font-weight-bold" />
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-2">
+                                <label>Fecha Inicio Ejecución</label>
+
+                                @{
+                                    var fechainicioejecucion = Convert.ToDateTime(item.FechaInicioEjecucion);
+                                    var fechainicioejecucionFormateada = (item.FechaInicioEjecucion != null && item.FechaInicioEjecucion != DateTime.MinValue && fechainicioejecucion != new DateTime(1900, 1, 1))
+                                        ? fechainicioejecucion.ToString("yyyy-MM-dd")
+                                        : string.Empty;
+                                }
+                                <input type="date" class="form-control form-control-sm tuclase_inicio_ejecucion" name="fecha_inicio_ejecucion" value="@fechainicioejecucionFormateada">
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>Fecha Fin Ejecución</label>
+
+                                @{
+                                    var fechafinejecucion = Convert.ToDateTime(item.FechaFinEjecucion);
+                                    var fechafinejecucionFormateada = (item.FechaFinEjecucion != null && item.FechaFinEjecucion != DateTime.MinValue && fechafinejecucion != new DateTime(1900, 1, 1))
+                                        ? fechafinejecucion.ToString("yyyy-MM-dd")
+                                        : string.Empty;
+                                }
+                                <input type="date" class="form-control form-control-sm tuclase_fin_ejecucion" name="fecha_fin_ejecucion" value="@fechafinejecucionFormateada">
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>Cant. Días TIGA</label>
+                                <input type="text" class="form-control form-control-sm tuclase_dias_ejecucion" name="cant_dias_ejecucion" value="@item.DiasEjecutadoGA" disabled>
+                            </div>
+                        </div>
+
+                        <p class="m-0 font-weight-bold text-dark font-italic pt-2">Fecha de Emisión</p>
+                        <hr class="mt-0 font-weight-bold" />
+
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <label>Fecha de Emisión</label>
+
+                                @{
+                                    var fechaemision = Convert.ToDateTime(item.FechaEmision);
+                                    var fechaemisionFormateada = (item.FechaEmision != null && item.FechaEmision != DateTime.MinValue && fechaemision != new DateTime(1900, 1, 1))
+                                        ? fechaemision.ToString("yyyy-MM-dd")
+                                        : string.Empty;
+                                }
+                                <input type="date" class="form-control form-control-sm tuclase_emision" name="fecha_emision" value="@fechaemisionFormateada" disabled>
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="tab-controles-editar" role="tabpanel">
+                    <div class="container-fluid py-3">
+
+                        <p class="m-0 font-weight-bold text-dark font-italic pt-2">Riesgos y Controles</p>
+                        <hr class="mt-0 font-weight-bold" />
+
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered table-hover display" id="riesgos_controles">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="text-center align-middle">Codigo Proyecto</th>
+                                        <th class="text-center align-middle">Nro Riesgo</th>
+                                        <th class="text-center align-middle">Nro Control</th>
+                                        <th class="text-center align-middle">1era Línea</th>
+                                        <th class="text-center align-middle">2da Línea</th>
+                                        <th class="text-center align-middle">3era Línea</th>
+                                        <th class="text-center align-middle">Riesgo - 1era Línea</th>
+                                        <th class="text-center align-middle">Riesgo - 2da Línea</th>
+                                        <th class="text-center align-middle">Control - 1era Línea</th>
+                                        <th class="text-center align-middle">Control - 2da Línea</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item5 in Model.TG_Proyecto_Riesgo_Control)
+                                    {
+                                        <tr>
+                                            <td class="text-nowrap text-center"><span>@item5.Referencia_del_proceso</span></td>
+                                            <td class="text-nowrap text-center"><span>@item5.NroRiesgo</span></td>
+                                            <td class="text-nowrap text-center"><span>@item5.NroControl</span></td>
+                                            <td class="text-nowrap text-center"><button class="btn btn-link interactive-btn w-100 h-100" data-id="@item5.IdProyecto_Riesgo_Control" data-field="C1eraLinea">@Html.Raw(item5.C1eraLinea == 1 ? "<i class='fa fa-check'></i>" : "")</button></td>
+                                            <td class="text-nowrap text-center"><button class="btn btn-link interactive-btn w-100 h-100" data-id="@item5.IdProyecto_Riesgo_Control" data-field="C2daLinea">@Html.Raw(item5.C2daLinea == 1 ? "<i class='fa fa-check'></i>" : "")</button></td>
+                                            <td class="text-nowrap text-center"><button class="btn btn-link interactive-btn w-100 h-100" data-id="@item5.IdProyecto_Riesgo_Control" data-field="C3eraLinea">@Html.Raw(item5.C3eraLinea == 1 ? "<i class='fa fa-check'></i>" : "")</button></td>
+                                            <td class="text-nowrap text-center"><button class="btn btn-link interactive-btn w-100 h-100" data-id="@item5.IdProyecto_Riesgo_Control" data-field="Riesgo_1eraLinea">@Html.Raw(item5.Riesgo_1eraLinea == 1 ? "<i class='fa fa-check'></i>" : "")</button></td>
+                                            <td class="text-nowrap text-center"><button class="btn btn-link interactive-btn w-100 h-100" data-id="@item5.IdProyecto_Riesgo_Control" data-field="Riesgo_2daLinea">@Html.Raw(item5.Riesgo_2daLinea == 1 ? "<i class='fa fa-check'></i>" : "")</button></td>
+                                            <td class="text-nowrap text-center"><button class="btn btn-link interactive-btn w-100 h-100" data-id="@item5.IdProyecto_Riesgo_Control" data-field="Control_1eraLinea">@Html.Raw(item5.Control_1eraLinea == 1 ? "<i class='fa fa-check'></i>" : "")</button></td>
+                                            <td class="text-nowrap text-center"><button class="btn btn-link interactive-btn w-100 h-100" data-id="@item5.IdProyecto_Riesgo_Control" data-field="Control_2daLinea">@Html.Raw(item5.Control_2daLinea == 1 ? "<i class='fa fa-check'></i>" : "")</button></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <button id="guardarCambios" class="btn btn-primary">Guardar Cambios</button>
+
+                    </div>
+                </div>
+
+
+                
+            </div>
+
+
+
+            <div class="form-group text-center">
+                <button type="button" class="btn btn-sm  btn-outline-secondary btn-group-toggle font-weight-normal mr-2" data-dismiss="modal">
+                    <i class="fas fa-times-circle"></i> Cancelar
+                </button>
+                <button type="submit" class="btn btn-sm btn-info btn-group-toggle font-weight-normal" id="boton_guardar">
+                    <i class="fas fa-save"></i> Guardar Cambios
+                </button>
+            </div>
+        }
+
+
+
+
+
+
+    </div>
+}
+
+
+@*MODAL DE DETALLE  OBSERVACION*@
+<div class="modal fade" id="modal-detalle-observacion" tabindex="-1" role="dialog" aria-labelledby="modalDetalleObservacionLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDetalleObservacionLabel">Observaciones</h5>
+                <button type="button" class="close" onclick="cerrarModalDetalleObservacion()" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="contenido-observacion" style="word-wrap: break-word; overflow-wrap: break-word; max-width: 100%;"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL DE DETALLE ACTIVIDAD *@
+
+<div class="modal fade" id="modal-editar-actividad" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Editar Actividad</h6>
+                <button type="button" class="close" onclick="cerrarModalDetalleActividad()" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="resultado-editar-detalle-formulario-actividad"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mensajeConfirmacion" style="display: none; color: green; font-weight: bold;"></div>
+
+
+
+
+
+
+
+
+<script type="text/javascript" class="init">
+
+
+
+
+    $(document).ready(function () {
+
+        $('#boton_guardar').on('click', function () {
+            guardarProyecto(event);
+        });
+
+        var fechaInicio = $('input[name="fecha_inicio_ejecucion"]');
+        var fechaFin = $('input[name="fecha_fin_ejecucion"]');
+        var cantDias = $('input[name="cant_dias_ejecucion"]');
+        var fechaEmision = $('input[name="fecha_emision"]');
+
+
+        //function calcularDiasLaborables() {
+        //    var inicio = new Date(fechaInicio.val());
+        //    var fin = new Date(fechaFin.val());
+
+        //    // Calcula la diferencia en días
+        //    var diferencia = Math.ceil((fin - inicio) / (1000 * 60 * 60 * 24));
+        //    cantDias.val(diferencia);
+        //}
+
+        function calcularFechaEmision() {
+            var fin = new Date(fechaFin.val());
+
+            // Agrega 21 días
+            fin.setDate(fin.getDate() + 21);
+            fechaEmision.val(fin.toISOString().slice(0, 10));
+        }
+
+
+        var feriados = ['01-01', '04-17', '04-18', '05-01', '06-29', '07-23', '07-28', '07-29', '08-06','08-30', '10-08', '11-01', '12-08', '12-09', '12-25'];
+
+
+        //function calcularFechaEmision() {
+        //    var inicio = new Date(fechaFin.val());
+        //    var diasLaborables = 13; // Número de días laborables a agregar
+
+        //    for (var d = new Date(inicio); diasLaborables > 0; d.setDate(d.getDate() + 1)) {
+        //        var diaSemana = d.getDay();
+        //        var esFinDeSemana = (diaSemana == 6) || (diaSemana == 0);
+        //        var esFeriado = feriados.includes(d.toISOString().slice(5, 10)); // Verifica si la fecha está en la lista de feriados
+
+        //        if (!esFinDeSemana && !esFeriado) {
+        //            diasLaborables--;
+        //        }
+        //    }
+
+        //    fechaEmision.val(d.toISOString().slice(0, 10));
+        //}
+
+        function calcularDiasLaborables() {
+            var inicio = new Date(fechaInicio.val());
+            var fin = new Date(fechaFin.val());
+            var diasLaborables = 0;
+
+            // Lista de fechas feriadas en formato 'mm-dd'
+
+            for (var d = new Date(inicio); d <= fin; d.setDate(d.getDate() + 1)) {
+                var diaSemana = d.getDay();
+                var esFinDeSemana = (diaSemana == 6) || (diaSemana == 0);
+                var esFeriado = feriados.includes(d.toISOString().slice(5, 10)); // Verifica si la fecha está en la lista de feriados
+
+                if (!esFinDeSemana && !esFeriado) {
+                    diasLaborables++;
+                }
+            }
+
+            cantDias.val(diasLaborables);
+        }
+
+        fechaInicio.change(calcularDiasLaborables);
+        fechaFin.change(calcularDiasLaborables);
+
+        fechaFin.change(calcularFechaEmision);
+
+
+
+            $('#seguimiento-observaciones_acciones').dataTable({
+                "dom": "<'row pb-1'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4 text-center'i><'col-sm-12 col-md-4'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 col-md-5'><'col-sm-12 col-md-7'p>>",
+                "order": [[1, 'asc']],
+                "searching": true,
+                "paging": true,
+                "scrollX": true,
+                "scrollY": "52vh",
+                "buttons": [
+                    {
+                        extend: 'copyHtml5',
+                        text: '<span class="font-weight-normal"><i class="fas fa-copy"></i> Copiar</span>',
+                        titleAttr: 'Copy'
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: '<span class="font-weight-normal"><i class="fas fa-file-excel"></i> Excel</span>',
+                        titleAttr: 'Excel'
+                    }
+                ],
+
+                "language": {
+                    "zeroRecords": "No hay datos disponibles para los filtros seleccionados",
+                    "info": "Mostrandose _TOTAL_ registros",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrado de _MAX_ registros)",
+                    "search": "Buscar:"
+                }
+            });
+
+            $('#seguimiento-observaciones_ampliaciones').dataTable({
+                "dom": "<'row pb-1'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4 text-center'i><'col-sm-12 col-md-4'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 col-md-5'><'col-sm-12 col-md-7'p>>",
+                "order": [[1, 'asc']],
+                "searching": true,
+                "paging": true,
+                "scrollX": true,
+                "scrollY": "52vh",
+                "buttons": [
+                    {
+                        extend: 'copyHtml5',
+                        text: '<span class="font-weight-normal"><i class="fas fa-copy"></i> Copiar</span>',
+                        titleAttr: 'Copy'
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: '<span class="font-weight-normal"><i class="fas fa-file-excel"></i> Excel</span>',
+                        titleAttr: 'Excel'
+                    }
+                ],
+
+                "language": {
+                    "zeroRecords": "No hay datos disponibles para los filtros seleccionados",
+                    "info": "Mostrandose _TOTAL_ registros",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrado de _MAX_ registros)",
+                    "search": "Buscar:"
+                }
+            });
+
+            $('#seguimiento-observaciones_errores').dataTable({
+                "dom": "<'row pb-1'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4 text-center'i><'col-sm-12 col-md-4'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 col-md-5'><'col-sm-12 col-md-7'p>>",
+                "order": [[1, 'asc']],
+                "searching": true,
+                "paging": true,
+                "scrollX": true,
+                "scrollY": "52vh",
+                "buttons": [
+                    {
+                        extend: 'copyHtml5',
+                        text: '<span class="font-weight-normal"><i class="fas fa-copy"></i> Copiar</span>',
+                        titleAttr: 'Copy'
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: '<span class="font-weight-normal"><i class="fas fa-file-excel"></i> Excel</span>',
+                        titleAttr: 'Excel'
+                    }
+                ],
+
+                "language": {
+                    "zeroRecords": "No hay datos disponibles para los filtros seleccionados",
+                    "info": "Mostrandose _TOTAL_ registros",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrado de _MAX_ registros)",
+                    "search": "Buscar:"
+                }
+            });
+
+
+        });
+
+
+
+        //observacion
+
+        function mostrarDetalleObservacion(event) {
+            event.preventDefault();
+
+            var contenidoProyecto = document.getElementById('observaciones').value;
+            document.getElementById('contenido-observacion').innerText = contenidoProyecto;
+            $('#modal-detalle-observacion').modal('show');
+        }
+
+        function cerrarModalDetalleObservacion() {
+            $('#modal-detalle-observacion').modal('hide');
+        }
+
+    function llamarEditarActividad(idactividad, idproyecto,event) {
+        event.preventDefault();
+
+        var laURLDeLaVista = '@Url.Action("PV_DetalleActividad", "WebPlanAnual")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: {
+                    idactividad: idactividad,
+                    idproyecto: idproyecto
+
+                },
+                success: function (response) {
+                    $('#resultado-editar-detalle-formulario-actividad').html('');
+                    $('#resultado-editar-detalle-formulario-actividad').html(response);
+
+
+                },
+                error: function (xhr, status, error) {
+                    console.log("Error en la petición AJAX:");
+                    console.log(xhr);
+                    console.log("Estado: " + status);
+                    console.log("Error: " + error);
+                }
+            });
+    }
+
+
+    function cerrarModalDetalleActividad() {
+        $('#modal-editar-actividad').modal('hide');
+    }
+
+    function guardarProyecto(event) {
+        event.preventDefault();
+
+         var compania = $('.tuclase_compania').val();
+         var proceso_evaluado = $('.tuclase_proceso_evaluado').val();
+         var fecha_bloqueo = $('.tuclase_fecha_bloqueo').val();
+         var cant_pruebas_real = $('.tuclase_cantidad_pruebas_real').val();
+        var pac = $('.tuclase_pac').is(':checked') ? 1 : 0;
+        var mapa_aseg = $('.tuclase_mapa_aseg').is(':checked') ? 1 : 0;
+         var anexo30 = $('.tuclase_anexo30').is(':checked') ? 1 : 0;
+         var fecha_reemplazo = $('.tuclase_fecha_reemplazo').val();
+         var proyecto_reemplazo= $('.tuclase_proyecto_reemplazo').val();
+         var fecha_envio = $('.tuclase_fecha_envio').val();
+         var enviado_por = $('.tuclase_enviador_por').val();
+         var cuatrimestral = $('.tuclase_cuatrimestral').val();
+         var cai = $('.tuclase_cai').val();
+        var cantidad_sprint = $('.tuclase_cantidad_sprint').val();
+         var riesgo_trabajo = $('.tuclase_riesgo_trabajo').val();
+         var riesgo_inherente = $('.tuclase_riesgo_inherente').val();
+         var riesgo_bcp = $('.tuclase_riesgobcp').val();
+        var admin_riesgo = $('.tuclase_admin_riesgo').val();
+        var observaciones = $('.tuclase_observaciones').val();
+         var project_owner = $('.tuclase_project_owner').val();
+        var scrum_master = $('.tuclase_scrum_master').val();
+         var scrum1 = $('.tuclase_scrum1').val();
+        var scrum2 = $('.tuclase_scrum2').val();
+        var scrum3 = $('.tuclase_scrum3').val();
+        var scrum4 = $('.tuclase_scrum4').val();
+         var scrum5 = $('.tuclase_scrum5').val();
+        var inicio_ejecucion = $('.tuclase_inicio_ejecucion').val();
+        var fin_ejecucion = $('.tuclase_fin_ejecucion').val();
+         var dias_ejecucion = $('.tuclase_dias_ejecucion').val();
+         var fecha_emision = $('.tuclase_emision').val();
+         var idproyecto = $('.tuclase_idproyecto').val();
+         var idplan = $('.tuclase_idplan').val();
+
+
+
+
+
+        var laURLDeLaVista = '@Url.Action("PV_Proyecto_Guardar", "WebPlanAnual")';
+        $.ajax({
+            cache: false,
+            async: true,
+            type: "POST",
+            url: laURLDeLaVista,
+            data: {
+                idproyecto: idproyecto,
+                idplananual: idplan,
+                compania: compania,
+                proceso_evaluado: proceso_evaluado,
+                fecha_bloqueo: fecha_bloqueo,
+                cant_pruebas_real: cant_pruebas_real,
+                pac: pac,
+                mapa_aseg: mapa_aseg,
+                anexo30: anexo30,
+                fecha_reemplazo: fecha_reemplazo,
+                proyecto_reemplazo: proyecto_reemplazo,
+                fecha_envio: fecha_envio,
+                enviado_por: enviado_por,
+                cuatrimestral: cuatrimestral,
+                cai: cai,
+                cantidad_sprint: cantidad_sprint,
+                riesgo_trabajo: riesgo_trabajo,
+                riesgo_inherente: riesgo_inherente,
+                riesgo_bcp: riesgo_bcp,
+                admin_riesgo: admin_riesgo,
+                observaciones: observaciones,
+                 project_owner: project_owner,
+                scrum_master: scrum_master,
+                scrum1: scrum1,
+                 scrum2: scrum2,
+                 scrum3: scrum3,
+                 scrum4: scrum4,
+                 scrum5: scrum5,
+                 inicio_ejecucion: inicio_ejecucion,
+                 fin_ejecucion: fin_ejecucion,
+                 dias_ejecucion: dias_ejecucion,
+                 fecha_emision: fecha_emision
+
+
+
+        },
+
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Cambios guardados',
+                        text: 'Se han guardado los cambios satisfactoriamente',
+                        confirmButtonText: 'Aceptar'
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ha ocurrido un error en la operación, inténtelo nuevamente',
+                        confirmButtonText: 'Aceptar'
+                    });
+                }
+                console.log(response);
+            },
+            error: function (xhr, status, error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Ha ocurrido un error en la operación por un error interno, inténtelo nuevamente. Detalles: ' + xhr.responseText,
+                    confirmButtonText: 'Aceptar'
+                });
+                console.error("Error en la petición AJAX:");
+                console.log(xhr);
+                console.log("Estado: " + status);
+                console.log("Error: " + error);
+                console.log(xhr.responseText);
+
+
+            }
+
+        });
+
+
+
+    };
+
+
+var cambios = [];
+
+    $(document).on('click', '.interactive-btn', function (event) {
+        event.preventDefault(); // Prevenir el comportamiento predeterminado del botón
+
+        var id = $(this).data('id');
+        var field = $(this).data('field');
+        var currentValue = $(this).find('i').length ? 1 : 0;
+        var newValue = currentValue === 1 ? 0 : 1;
+
+        // Actualizar el valor en la estructura de datos temporal
+        cambios.push({ id: id, field: field, value: newValue });
+
+        // Actualizar el botón visualmente
+        if (newValue === 1) {
+            $(this).html("<i class='fa fa-check'></i>");
+        } else {
+            $(this).html("");
+        }
+    });
+
+    $('#guardarCambios').on('click', function (event) {
+        event.preventDefault();
+        console.log(JSON.stringify(cambios));
+
+        $.ajax({
+            cache: false,
+            async: true,
+            type: "POST",
+            url: '@Url.Action("PV_Guardar_Cambios_Riesgos_Controles", "WebPlanAnual")',
+            data: JSON.stringify(cambios),
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                if (response.success) {
+                    alert('Cambios guardados satisfactoriamente');
+                } else {
+                    alert('Ha ocurrido un error en la operación, inténtelo nuevamente');
+                }
+            },
+            error: function (xhr, status, error) {
+                alert('Ha ocurrido un error en la operación por un error interno, inténtelo nuevamente. Detalles: ' + xhr.responseText);
+                console.error("Error en la petición AJAX:");
+                console.log(xhr);
+                console.log("Estado: " + status);
+                console.log("Error: " + error);
+                console.log(xhr.responseText);
+            }
+        });
+    });
+
+
+</script>

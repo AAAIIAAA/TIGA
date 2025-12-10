@@ -1,0 +1,247 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
+
+
+body, h1, h2, h3, h4, h5, h6, p{
+    font-family: 'Poppins', Arial, Helvetica, sans-serif !important;
+}
+
+.sidebar-divider-custom {
+    border: 0;
+    height: 2px;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0), #fff, rgba(255, 255, 255, 0));
+}
+
+
+.sticky-footer {
+    border-top: 1px solid #e7eaec !important;
+    position: absolute !important;
+    padding: 1.5rem 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+header {
+    margin: 3rem auto 2rem auto;
+    max-width: 600px;
+    text-align: center;
+}
+
+h1 {
+    font-weight: 500;
+    margin: 0;
+}
+
+p {
+    color: hsl(229, 6%, 66%)
+}
+
+.container-plan-anual {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    margin-bottom: 5rem !important;
+    max-width: 1140px;
+    justify-content: center;
+}
+
+.card {
+    margin-bottom: 5rem !important;
+}
+
+.box:hover {
+    cursor: pointer;
+    /*box-shadow: 0 0 25px 0 rgba(20, 27, 201, .05);*/
+    /*box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23) !important;*/
+    background: hsl(229 2% 92%);
+}
+
+.box {
+    background-color: #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    border-radius: 5px;
+    padding: 30px;
+    margin: 15px;
+    width: 18vw;
+    /*height: 25vh;*/
+    display: flex;
+    flex-direction: column;
+}
+
+.box h3 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.box p {
+    font-size: 0.9rem;
+    margin: 15px 0 30px;
+}
+
+/*.box img {
+    height: 6.5vh;
+    align-self: flex-end;
+}*/
+
+.box:nth-child(1) {
+    border-top: 5px solid hsl(180, 62%, 55%);
+}
+.box:nth-child(2) {
+    border-top: 5px solid hsl(0, 78%, 62%);
+}
+.box:nth-child(3) {
+    border-top: 5px solid hsl(212, 86%, 64%);
+}
+.box:nth-child(4) {
+    border-top: 5px solid hsl(34, 97%, 64%);
+}
+.box:nth-child(5) {
+    border-top: 5px solid hsl(106, 47%, 55%);
+}
+.box:nth-child(6) {
+    border-top: 5px solid hsl(274, 27%, 55%);
+}
+.box:nth-child(7) {
+    border-top: 5px solid hsl(24 100% 50%);
+}
+
+td.disabled {
+    box-shadow: rgb(255, 74, 50) 0px -4px 0px 0px inset !important;
+}
+
+.ellipsis {
+    position: relative;
+}
+
+.ellipsis:before {
+    content: '&nbsp;';
+    visibility: hidden;
+}
+
+.ellipsis span {
+    position: absolute;
+    left: 0;
+    right: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+table {
+    font-size: 0.9rem;
+}
+#programacion-final td:hover {
+    background-color: rgba(0,0,0,.075) !important;
+}
+
+
+.btn-filter {
+    font-size: 0.85rem !important;
+    font-weight: normal !important;
+}
+
+.btn-icon {
+    background: none !important;
+    color: inherit !important;
+    border: none !important;
+    padding: 0 !important;
+    font: inherit !important;
+    cursor: pointer !important;
+    outline: inherit !important;
+}
+
+
+/* JS FULL CALENDAR */
+.calendar .calendar-header {
+    background-color: white;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+    border: 0;
+}
+
+    .calendar .calendar-header .year-title {
+        font-size: 18px;
+    }
+
+        .calendar .calendar-header .year-title:hover,
+        .calendar .calendar-header .prev:hover,
+        .calendar .calendar-header .next:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .calendar .calendar-header .year-title:not(.year-neighbor):not(.year-neighbor2) {
+            border-bottom: 2px solid #ccc;
+        }
+
+    .calendar .calendar-header .year-neighbor {
+        color: inherit;
+        opacity: 0.7;
+    }
+
+    .calendar .calendar-header .year-neighbor2 {
+        color: inherit;
+        opacity: 0.4;
+    }
+
+.calendar .months-container .month-container {
+    height: 235px;
+    margin-bottom: 25px;
+}
+
+.calendar table.month {
+    background-color: white;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
+    height: 100%;
+}
+
+    .calendar table.month th.month-title {
+        background-color: #f0f0f0;
+        color: #888;
+        padding: 6px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .calendar table.month th.day-header {
+        padding-top: 8px;
+        padding-bottom: 5px;
+        color: #666;
+        font-weight: 500;
+    }
+
+    .calendar table.month td.day .day-content {
+        color: #666;
+        padding: 9px 7px;
+        border-radius: 2px;
+    }
+
+
+
+@media only screen and (max-width: 1400px) {
+    html {
+        font-size: 81%;
+    }
+  /*  .box > img{
+        height: 10vh;
+    }*/
+    
+  
+
+    .dataTables_scrollBody {
+        max-height: 38vh !important;
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    html {
+        font-size: 78%;
+    }
+    /*  .box > img{
+        height: 10vh;
+    }*/
+    .dataTables_scrollBody {
+        max-height: 38vh !important;
+    }
+}

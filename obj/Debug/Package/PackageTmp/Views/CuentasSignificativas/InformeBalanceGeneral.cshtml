@@ -1,0 +1,162 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+@{
+    ViewBag.Title = "InformeBalanceGeneral";
+    Layout = "~/Views/Shared/_Layout_CuentasSIG.cshtml";
+
+    var listaBG = Model.SP_BC_BG_INFORME.ToList();
+
+    var subtotact1 = 0.0; var subtotact2 = 0.0; var subtotact3 = 0.0;
+    var subtotpas1 = 0.0; var subtotpas2 = 0.0; var subtotpas3 = 0.0;
+    var subtotpat1 = 0.0; var subtotpat2 = 0.0; var subtotpat3 = 0.0;
+}
+
+
+<div class="card shadow">
+    <div class="card-header py-3 text-center">
+        <h6 class="m-0 font-weight-bold">Informe de Balance General</h6>
+        <small class="m-0 font-italic">Expresado en millones de soles</small>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            <div class="row justify-content-center">
+                <div class="col-lg-3">
+                    Error Tolerable : <br />
+                    @Html.TextBox("errorTolerable", null, new { style = "text-transform:uppercase", @class = "form-control", placeholder = ViewBag.ErrorTolerable, @type= "number" })
+                </div>
+
+                <div class="col-lg-3">
+                    Periodo : <br />
+                    @Html.DropDownList("periodo", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-lg-2">
+                    <br />
+                    <button type="submit" class="btn btn-info">
+                        <i class="fas fa-search"></i> Buscar
+                    </button>
+                </div>
+            </div>
+        }
+     
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered" id="informe-BG" width="100%" style="font-size: 0.85rem;">
+                    <thead class="table-active">
+                        <tr>
+                            <th class="text-center align-middle" style="width: 28%"> Rubro </th>
+                            <th class="text-center align-middle" style="width: 12%"> @ViewBag.NombreMes </th>
+                            <th class="text-center align-middle" style="width: 12%"> @ViewBag.NombreMesAnterior </th>
+                            <th class="text-center align-middle" style="width: 12%"> Variación </th>
+                            <th class="text-center align-middle" style="width: 12%"> Alcance Metodología </th>
+                            <th class="text-center align-middle" style="width: 12%"> Significativas Seleccionadas </th>
+                            <th class="text-center align-middle" style="width: 12%"> Alcance Seleccionadas </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in listaBG)
+                        {
+                            if (item.TIPO == "Activos")
+                            {
+                            <tr>                                   
+                                <td class="text-left">@item.RUBRO</td>
+                                <td class="text-right">@item.MES</td>
+                                <td class="text-right">@item.MES_ANTERIOR</td>
+                                <td class="text-right">@item.VARIACION</td>
+                                <td class="text-right">@item.ALCANCE_METODOLOGIA </td>
+                                <td class="text-right">@item.SIGNIFICATIVAS_SELECCIONADAS</td>
+                                <td class="text-center">@item.ALCANCE_SELECCIONADAS</td>
+                            </tr>
+                                subtotact1 += (item.MES == null ? 0 : (double)item.MES);
+                                subtotact2 += (item.MES_ANTERIOR == null ? 0 : (double)item.MES_ANTERIOR);
+                                subtotact3 += (item.VARIACION == null ? 0 : (double)item.VARIACION);
+                            }
+                        }
+                        <tr class="font-weight-bold">
+                            <td class="text-center table-active">Total Activos</td>
+                            <td class="text-right table-active">@subtotact1</td>
+                            <td class="text-right table-active">@subtotact2</td>
+                            <td class="text-right table-active">@subtotact3</td>
+                            <td class="text-right table-active"></td>
+                            <td class="text-right table-active"></td>
+                            <td class="text-right table-active"></td>
+                        </tr>
+                        @foreach (var item in listaBG)
+                        {
+                            if (item.TIPO == "Pasivos")
+                            {
+                                <tr>
+                                    <td style="text-align:left">@item.RUBRO</td>
+                                    <td style="text-align:right">@item.MES</td>
+                                    <td style="text-align:right">@item.MES_ANTERIOR</td>
+                                    <td style="text-align:right">@item.VARIACION</td>
+                                    <td style="text-align:right">@item.ALCANCE_METODOLOGIA </td>
+                                    <td style="text-align:right">@item.SIGNIFICATIVAS_SELECCIONADAS</td>
+                                    <td style="text-align:center">@item.ALCANCE_SELECCIONADAS</td>
+                                </tr>
+                                subtotpas1 += (item.MES == null ? 0 : (double)item.MES);
+                                subtotpas2 += (item.MES_ANTERIOR == null ? 0 : (double)item.MES_ANTERIOR);
+                                subtotpas3 += (item.VARIACION == null ? 0 : (double)item.VARIACION);                                
+                            }
+                        }
+                        <tr class="font-weight-bold">
+                            <td class="text-center table-active">Total Pasivos</td>
+                            <td class="text-right table-active">@subtotpas1</td>
+                            <td class="text-right table-active">@subtotpas2</td>
+                            <td class="text-right table-active">@subtotpas3</td>
+                            <td class="text-right table-active"></td>
+                            <td class="text-right table-active"></td>
+                            <td class="text-right table-active"></td>
+                        </tr>
+                        @foreach (var item in listaBG)
+                        {
+                            if (item.TIPO == "Patrimonio")
+                            {
+                                <tr>
+                                    <td style="text-align:left">@item.RUBRO</td>
+                                    <td style="text-align:right">@item.MES</td>
+                                    <td style="text-align:right">@item.MES_ANTERIOR</td>
+                                    <td style="text-align:right">@item.VARIACION</td>
+                                    <td style="text-align:right">@item.ALCANCE_METODOLOGIA </td>
+                                    <td style="text-align:right">@item.SIGNIFICATIVAS_SELECCIONADAS</td>
+                                    <td style="text-align:center">@item.ALCANCE_SELECCIONADAS</td>
+                                </tr>
+                                subtotpat1 += (item.MES == null ? 0 : (double)item.MES);
+                                subtotpat2 += (item.MES_ANTERIOR == null ? 0 : (double)item.MES_ANTERIOR);
+                                subtotpat3 += (item.VARIACION == null ? 0 : (double)item.VARIACION);
+                            }
+                        }
+                        <tr class="font-weight-bold">
+                            <td class="text-center table-active">Patrimonio</td>
+                            <td class="text-right table-active">@subtotpat1</td>
+                            <td class="text-right table-active">@subtotpat2</td>
+                            <td class="text-right table-active">@subtotpat3</td>
+                            <td class="text-right table-active"></td>
+                            <td class="text-right table-active"></td>
+                            <td class="text-right table-active"></td>
+                        </tr>
+                    </tbody>
+                    
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" class="init">
+    $(document).ready(function () {
+        $('#informe-BG').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                { extend: 'excelHtml5', text: '<i class="fas fa-file-excel"></i> Descargar Excel'},
+            ],
+            "scrollY": "49vh",
+            ordering: false,
+            searching: false,
+            paging: false,
+            info: false
+        });
+    });  
+</script>

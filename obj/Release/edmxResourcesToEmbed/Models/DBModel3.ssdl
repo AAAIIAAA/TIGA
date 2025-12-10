@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MultiserviciosModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="TD_VacacionesRegistro">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Tipo" Type="varchar(max)" />
+    <Property Name="FechaInicio" Type="date" />
+    <Property Name="FechaFin" Type="date" />
+    <Property Name="Periodo" Type="varchar(max)" />
+    <Property Name="IdUsuario" Type="int" />
+    <Property Name="Descripción" Type="varchar(max)" />
+    <Property Name="Ajuste" Type="int" />
+    <Property Name="Ejecutado" Type="int" />
+  </EntityType>
+  <EntityType Name="Usuarios_Objetivos">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Usuario" Type="varchar" MaxLength="50" />
+    <Property Name="Contraseña" Type="varchar" MaxLength="50" />
+    <Property Name="Estado" Type="varchar" MaxLength="50" />
+    <Property Name="Nombre_Ape" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Función" Type="varchar" MaxLength="30" />
+    <Property Name="Matrícula" Type="varchar" MaxLength="50" />
+    <Property Name="SubGerencia" Type="varchar" MaxLength="50" />
+    <Property Name="Equipo" Type="varchar" MaxLength="200" />
+    <Property Name="FechaIngreso" Type="date" />
+    <Property Name="NombreSharepoint" Type="varchar" MaxLength="50" />
+    <Property Name="IDJefeDirecto" Type="int" />
+    <Property Name="DNI" Type="nchar" MaxLength="8" />
+    <Property Name="Administrador" Type="tinyint" />
+    <Property Name="NombreTC" Type="varchar" MaxLength="50" />
+    <Property Name="NombreSharepoint2" Type="varchar" MaxLength="50" />
+    <Property Name="NombreSharepoint3" Type="varchar" MaxLength="50" />
+    <Property Name="NombreSharepoint4" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Multiservicios.dbo.TS_Estructura' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="TS_Estructura">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Nombre" />
+      <PropertyRef Name="ID_Padre" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="ID_Padre" Type="int" Nullable="false" />
+    <Property Name="GERENCIA NIVEL 0" Type="nvarchar" MaxLength="250" />
+    <Property Name="GERENCIA NIVEL 1" Type="nvarchar" MaxLength="250" />
+    <Property Name="GERENCIA NIVEL 2" Type="nvarchar" MaxLength="250" />
+    <Property Name="GERENCIA NIVEL 3" Type="nvarchar" MaxLength="250" />
+    <Property Name="GERENCIA NIVEL 4" Type="nvarchar" MaxLength="250" />
+    <Property Name="GERENCIA NIVEL 5" Type="nvarchar" MaxLength="250" />
+  </EntityType>
+  <Function Name="SP_VACACIONES_REGISTRO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TIPO" Type="nvarchar" Mode="In" />
+    <Parameter Name="ID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_CONTROL_PERIODO_DIAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FECHA" Type="date" Mode="In" />
+    <Parameter Name="ID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_GANTT_VACACIONES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DATE" Type="date" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_REPORTE_CLAVE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_WT_REPORTE_GENERAL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_WT_REPORTES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_WT_VACACIONES_CONSOLIDADO_DETALLE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FECHA" Type="date" Mode="In" />
+    <Parameter Name="ID" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="MultiserviciosModel1StoreContainer">
+    <EntitySet Name="TD_VacacionesRegistro" EntityType="Self.TD_VacacionesRegistro" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuarios_Objetivos" EntityType="Self.Usuarios_Objetivos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TS_Estructura" EntityType="Self.TS_Estructura" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [TS_Estructura].[ID] AS [ID], 
+    [TS_Estructura].[Nombre] AS [Nombre], 
+    [TS_Estructura].[ID_Padre] AS [ID_Padre], 
+    [TS_Estructura].[GERENCIA NIVEL 0] AS [GERENCIA NIVEL 0], 
+    [TS_Estructura].[GERENCIA NIVEL 1] AS [GERENCIA NIVEL 1], 
+    [TS_Estructura].[GERENCIA NIVEL 2] AS [GERENCIA NIVEL 2], 
+    [TS_Estructura].[GERENCIA NIVEL 3] AS [GERENCIA NIVEL 3], 
+    [TS_Estructura].[GERENCIA NIVEL 4] AS [GERENCIA NIVEL 4], 
+    [TS_Estructura].[GERENCIA NIVEL 5] AS [GERENCIA NIVEL 5]
+    FROM [dbo].[TS_Estructura] AS [TS_Estructura]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

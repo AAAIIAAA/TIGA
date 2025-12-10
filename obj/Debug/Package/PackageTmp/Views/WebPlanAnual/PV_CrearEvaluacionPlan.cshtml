@@ -1,0 +1,327 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+
+<div style="font-size: 0.8rem !important">
+
+    <nav>
+        <div class="nav nav-tabs" role="tablist">
+            <button class="nav-link active" data-toggle="tab" href="#tab-general-crear">Información General</button>
+            <button class="nav-link" data-toggle="tab" href="#tab-adicional-crear">Información Adicional</button>
+        </div>
+    </nav>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="tab-general-crear" role="tabpanel">
+        <div class="container-fluid py-3" @*style="height: 70%;"*@>
+            <input type="text" class="form-control form-control-sm" name="ID_Plan_Anual" value="@ViewBag.IdPlanSel" hidden>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label>Evaluación *</label>
+                    <select class="form-control form-control-sm" name="ID_Evaluacion" required>
+                        <option value="" selected disabled> -- Seleccione la evaluación a agregar -- </option>
+                        @foreach (var Item in Model.DPA_Evaluacion)
+                        {
+                            <option value="@Item.ID_Evaluacion" data-toggle="tooltip" data-placement="bottom" title="@Item.Evaluacion">
+                                @(Item.Evaluacion.Length >= 80 ? Item.Evaluacion.Substring(0, 80) + "..." : Item.Evaluacion )
+                            </option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label>Último Calificativo *</label>
+                    <select class="form-control form-control-sm" name="Ultimo_Calificativo" required>
+                        <option value="" selected disabled> - </option>
+                        @foreach (var Item in ViewBag.listaUltimoCalificativo)
+                        {
+                            <option>@Item</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Macroproceso *</label>
+                    <select class="form-control form-control-sm" name="ID_Proceso_Evaluado" required>
+                        <option value="" selected disabled> -- Seleccionar -- </option>
+                        @foreach (var Item in Model.DD_ProcesoEvaluado)
+                        {
+                            <option value="@Item.IdProcesoEvaluado">@Item.Nombre</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Centro de Costo *</label>
+                    <input type="text" class="form-control form-control-sm" name="Centro_Costo" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label>Objetivo *</label>
+                    <input type="text" class="form-control form-control-sm" name="Objetivo" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label>Atrib. Universo *</label>
+                    <input type="text" class="form-control form-control-sm" name="Atributo_Universo" required>
+                </div>
+                <div class="form-group col-md-5">
+                    <label>Riesgo Asociado *</label>
+                    <select class="form-control form-control-sm" name="ID_Riesgo_Asociado" required>
+                        <option value="" selected disabled> - </option>
+                        @foreach (var Item in Model.DPA_Riesgo_Asociado)
+                        {
+                            <option value="@Item.ID_Riesgo_Asociado">@Item.Nombre_Riesgo</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-md-5">
+                    <label>Equipo Responsable *</label>
+                    <select class="form-control form-control-sm" name="ID_Equipo_Responsable" required>
+                        <option value="" selected disabled> - </option>
+                        @foreach (var Item in Model.DPA_Equipo)
+                        {
+                            <option value="@Item.ID_Equipo">@Item.Nombre_Equipo</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label>PAC *</label>
+                    <select class="form-control form-control-sm" name="PAC" required>
+                        <option value="" selected disabled> - </option>
+                        @foreach (var Item in ViewBag.ListaSN)
+                        {
+                            <option>@Item</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label>Anexo 30 *</label>
+                    <select class="form-control form-control-sm" name="Anexo_30" required>
+                        <option value="" selected disabled> - </option>
+                        @foreach (var Item in ViewBag.listaSN)
+                        {
+                            <option>@Item</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Tipo Evaluación *</label>
+                    <select class="form-control form-control-sm" name="Tipo_Evaluacion" required>
+                        <option value="" selected disabled> - </option>
+                        @foreach (var Item in ViewBag.listaTipoEvaluacion)
+                        {
+                            <option>@Item</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Nombre de Mesa</label>
+                    <input type="text" class="form-control form-control-sm" name="Nombre_Mesa">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label>SOX *</label>
+                    <select class="form-control form-control-sm" name="SOX" required>
+                        <option value="" selected disabled> - </option>
+                        @foreach (var Item in ViewBag.listaSN)
+                        {
+                            <option>@Item</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label>Fase SOX *</label>
+                    <select class="form-control form-control-sm" name="Fase_SOX" required>
+                        <option value="" selected disabled> - </option>
+                        @foreach (var Item in ViewBag.listaFaseSOX)
+                        {
+                            <option>@Item</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label>Regulatorio *</label>
+                    <select class="form-control form-control-sm" name="Regulatorio" required>
+                        <option value="" selected disabled> - </option>
+                        @foreach (var Item in ViewBag.listaSN)
+                        {
+                            <option>@Item</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label>N° SBS</label>
+                    <input type="number" class="form-control form-control-sm" name="N_SBS">
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Evaluación SBS</label>
+                    <input type="text" class="form-control form-control-sm" name="Evaluacion_SBS">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="tab-adicional-crear" role="tabpanel">
+
+        <div class="container-fluid py-3">
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label>Comentario</label>
+                    <input type="text" class="form-control form-control-sm" name="Comentario" placeholder="Comentarios generales de la evaluación">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label>Squad/COE/Area</label>
+                    <input type="text" class="form-control form-control-sm" name="Squad_COE_Area" placeholder="Ej. Squad1; Squad2; Area1; Area2">
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Aplicaciones</label>
+                    <input type="text" class="form-control form-control-sm" name="Aplicaciones" placeholder="Ej. Aplicacion1; Aplicacion2">
+                </div>
+                <div class="form-group col-md-4">
+                    <label>RPA</label>
+                    <input type="text" class="form-control form-control-sm" name="RPA" placeholder="Ej. RPA1; RPA2; RPA3">
+                </div>
+
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label>Chatbot</label>
+                    <select class="form-control form-control-sm" name="Chatbot">
+                        <option value="" selected disabled> - </option>
+                        @foreach (var Item in ViewBag.listaSN)
+                        {
+                            <option>@Item</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label>IA</label>
+                    <select class="form-control form-control-sm" name="IA">
+                        <option value="" selected disabled> - </option>
+                        @foreach (var Item in ViewBag.listaSN)
+                        {
+                            <option>@Item</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>API</label>
+                    <input type="text" class="form-control form-control-sm" name="API" placeholder="Ej. API1; API2">
+                </div>
+                <div class="form-group col-md-2">
+                    <label>N° Riesgos</label>
+                    <input type="number" class="form-control form-control-sm" name="N_Riesgos" placeholder="Ej. 2">
+                </div>
+                <div class="form-group col-md-2">
+                    <label>N° Controles</label>
+                    <input type="number" class="form-control form-control-sm" name="N_Controles" placeholder="Ej. 3">
+                </div>
+            </div>
+
+            <p class="m-0 font-weight-bold text-dark font-italic pt-2">Información de Analítica</p>
+            <hr class="mt-0 font-weight-bold" />
+
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label>Accesos Aplicación</label>
+                    <input type="text" class="form-control form-control-sm" name="Accesos_Aplicacion" @(ViewBag.idRol != 5 ? "disabled" : "") pln>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Accesos BD</label>
+                    <input type="text" class="form-control form-control-sm" name="Accesos_BD" @(ViewBag.idRol != 5 ? "disabled" : "")>
+                </div>
+                <div class="form-group col-md-2">
+                    <label>SIEMBRA</label>
+                    <select class="form-control form-control-sm" name="SIEMBRA" @(ViewBag.idRol != 5 ? "disabled" : "")>
+                        <option value="" selected disabled> - </option>
+                        @foreach (var Item in ViewBag.listaSN)
+                        {
+                            <option>@Item</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label>RIEGA</label>
+                    <select class="form-control form-control-sm" name="RIEGA" @(ViewBag.idRol != 5 ? "disabled" : "")>
+                        <option value="" selected disabled> - </option>
+                        @foreach (var Item in ViewBag.listaSN)
+                        {
+                            <option>@Item</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label>SIEGA</label>
+                    <select class="form-control form-control-sm" name="SIEGA" @(ViewBag.idRol != 5 ? "disabled" : "")>
+                        <option value="" selected disabled> - </option>
+                        @foreach (var Item in ViewBag.listaSN)
+                        {
+                            <option>@Item</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label>Uso Analítica EWP</label>
+                    <input type="text" class="form-control form-control-sm" name="Uso_Analitica_EWP" @(ViewBag.idRol != 5 ? "disabled" : "")>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Uso Analítica Registrado</label>
+                    <input type="text" class="form-control form-control-sm" name="Uso_Analitica_Registrado" @(ViewBag.idRol != 5 ? "disabled" : "")>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Analítica - Tipo Pruebas</label>
+                    <input type="text" class="form-control form-control-sm" name="Analítica_Tipo_Pruebas" @(ViewBag.idRol != 5 ? "disabled" : "")>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Ratio Días/Control</label>
+                    <input type="number" class="form-control form-control-sm" name="Ratio_Dias_Control" step="0.01" @(ViewBag.idRol != 5 ? "disabled" : "")>
+                </div>
+            </div>
+
+            <span class="badge text-wrap font-weight-normal text-danger" style="font-size: 0.8rem !important">
+                <i class="fas fa-info-circle"></i> Revisar que los campos obligatorios estén completos antes de guardar
+            </span>
+        </div>
+        
+    </div>
+
+    
+
+</div>
+
+
+
+        
+
+        <div class="form-group text-center">
+            <button type="button" class="btn btn-sm  btn-outline-secondary btn-group-toggle font-weight-normal mr-2" data-dismiss="modal">
+                <i class="fas fa-times-circle"></i> Cancelar
+            </button>
+            <button type="submit" class="btn btn-sm btn-info btn-group-toggle font-weight-normal">
+                <i class="fas fa-save"></i> Guardar Cambios
+            </button>
+        </div>
+    }
+</div>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,417 @@
+﻿@using WebTIGA;
+@using Newtonsoft.Json
+@model WebTIGA.Models.ContenedorModelos
+@{
+    ViewBag.Title = "Ejecucion del Plan Aanual";
+    Layout = "~/Views/Shared/_Layout_Plan_Anual.cshtml";
+}
+
+<div class="row card-header py-3">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+        <h5 class="m-0 font-weight-bold text-dark text-center">Ejecución del Plan Anual de Auditoría</h5>
+    </div>
+
+</div>
+
+<div style="width: 100%; height: 20px; ">
+
+</div>
+
+<div class="card shadow">
+
+
+
+
+
+
+
+    <div class="card-body">
+
+
+        <div class="mt-4">
+            <table class="table table-sm table-bordered table-hover display" id="ejecucion_plan">
+                <thead class="thead-light">
+                    <tr>
+
+                        <th class="text-center align-middle"> Acciones </th>
+                        <th class="text-center align-middle"> ID </th>
+                        <th class="text-center align-middle"> Código </th>
+                        <th class="text-center align-middle"> Riesgo </th>
+                        <th class="text-center align-middle"> Compañía </th>
+                        <th class="text-center align-middle"> Macroproceso </th>
+                        @*<th class="text-center align-middle"> Plan </th>*@
+                        <th class="text-center align-middle"> Evaluación </th>
+                        <th class="text-center align-middle"> Estado </th>
+                        <th class="text-center align-middle"> Proceso Evaluado </th>
+                        <th class="text-center align-middle"> Tipo </th>
+
+
+                        @*<th class="text-center align-middle"> Auditores Senior </th>*@
+
+                        <th class="text-center align-middle"> Gerente Adjunto Plan </th>
+                        <th class="text-center align-middle"> Gerente </th>
+
+                        <th class="text-center align-middle"> Año</th>
+                        <th class="text-center align-middle"> Fecha Emisión </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.fn_TG_Obtener_Proyectos_v2)
+                    {
+                        <tr>
+
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <button class="btn-icon pr-3" title="Editar" onclick="llamarEditarProyecto(@item.IdProyecto);"
+                                            data-toggle="modal" data-target="#modal-editar-proyecto">
+                                        <i class="fas fa-edit text-warning"></i>
+                                    </button>
+                                    @if (ViewBag.idRol == 5)
+                                    {
+
+                                        <button class="btn-icon" title="Eliminar" onclick="llamarEliminarProyecto(@item.IdProyecto);"
+                                                data-toggle="modal" data-target="#modal-eliminar-proyecto">
+                                            <i class="fas fa-trash-alt text-danger"></i>
+                                        </button>
+                                    }
+
+                                </div>
+                            </td>
+
+                            <td class="text-nowrap text-center"> <span>@item.IdProyecto</span> </td>
+                            <td class="text-nowrap text-center"> <span>@item.Codigo</span> </td>
+                            <td class="text-nowrap text-center"> <span>@item.Riesgo</span> </td>
+                            <td class="text-nowrap text-center"> <span>@item.Compania</span> </td>
+                            <td class="text-nowrap text-center"> <span>@item.Macroproceso</span> </td>
+                            @*<td class="text-nowrap text-center"> <span>@item.Plan</span> </td>*@
+
+
+                            <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item.Evaluacion" style="min-width: 35vw;"> <span>@item.Evaluacion</span> </td>
+
+                            <td class="text-nowrap text-center"> <span> @((item.Estado == null) ? "-" : item.Estado) </span> </td>
+                            <td class="text-nowrap text-center"> <span> @((item.ProcesoEvaluado == null) ? "-" : item.ProcesoEvaluado) </span> </td>
+                            <td class="text-nowrap text-center"> <span> @((item.Tipo == null) ? "-" : item.Tipo) </span> </td>
+
+
+                            @*<td class="text-nowrap text-center"> <span> @((item.AuditoresSenior == null) ? "-" : item.AuditoresSenior) </span> </td>*@
+                            <td class="text-nowrap text-center"> <span> @((item.GerenteAdjunto_plan == null) ? "-" : item.GerenteAdjunto_plan) </span> </td>
+                            <td class="text-nowrap text-center"> <span> @((item.Gerente == null) ? "-" : item.Gerente) </span> </td>
+
+
+                            <td class="text-nowrap text-center"> <span>@item.Anio</span> </td>
+                            <td class="text-nowrap text-center"> <span> @((item.FechaEmision == null) ? "-" : item.FechaEmision) </span> </td>
+
+                        </tr>
+                    }
+
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+
+@*MODAL DE EDITAR DETALLE PROYECTO*@
+
+<div class="modal fade" id="modal-editar-proyecto" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Detalle de Proyecto</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="resultado-editar-detalle-proyecto"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*MODAL CREAR PROYECTO*@
+
+<div class="modal fade" id="modal-crear-proyecto" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Nuevo Proyecto</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="resultado-crear-proyecto"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" class="init">
+            $(document).ready(function () {
+
+               $('#ejecucion_plan').DataTable({
+                   "dom": "<'row pb-1'<'col-sm-3'B><'col-sm-4 text-center'i><'col-sm-2'<'#customSelectContainer'>><'col-sm-2'f>>" +
+                       "<'row'<'col-sm-12'tr>>" +
+                       "<'row'<'col-sm-12 col-md-5'><'col-sm-12 col-md-7'p>>",
+                   "order": [[1, 'asc']],
+                   "searching": true,
+                   "paging": true,
+                   "scrollX": true,
+                   "scrollY": "52vh",
+                   "buttons": [
+
+                   ],
+
+                   "language": {
+                       "zeroRecords": "No hay datos disponibles para los filtros seleccionados",
+                       "info": "Mostrandose _TOTAL_ registros",
+                       "infoEmpty": "No hay registros disponibles",
+                       "infoFiltered": "(filtrado de _MAX_ registros)",
+                       "search": "Buscar:"
+                   },
+                    "initComplete": function () {
+                        var customExportar = $('<button type="button" style="background-color: #8FBC8F; color: white; border-color: #8FBC8F;" class="btn btn-custom" onclick="exportarReporteExcel(); progressAlert();" ><i class="fas fa-file-excel"></i> Reporte</button>');
+                        $('#ejecucion_plan_wrapper .dt-buttons').append(customExportar);
+
+                        customExportar.hover(function () {
+                            $(this).css({
+                                'background-color': '#556B2F',
+                                'border-color': '#556B2F'
+                            });
+                        }, function () {
+                            $(this).css({
+                                'background-color': '#8FBC8F',
+                                'border-color': '#8FBC8F'
+                            });
+                        });
+
+
+                        var customButton2 = $('<button type="button" style="background-color: #5BB4BF; color: white; border-color: #5BB4BF ;" class="btn btn-custom" onclick="llamarCrearProyecto();" data-toggle="modal" data-target="#modal-crear-proyecto"><i class="fas fa-plus"></i> Nuevo Proyecto</button>');
+                        $('#ejecucion_plan_wrapper .dt-buttons').append(customButton2);
+
+
+                        customButton2.hover(function () {
+                            $(this).css({
+                                'background-color': '#67CDD9',
+                                'border-color': '#67CDD9'
+                            });
+                        }, function () {
+                            $(this).css({
+                                'background-color': '#5BB4BF',
+                                'border-color': '#5BB4BF'
+                            });
+                        });
+
+                        var urlParams = new URLSearchParams(window.location.search);
+                        var selectedPlan = urlParams.get('pa');
+
+                        if (!selectedPlan) {
+                            selectedPlan = '14';
+                        }
+
+                        var customSelect = $('<div class="form-group row align-items-center">' +
+                            '<label for="selectIdPlan" class="col-sm-4 col-form-label">Plan:</label>' +
+                            '<div class="col-sm-8">' +
+                            '<select class="form-control" id="selectIdPlan" name="idPlanAnual" onchange="cambioSeleccion()">' +
+                            '<option value="4" ' + (selectedPlan === '4' ? 'selected' : '') + '>2022</option>' +
+                            '<option value="11" ' + (selectedPlan === '11' ? 'selected' : '') + '>2023</option>' +
+                            '<option value="13" ' + (selectedPlan === '13' ? 'selected' : '') + '>2024</option>' +
+                            '<option value="14" ' + (selectedPlan === '14' ? 'selected' : '') + '>2025</option>' +
+                            '</select>' +
+                            '</div>' +
+                            '</div>');
+
+                        $('#customSelectContainer').append(customSelect);
+
+
+
+
+                    }
+                });
+            });
+
+
+            function exportarReporteExcel() {
+
+                var plan = $('#selectIdPlan').val();
+
+        var laURLDeLaVista = '@Url.Action("EjecucionPlanAnualReporte", "WebPlanAnual")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: {
+                    pa:plan
+
+                },
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                success: function (response, status, xhr) {
+
+                    if (xhr.status === 200) {
+
+                        var blob = new Blob([response], { type: xhr.getResponseHeader('Content-Type') });
+                        var link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = 'ReporteProyectos.xlsx';
+                        link.click();
+                        Swal.close();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log("Error en la petición AJAX:");
+                    console.log(xhr);
+                    console.log("Estado: " + status);
+                    console.log("Error: " + error);
+                    Swal.close();
+                }
+            });
+
+
+    }
+
+
+    function llamarEditarProyecto(id) {
+
+        var laURLDeLaVista = '@Url.Action("PV_DetalleProyecto", "WebPlanAnual")';
+        var selected_plan = $('#selectIdPlan').val();
+
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { pa: selected_plan, id: id },
+                success: function (response) {
+                    $('#resultado-editar-detalle-proyecto').html('');
+                    $('#resultado-editar-detalle-proyecto').html(response);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log("Error:", errorThrown);
+                    console.log("Status:", textStatus);
+                    console.log("Response Text:", xhr.responseText);
+
+                }
+
+            });
+    }
+
+    function llamarEliminarProyecto(id) {
+    var laURLDeLaVista = '@Url.Action("PV_EliminarProyecto", "WebPlanAnual")';
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "¡No podrás revertir esto!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '¡Sí, bórralo!',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "POST",
+                url: laURLDeLaVista,
+                data: {id:id},
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Eliminado',
+                            text: 'El proyecto ha sido eliminado.',
+                            confirmButtonText: 'Aceptar'
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Ha ocurrido un error en la operación, inténtelo nuevamente',
+                            confirmButtonText: 'Aceptar'
+                        });
+                    }
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ha ocurrido un error en la operación por un error interno, inténtelo nuevamente. Detalles: ' + xhr.responseText,
+                        confirmButtonText: 'Aceptar'
+                    });
+                    console.error("Error en la petición AJAX:");
+                    console.log(xhr);
+                    console.log("Estado: " + status);
+                    console.log("Error: " + error);
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+    })
+}
+
+
+    function llamarCrearProyecto() {
+        var laURLDeLaVista = '@Url.Action("PV_CrearProyecto", "WebPlanAnual")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: {
+
+                    },
+                success: function (response) {
+                    $('#resultado-crear-proyecto').html('');
+                    $('#resultado-crear-proyecto').html(response);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log("Error:", errorThrown);
+                    console.log("Status:", textStatus);
+                    console.log("Response Text:", xhr.responseText);
+
+                }
+
+            });
+    }
+
+
+            function cambioSeleccion() {
+                var idPlan = document.getElementById("selectIdPlan").value;
+
+                window.location.href = "../WebPlanAnual/EjecucionPlanAnual?pa=" + idPlan;
+            }
+
+            function progressAlert() {
+                Swal.fire({
+                    title: 'Por favor, espere',
+                    text: 'Procesando la información ...',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    willOpen: () => {
+                        Swal.showLoading()
+                    },
+                });
+            }
+
+
+
+
+
+</script>
+
+

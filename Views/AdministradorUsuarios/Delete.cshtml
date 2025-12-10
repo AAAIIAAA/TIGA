@@ -1,0 +1,102 @@
+﻿@model WebTIGA.Models.UsuarioModuloRol
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout_Administrador.cshtml";
+    string modulo = ViewBag.modulo;
+    string nombre = ViewBag.userN;
+    string rol = ViewBag.rol;
+    int? estado = ViewBag.estado;
+}
+<html>
+    <head>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstr apcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+        <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+
+    </head>
+    <body>
+
+
+
+        <div class="col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-dark">ADMINISTRADOR DE ROLES</h6>
+                </div>
+                <div class="card-body card-block border-bottom-light">
+
+                    <div class="container">
+                        <div>
+                            <h5 class="m-0 font-weight-bold text-dark">ELIMINAR ROL DE USUARIO</h5>
+                            <br />
+                            <h6>¿Estás seguro de que quieres eliminar este registro?</h6>
+
+                            <hr />
+                            <dl class="dl-horizontal">
+
+                                <div class="form-group row">
+                                    <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Usuario: </label>
+                                    <div class="col-md-10">
+
+                                        @Html.TextBox("userN", null, new { style = "text-transform:uppercase ", @class = "form-control", value = "userN", @disabled = "disabled" })
+
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="form-group row">
+                                    <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Modulo: </label>
+                                    <div class="col-md-10">
+
+                                        @Html.TextBox("modulo", null, new { style = "text-transform:uppercase", @class = "form-control", value = "modulo", @disabled = "disabled" })
+
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="form-group row">
+                                    <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Rol: </label>
+                                    <div class="col-md-10">
+
+                                        @Html.TextBox("rol", null, new { style = "text-transform:uppercase", @class = "form-control", value = "modulo", @disabled = "disabled" })
+
+                                    </div>
+                                </div>
+                                <br>
+
+
+
+
+                            </dl>
+                        </div>
+
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-group text-center">
+                                <input type="submit" value="Eliminar" class="btn btn-info btn-group-toggle" style="background-color :lightseagreen" />
+
+                                <a href="@Url.Action("Administrador_U","AdministradorUsuarios")" class="btn btn-secondary" id="btnReturn">Retornar</a>
+                            </div>
+
+
+
+
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+
+</html>
+
+

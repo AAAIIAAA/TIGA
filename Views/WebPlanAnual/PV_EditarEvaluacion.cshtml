@@ -1,0 +1,38 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <input type="text" class="form-control" name="ID_Evaluacion" value="@ViewBag.Evaluacion.ID_Evaluacion" hidden>
+    <input type="text" class="form-control" name="ID_Negocio" value="@ViewBag.Evaluacion.ID_Negocio" hidden>
+
+    <div class="form-group">
+        <label>Nombre de la Evaluación: </label>
+        <textarea class="form-control" name="Evaluacion">@ViewBag.Evaluacion.Evaluacion</textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Negocio: </label>
+        <input type="text" class="form-control" value="@ViewBag.Negocio.Negocio" disabled required>
+    </div>
+
+    <div class="form-group text-center pt-3">
+        <button type="button" class="btn font-weight-normal btn-outline-secondary btn-group-toggle mr-2" data-dismiss="modal">
+            <i class="fas fa-times-circle"></i> Cancelar
+        </button>
+        <button type="submit" class="btn font-weight-normal btn-info btn-group-toggle">
+            <i class="fas fa-check-circle"></i> Editar Evaluación
+        </button>
+    </div>
+}
+
+
+
+
+
+
+
+
+

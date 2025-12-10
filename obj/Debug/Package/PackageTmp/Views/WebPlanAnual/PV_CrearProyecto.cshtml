@@ -1,0 +1,579 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+
+<div style="font-size: 0.8rem !important">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="tab-content">
+
+
+            <div class="container-fluid py-3">
+
+                <p class="m-0 font-weight-bold text-dark font-italic pt-2">GENERAL</p>
+                <hr class="mt-0 font-weight-bold" />
+                <div class="form-row">
+
+
+
+
+                    <div class="form-group col-md-2">
+                        <label>Código</label>
+                        <input type="text" class="form-control form-control-sm tuclase_codigo" name="codigo" value="">
+                    </div>
+
+                    <div class="form-group col-md-9">
+                        <label>Evaluación</label>
+                        <input type="text" class="form-control form-control-sm tuclase_evaluacion" name="evaluacion" value="">
+                    </div>
+
+                    <div class="form-group col-md-1">
+                        <label>Plan Anual</label>
+                        <select class="form-control form-control-sm tuclase_plananual" name="plan_anual">
+                            <option value="">--select--</option>
+                            @foreach (var Item in Model.DPA_Plan_Anual)
+                            {
+                                <option value="@Item.ID_Plan_Anual">@Item.Anio_Plan</option>
+                            }
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+
+
+
+                    <div class="form-group col-md-2">
+                        <label>Estado</label>
+                        <select class="form-control form-control-sm tuclase_estado" name="estado">
+                            <option value="">--select--</option>
+                            @foreach (var estado in Model.TG_Estados_Proyecto)
+                            {
+                                <option value="@estado.IdEstadosProyecto">@estado.Nombre</option>
+                            }
+
+
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Riesgo</label>
+                        <select class="form-control form-control-sm tuclase_riesgo" name="riesgo">
+                            <option value="">--select--</option>
+                            <option value="Alta">Alta</option>
+                            <option value="Media">Media</option>
+                            <option value="Baja">Baja</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Plan Compañía</label>
+                        <select class="form-control form-control-sm tuclase_plan" name="plan_compañia">
+                            <option value="">--select--</option>
+                            <option value="PRO">PRO</option>
+                            <option value="NPRO">NPRO</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Compañía</label>
+                        <select class="form-control form-control-sm tuclase_compañia" name="compañia">
+                            <option value="">--select--</option>
+                            @foreach (var Item in Model.TG_Informe)
+                            {
+                                <option value="@Item.IdInforme">@Item.Nombre</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Cant. Pruebas Analíticas Plan</label>
+                        <input type="text" class="form-control form-control-sm tuclase_pruebas_plan" name="cant_pruebas_analiticas" value="">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Macroproceso</label>
+                        <input type="text" class="form-control form-control-sm tuclase_macroproceso" name="macroproceso" value="">
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="form-row">
+
+
+
+
+
+                    <div class="form-group col-md-2">
+                        <label>Tipo</label>
+                        <input type="text"  class="form-control form-control-sm tuclase_tipo" name="tipo" value="">
+                    </div>
+
+                    <div class="form-group col-md-1">
+                        <label>Criticidad</label>
+                        <input type="text" pattern="[0-9]+" class="form-control form-control-sm tuclase_criticidad" name="criticidad" value="">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Proceso Evaluado</label>
+                        <select class="form-control form-control-sm tuclase_proceso_evaluado" name="proceso_evaluado">
+                            <option value="">--select--</option>
+                            @foreach (var Item in Model.TG_Proceso_Evaluado)
+                            {
+                                <option value="@Item.IdProcesoEvaluado">@Item.Nombre</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label>Riesgo BCP</label>
+                        <select class="form-control form-control-sm tuclase_riesgobcp" name="riesgo_bcp">
+                            <option value="">--select--</option>
+                            @foreach (var Item in Model.TG_RiesgoBCP)
+                            {
+                                <option value="@Item.IDTipo">@Item.Nombre</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Riesgo Inherente</label>
+                        <select class="form-control form-control-sm tuclase_riesgo_inherente" name="riesgo_inherente">
+                            <option value="">--select--</option>
+                            @foreach (var Item in Model.TG_RiesgoInherente)
+                            {
+                                <option value="@Item.IdRiesgoInherente">@Item.Nombre</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Administración del Riesgo</label>
+                        <select class="form-control form-control-sm tuclase_admin_riesgo" name="administracion_del_riesgo">
+                            <option value="">--select--</option>
+                            @foreach (var Item in Model.TG_AdministraciónDelRiesgo)
+                            {
+                                <option value="@Item.IdAdministraciónDelRiesgo">@Item.Nombre</option>
+                            }
+                        </select>
+                    </div>
+
+                </div>
+
+
+                <p class="m-0 font-weight-bold text-dark font-italic pt-2">TIEMPO</p>
+                <hr class="mt-0 font-weight-bold" />
+
+                <div class="form-row">
+
+                    <div class="form-group col-md-2">
+                        <label>Inicio Plan Anual</label>
+                        <input type="date" class="form-control form-control-sm tuclase_fecha_inicio_plan" name="inicio_plan_anual">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Fin Plan Anual</label>
+                        <input type="date" class="form-control form-control-sm tuclase_fecha_fin_plan" name="fin_plan_anual">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Días Plan</label>
+                        <input type="text" class="form-control form-control-sm tuclase_dias_plan" name="dias_plan" value="" disabled>
+                    </div>
+
+
+                    <div class="form-group col-md-2">
+                        <label>Emisión Informe</label>
+                        <input type="date" class="form-control form-control-sm tuclase_emision_informe" name="emision_informe" disabled>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Correo de Inicio</label>
+                        <input type="date" class="form-control form-control-sm tuclase_correo_inicio" name="correo_inicio">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Enviado por</label>
+                        <select class="form-control form-control-sm tuclase_enviado_por" name="enviado_por">
+                            <option value="">--select--</option>
+                            @foreach (var Item in Model.Persona)
+                            {
+                                <option value="@Item.NombreSharepoint">@Item.NombreSharepoint</option>
+                            }
+                        </select>
+                    </div>
+
+
+
+
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group col-md-2">
+                        <label>Inicio Ejecución</label>
+                        <input type="date" class="form-control form-control-sm tuclase_fecha_inicio_ejecucion" name="inicio_ejecucion" disabled>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Fin Ejecución</label>
+                        <input type="date" class="form-control form-control-sm tuclase_fecha_fin_ejecucion" name="fin_ejecucion" disabled>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Días Ejecutado</label>
+                        <input type="text" class="form-control form-control-sm tuclase_dias_ejecutado" name="dias_ejecutado" value="" disabled>
+                    </div>
+
+
+                    <div class="form-group col-md-2">
+
+                        <label>
+                            PAC
+                        </label>
+                        <input type="checkbox" class="form-check-input ml-2 tuclase_pac" name="pac">
+
+                    </div>
+
+
+                    <div class="form-group col-md-2">
+
+                        <label class="form-check-label mb-0">
+                            Anexo 30
+                        </label>
+                        <input type="checkbox" class="form-check-input ml-2 tuclase_anexo30" name="anexo30">
+
+                    </div>
+
+                    <div class="form-group col-md-3">
+
+                        <label>
+                            Mapa de Aseguramiento
+                        </label>
+                        <input type="checkbox" class="form-check-input ml-2 tuclase_mapa_aseg" name="mapa_aseg">
+
+                    </div>
+
+                </div>
+
+
+
+                <p class="m-0 font-weight-bold text-dark font-italic pt-2">EQUIPO</p>
+                <hr class="mt-0 font-weight-bold" />
+
+
+                <div class="form-row">
+
+                    <div class="form-group col-md-3">
+                        <label>Project Owner</label>
+                        <select class="form-control form-control-sm tuclase_po" name="project_owner">
+                            <option value="">--select--</option>
+                            @foreach (var Item in Model.Persona)
+                            {
+                                <option value="@Item.NombreSharepoint">@Item.NombreSharepoint</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label>Scrum Master</label>
+                        <select class="form-control form-control-sm tuclase_scrum_master" name="scrum_master">
+                            <option value="">--select--</option>
+                            @foreach (var Item in ViewBag.auditores)
+                            {
+                                <option value="@Item.NombreSharepoint">@Item.NombreSharepoint</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label>Auditor 1</label>
+                        <select class="form-control form-control-sm tuclase_auditor1" name="auditor_1">
+                            <option value="">--select--</option>
+                            @foreach (var Item in ViewBag.auditores)
+                            {
+                                <option value="@Item.NombreSharepoint">@Item.NombreSharepoint</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label>Auditor 2</label>
+                        <select class="form-control form-control-sm tuclase_auditor2" name="auditor_2">
+                            <option value="">--select--</option>
+                            @foreach (var Item in ViewBag.auditores)
+                            {
+                                <option value="@Item.NombreSharepoint">@Item.NombreSharepoint</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group col-md-3">
+                        <label>Auditor 3</label>
+                        <select class="form-control form-control-sm tuclase_auditor3" name="auditor_3">
+                            <option value="">--select--</option>
+                            @foreach (var Item in ViewBag.auditores)
+                            {
+                                <option value="@Item.NombreSharepoint">@Item.NombreSharepoint</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label>Auditor 4</label>
+                        <select class="form-control form-control-sm tuclase_auditor4" name="auditor_4">
+                            <option value="">--select--</option>
+                            @foreach (var Item in ViewBag.auditores)
+                            {
+                                <option value="@Item.NombreSharepoint">@Item.NombreSharepoint</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label>Auditor 5</label>
+                        <select class="form-control form-control-sm tuclase_auditor5" name="auditor_5">
+                            <option value="">--select--</option>
+                            @foreach (var Item in ViewBag.auditores)
+                            {
+                                <option value="@Item.NombreSharepoint">@Item.NombreSharepoint</option>
+                            }
+                        </select>
+                    </div>
+
+                </div>
+                <p class="m-0 font-weight-bold text-dark font-italic pt-2">OBSERVACIONES</p>
+                <hr class="mt-0 font-weight-bold" />
+
+                <div class="form-row">
+
+                    <div class="form-group col-md-12">
+                        <label>Observaciones</label>
+                        <input type="text" class="form-control form-control-sm tuclase_observaciones" name="observaciones" value="">
+                    </div>
+
+
+
+                </div>
+
+
+                <div class="form-group text-center pt-3">
+                    <button type="submit" class="btn font-weight-normal btn-info btn-group-toggle" id="boton_crear">
+                        <i class="fas fa-check-circle"></i> Crear Proyecto
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+
+    }
+
+</div>
+
+
+<script type="text/javascript" class="init">
+
+
+
+
+    $(document).ready(function () {
+
+        $('#boton_crear').on('click', function () {
+            crearProyecto(event);
+        });
+
+        var inicioPlan = $('input[name="inicio_plan_anual"]');
+        var finPlan = $('input[name="fin_plan_anual"]');
+        var diasPlan = $('input[name="dias_plan"]');
+        var emisionInforme = $('input[name="emision_informe"]');
+        var inicioEjecucion = $('input[name="inicio_ejecucion"]');
+        var finEjecucion = $('input[name="fin_ejecucion"]');
+        var diasEjecutado = $('input[name="dias_ejecutado"]');
+
+        function calcularDiasPlan() {
+            var inicio = new Date(inicioPlan.val());
+            var fin = new Date(finPlan.val());
+
+            // Calcula la diferencia en días
+            var diferencia = Math.ceil((fin - inicio) / (1000 * 60 * 60 * 24));
+            diasPlan.val(diferencia);
+            diasEjecutado.val(diferencia); // Los días ejecutados son iguales a los días plan
+        }
+
+        function calcularFechaEmision() {
+            var fin = new Date(finPlan.val());
+
+            // Agrega 21 días
+            fin.setDate(fin.getDate() + 21);
+            emisionInforme.val(fin.toISOString().slice(0, 10));
+        }
+
+        function copiarFechasPlan() {
+            inicioEjecucion.val(inicioPlan.val());
+            finEjecucion.val(finPlan.val());
+        }
+
+        inicioPlan.change(calcularDiasPlan);
+        inicioPlan.change(copiarFechasPlan);
+        finPlan.change(calcularDiasPlan);
+        finPlan.change(calcularFechaEmision);
+        finPlan.change(copiarFechasPlan);
+
+    });
+
+
+    function crearProyecto(event) {
+        event.preventDefault();
+
+         var codigo = $('.tuclase_codigo').val();
+         var evaluacion = $('.tuclase_evaluacion').val();
+         var plan_anual = $('.tuclase_plananual').val();
+         var estado = $('.tuclase_estado').val();
+        var riesgo = $('.tuclase_riesgo').val();
+        var plan = $('.tuclase_plan').val();
+         var compañia = $('.tuclase_compañia').val();
+         var pruebas_plan= $('.tuclase_pruebas_plan').val();
+         var macroproceso = $('.tuclase_macroproceso').val();
+         var tipo = $('.tuclase_tipo').val();
+         var criticidad = $('.tuclase_criticidad').val();
+        var proceso_evaluado = $('.tuclase_proceso_evaluado').val();
+        var riesgo_bcp = $('.tuclase_riesgobcp').val();
+        var riesgo_inherente = $('.tuclase_riesgo_inherente').val();
+        var admin_riesgo = $('.tuclase_admin_riesgo').val();
+        var fecha_inicio_plan = $('.tuclase_fecha_inicio_plan').val();
+         var fecha_fin_plan = $('.tuclase_fecha_fin_plan').val();
+        var dias_plan = $('.tuclase_dias_plan').val();
+         var emision_informe = $('.tuclase_emision_informe').val();
+        var correo_inicio = $('.tuclase_correo_inicio').val();
+        var enviado_por = $('.tuclase_enviador_pr').val();
+
+        var fecha_inicio_ejec = $('.tuclase_fecha_inicio_ejecucion').val();
+        var fecha_fin_ejec = $('.tuclase_fecha_fin_ejecucion').val();
+        var dias_ejec = $('.tuclase_dias_ejecutado').val();
+        var pac = $('.tuclase_pac').is(':checked') ? 1 : 0;
+        var mapa_aseg = $('.tuclase_mapa_aseg').is(':checked') ? 1 : 0;
+        var anexo30 = $('.tuclase_anexo30').is(':checked') ? 1 : 0;
+        var po = $('.tuclase_po').val();
+        var scrum_master = $('.tuclase_scrum_master').val();
+        var auditor1 = $('.tuclase_auditor1').val();
+        var auditor2 = $('.tuclase_auditor2').val();
+        var auditor3 = $('.tuclase_auditor3').val();
+        var auditor4 = $('.tuclase_auditor4').val();
+        var auditor5 = $('.tuclase_auditor5').val();
+         var observaciones = $('.tuclase_observaciones').val();
+        
+
+
+
+
+
+        var laURLDeLaVista = '@Url.Action("PV_Proyecto_Crear", "WebPlanAnual")';
+        $.ajax({
+            cache: false,
+            async: true,
+            type: "POST",
+            url: laURLDeLaVista,
+            data: {
+                codigo:codigo,
+                evaluacion :evaluacion,
+                plan_anual:plan_anual,
+                estado:estado,
+                riesgo:riesgo,
+                plan:plan,
+                compañia:compañia,
+                 pruebas_plan :pruebas_plan,
+                 macroproceso :macroproceso,
+                 tipo :tipo,
+                 criticidad :criticidad,
+                 proceso_evaluado :proceso_evaluado,
+                 riesgo_bcp:riesgo_bcp,
+                 riesgo_inherente :riesgo_inherente,
+                 admin_riesgo :admin_riesgo,
+                 fecha_inicio_plan:fecha_inicio_plan,
+                 fecha_fin_plan :fecha_fin_plan,
+                 dias_plan :dias_plan,
+                 emision_informe :emision_informe,
+                correo_inicio: correo_inicio,
+                enviado_por: enviado_por,
+                fecha_inicio_ejec: fecha_inicio_ejec,
+
+                fecha_fin_ejec: fecha_fin_ejec,
+                dias_ejec: dias_ejec,
+                pac: pac,
+                mapa_aseg: mapa_aseg,
+                 anexo30:anexo30,
+                 po :po,
+                 scrum_master :scrum_master,
+                 auditor1 :auditor1,
+                 auditor2 :auditor2,
+                 auditor3:auditor3,
+                 auditor4:auditor4,
+                 auditor5: auditor5,
+                 observaciones: observaciones
+
+
+        },
+
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Cambios guardados',
+                        text: 'Se han guardado los cambios satisfactoriamente',
+                        confirmButtonText: 'Aceptar'
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ha ocurrido un error en la operación, inténtelo nuevamente',
+                        confirmButtonText: 'Aceptar'
+                    });
+                }
+                console.log(response);
+            },
+            error: function (xhr, status, error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Ha ocurrido un error en la operación por un error interno, inténtelo nuevamente. Detalles: ' + xhr.responseText,
+                    confirmButtonText: 'Aceptar'
+                });
+                console.error("Error en la petición AJAX:");
+                console.log(xhr);
+                console.log("Estado: " + status);
+                console.log("Error: " + error);
+                console.log(xhr.responseText);
+
+
+            }
+
+        });
+
+
+
+    }
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+

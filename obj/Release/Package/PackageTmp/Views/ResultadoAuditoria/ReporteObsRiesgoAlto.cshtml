@@ -1,0 +1,104 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+@{
+    ViewBag.Title = "ReporteObsRiesgoAlto";
+    Layout = "~/Views/Shared/_Layout_Resultado_Auditoria.cshtml";
+}
+
+
+<div class="card shadow">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-dark text-center">Reporte de Observaciones de Riesgo Alto</h6>
+    </div>
+
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+        <div class="row justify-content-center">
+
+            <div class="col-lg-2">
+                Plan Anual: <br />
+                <select class="form-control" id="Plan" name="idPlanAnual">
+                    @foreach (var Item in Model.DD_PlanAnual)
+                    {
+                        if (Item.IdPlanAnual == ViewBag.IdPlanAnualSeleccionado)
+                        {
+                            <option value="@Item.IdPlanAnual" selected>@Item.Nombre</option>
+                        }
+                        else
+                        {
+                            <option value="@Item.IdPlanAnual">@Item.Nombre</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="col-lg-2">
+                Fecha de Corte: <br />
+                <div class="input-group date" id="fecha-fin">
+                    <input class="form-control" id="fechaCorte" name="fechaCorte" type="text" value="@ViewBag.FechaCorte" />
+                    <span class="input-group-append">
+                        <span class="input-group-text bg-white">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                    </span>
+                </div>
+            </div>            
+            <div class="col-lg-3">
+                <br />
+                <button type="submit" class="btn btn-info btn-reporte mr-2">
+                    <i class="fas fa-filter"></i> Filtrar
+                </button>
+                <a type="button" class="btn btn-reporte btn-success" href="@Url.Action("DescargarReporteObsRiesgoAlto", "ResultadoAuditoria", new { idPlanAnual = ViewBag.IdPlanAnualSeleccionado, fechaCorte = ViewBag.FechaCorte})">
+                    <i class="fas fa-file-excel"></i> Descargar Reporte
+                </a>
+            </div>
+        </div>
+        }
+
+        <div class="table-responsive mt-4">
+            <table class="table table-bordered table-hover tabla-reporte">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="text-center align-middle"> Código del Proyecto </th>
+                        <th class="text-center align-middle"> Nombre del Proyecto </th>
+                        <th class="text-center align-middle"> Título de Observación </th>
+                        <th class="text-center align-middle"> Observación </th>
+                        <th class="text-center align-middle"> Recomendación </th>
+                        <th class="text-center align-middle"> Plan de Acción </th>
+                        <th class="text-center align-middle"> Estado </th>
+                        <th class="text-center align-middle"> Riesgo </th>
+                        <th class="text-center align-middle"> Fecha de Vencimiento </th>
+                        <th class="text-center align-middle"> Unidad Responsable </th>
+                        <th class="text-center align-middle"> Estado Actualizado </th>
+                        <th class="text-center align-middle"> ID </th>
+                        <th class="text-center align-middle"> Negocio </th>
+                    </tr>
+                </thead>
+                <tbody >
+                    @foreach (var item in Model.SP_RA_REPORTE_OBS_RIESGO_ALTO)
+                    {
+                    <tr>
+                        <td class="text-nowrap"> <span>@item.PROYECTO</span> </td>
+                        <td class="text-nowrap"> <span>@item.NOMBRE_PROYECTO</span> </td>
+                        <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item.TITULO_OBSERVACION"> <span>@item.TITULO_OBSERVACION</span> </td>
+                        <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item.OBSERVACION"> <span>@item.OBSERVACION</span> </td>
+                        <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item.RECOMENDACION"> <span>@item.RECOMENDACION</span> </td>
+                        <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item.PRIMERA_RESPUESTA"> <span>@item.PRIMERA_RESPUESTA</span> </td>
+                        <td class="text-nowrap"> <span>@item.ESTADO</span> </td>
+                        <td class="text-nowrap"> <span>@item.RIESGO</span> </td>
+                        <td class="text-center text-nowrap"> <span>@(item.FECHA_DE_VENCIMIENTO != null ? Convert.ToDateTime(item.FECHA_DE_VENCIMIENTO).ToShortDateString() : "-") </span> </td>
+                        <td class="text-nowrap"> <span>@item.UNIDAD_RESPONSABLE</span> </td>
+                        <td class="text-nowrap"> <span>@item.SITUACION</span> </td>
+                        <td class="text-nowrap"> <span>@item.ID</span> </td>
+                        <td class="text-nowrap"> <span>@item.NEGOCIO</span> </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+

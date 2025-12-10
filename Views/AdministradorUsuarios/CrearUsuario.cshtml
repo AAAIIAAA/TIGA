@@ -1,0 +1,244 @@
+﻿@using WebTIGA;
+
+@model WebTIGA.Models.ContenedorModelos
+
+@{
+    Layout = "~/Views/Shared/_Layout_Administrador.cshtml";
+    ViewBag.Title = "Administrador_Usuarios";
+}
+
+
+
+<div class="col-lg-12">
+    <div class="card shadow mb-4">
+        <div class="card-header text-center">
+            <h6 class="m-0 font-weight-bold text-dark">CREAR NUEVO USUARIO</h6>
+        </div>
+        <div class="card-body card-block border-bottom-light">
+            <div class="container">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group row justify-content-md-center">
+                        <label for="UsuarioTM" class="col-md-2 col-form-label" style="font-weight:bold;">Usuario TeamMate: </label>
+                        <div class="col-md-6">
+                            <select class="form-control" id="UsuarioTM" name="UsuarioTM" onchange="callChangeFunc(this.value)">
+                                <option selected disabled value="">-- Seleccione un usuario --</option>
+                                @foreach (var Item in Model.View_AU_Drop_UsuariosTM)
+                                {
+                                    if (Item.ID == ViewBag.IdUsuarioTMSelec)
+                                    {
+                                        <option value="@Item.ID" selected>@Item.Nombre</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@Item.ID">@Item.Nombre</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <h6 class="m-0 font-weight-bold text-dark">Datos Personales</h6>
+                    <hr />
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputNombres">Nombres *</label>
+                            <input type="text" class="form-control" id="inputNombres" name="Nombres" placeholder="Nombres" value="@ViewBag.Nombres" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputApellidos">Apellidos *</label>
+                            <input type="text" class="form-control" id="inputApellidos" name="Apellidos" placeholder="Apellidos" value="@ViewBag.Apellidos" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputNombreSharepoint">Nombre Sharepoint *</label>
+                            <input type="text" class="form-control" id="inputNombreSharepoint" name="NombreSharepoint" placeholder="Nombres y Apellidos" value="@ViewBag.NombreSharepoint" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputDNI">Documento de Identidad *</label>
+                            <input type="text" class="form-control" id="inputDNI" name="Dni" placeholder="DNI" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail">Email *</label>
+                            <input type="email" class="form-control" id="inputEmail" name="Email" placeholder="usuarioejemplo@pacifico.com.pe" value="@ViewBag.Email" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputCompañia"> Compañía</label>
+                            <select class="form-control" id="IdCompañia" name="IdCompañia" required>
+                                <option selected disabled value="">-- Seleccione --</option>
+                                @foreach (var Item in Model.Compañia)
+                                {
+                                    <option value="@Item.IdCompañia">@Item.Nombre</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <h6 class="m-0 font-weight-bold text-dark pt-4">Información para el inicio de sesión</h6>
+                    <hr />
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputUsuario">Usuario</label>
+                            <input type="text" class="form-control" id="inputUsuario" name="Usuario" placeholder="Usuario" value="@ViewBag.Usuario" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputContraseña">Contraseña</label>
+                            <input type="password" class="form-control" id="inputContraseña" name="Contraseña" placeholder="Contraseña" required>
+                        </div>
+                    </div>
+
+                    <h6 class="m-0 font-weight-bold text-dark pt-4">Datos de Rotación</h6>
+                    <hr />
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputFechaIngreso">Fecha de Ingreso *</label>
+                            <div class="input-group date" id="fecha-ingreso">
+                                <input class="form-control" id="FechaIngreso" name="FechaIngreso" type="text" placeholder="dd/mm/yyyy" required />
+                                <span class="input-group-append">
+                                    <span class="input-group-text bg-white">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputFechaSalida">Fecha de Salida</label>
+                            <div class="input-group date" id="fecha-salida">
+                                <input class="form-control" id="fechaSalida" name="fechaSalida" type="text" placeholder="dd/mm/yyyy" />
+                                <span class="input-group-append">
+                                    <span class="input-group-text bg-white">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputFuncion">Función *</label>
+                            <select class="form-control" id="inputFuncion" name="Función" required>
+                                <option selected disabled value="">-- Seleccione --</option>
+                                <option>01-Auditor</option>
+                                <option>02-Jefe de Auditoría</option>
+                                <option>03-Gerente Adjunto</option>
+                                <option>04-Gerente</option>
+                                <option>05-Practicante</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputCargo">Cargo</label>
+                            <select class="form-control" id="inputCargo" name="Cargo" required>
+                                <option selected disabled value="">-- Seleccione --</option>
+                                <option>Auditor</option>
+                                <option>Jefe de Auditoría</option>
+                                <option>Gerente Adjunto</option>
+                                <option>Gerente</option>
+                                <option>Practicante</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2">
+                            <label for="inputPlanilla">Planilla</label>
+                            <select class="form-control" id="inputPlanilla" name="Planilla" required>
+                                <option selected disabled value="">-- Seleccione --</option>
+                                <option>PS</option>
+                                <option>EPS</option>
+                                <option>EPV</option>
+                                <option>PRI</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputMatricula">Matrícula *</label>
+                            <input type="text" class="form-control" id="inputMatricula" name="Matrícula" placeholder="EPPS\S49013" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputJefeDirecto">Jefe Directo</label>
+                            <select class="form-control" id="inputJefeDirecto" name="IdJefeDirecto" required>
+                                <option selected disabled value="">-- Seleccione --</option>
+                                <option value="112">Daniela Del Pilar Rodriguez Diaz</option>
+                                <option value="88">Romulo Fernando Lomparte Alvarado</option>
+                                <option value="2">Jorge Portocarrero Colunge</option>
+                                <option value="20">Miguel Vetter</option>
+                                <option value="131">Yanina Mercedes Delfin Lazo</option>
+                                <option value="1">Guillermo Zegarra Cerna</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEquipo">Equipo *</label>
+                            <select class="form-control" id="inputEquipo" name="Equipo" required>
+                                <option selected disabled value="">-- Seleccione --</option>
+                                <option>Calidad</option>
+                                <option>Procesos de Prestación</option>
+                                <option>Procesos de Pensiones</option>
+                                <option>Procesos de Seguros</option>
+                                <option>Procesos de TI</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputSubgerencia">SubGerencia *</label>
+                            <select class="form-control" id="inputSubgerencia" name="SubGerencia" required>
+                                <option selected disabled value="">-- Seleccione --</option>
+                                <option>Daniela Del Pilar Rodriguez Diaz</option>
+                                <option>Romulo Fernando Lomparte Alvarado</option>
+                                <option>Jorge Portocarrero Colunge</option>
+                                <option>Miguel Vetter</option>
+                                <option>Yanina Mercedes Delfin Lazo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center pt-3">
+                        <button type="submit" class="btn btn-info btn-group-toggle" style="background-color :lightseagreen">
+                            <i class="fas fa-plus"></i> Crear
+                        </button>
+                        <a href="@Url.Action("Administrador_Usuarios", "AdministradorUsuarios")" class="btn btn-secondary" id="btnReturn">
+                            <i class="fas fa-chevron-left"></i> Volver
+                        </a>
+                    </div>
+                }
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        if ('@ViewBag.Alerta' == "fallo") {
+            Swal.fire({
+                title: 'Creación Fallida',
+                text: 'El nombre del usuario o el usuario ya se encuentra en la base de datos.',
+                icon: 'error',
+                confirmButtonColor: 'lightseagreen'
+            })
+        }
+    });
+
+    $(function () {
+        $('#fecha-ingreso').datepicker({
+            format: 'dd/mm/yyyy'
+        });
+        $('#fecha-salida').datepicker({
+            format: 'dd/mm/yyyy'
+        });
+    });
+
+    function callChangeFunc(val) {
+        window.location.href = "../AdministradorUsuarios/CrearUsuario?idUsuarioTM=" + val;
+    }
+
+</script>
+
+

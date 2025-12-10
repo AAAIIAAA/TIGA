@@ -1,0 +1,481 @@
+﻿
+@{
+    ViewBag.Title = "_Layout_Plan_Anual";
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title> WEB-TIGA - Plan Anual</title>
+
+    <link href="~/Content/css/plan-anual.css" rel="stylesheet" type="text/css" />
+
+
+    @Styles.Render("~/bundles/css")
+
+</head>
+<body id="page-top">
+
+
+    <div id="wrapper">
+
+        <ul class="navbar-nav sidebar sidebar-dark accordion bg-dark" id="accordionSidebar">
+
+            <a class="sidebar-brand d-flex align-items-center justify-content-center text-info" href="@Url.Action("Inicio", "WebPlanAnual")">
+                <br />
+                <div class="sidebar-brand-icon ">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">PLAN ANUAL</div>
+            </a>
+
+
+
+            <hr class="sidebar-divider">
+
+            <li class="nav-item">
+                <div class="nav-link" style="display: inline-block; font-weight: bold; color: #ffffff; text-decoration: none;">
+                    <a href="@Url.Action("ElaboracionPlanAnual", "WebPlanAnual")" style="display: inline-block; color: #ffffff;">
+                        <i class="fas fa-home"></i> Plan Anual
+                    </a>
+                </div>
+
+                <hr class="sidebar-divider">
+
+                <ul class="submenu" style="list-style: none; padding-left: 0;">
+                    @if (ViewBag.idRol == 5)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("CargaPlanAnual", "WebPlanAnual")">
+                                <i class="fas fa-upload"></i>
+                                <span>Carga del Universo</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-upload"></i>
+                                <span>Carga de Proyectos</span>
+                            </a>
+                        </li>
+}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("GestionEvaluaciones", "WebPlanAnual")">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span>Gestión del Universo</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("MantenimientoPlan", "WebPlanAnual")">
+                            <i class="fas fa-edit"></i>
+                            <span>Mantenimiento del Plan</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("VotacionAuditor", "WebPlanAnual")">
+                            <i class="fas fa-vote-yea"></i>
+                            <span>Votación</span>
+                        </a>
+                    </li>
+
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("ProgramacionFinal", "WebPlanAnual")">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span>Programación Final</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+            @*<li class="nav-item">
+
+                <div class="nav-link" style="display: inline-block; font-weight: bold; color: #ffffff; text-decoration: none;" id="toggleSubMenu2">
+                    <a href="@Url.Action("ElaboracionPlanDinamico", "WebPlanAnual")" style="display: inline-block; color: #ffffff;">
+                        <i class="fas fa-home"></i>  Plan Dinámico
+                    </a>
+                    <i class="fas fa-chevron-down" id="iconoFlecha2"></i>
+                </div>
+
+
+                <hr class="sidebar-divider">
+
+                <ul class="submenu" id="subMenu2" style="display: none; list-style: none; padding-left: 0;">
+
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("MantenimientoPlan", "WebPlanAnual")">
+                            <i class="fas fa-edit"></i>
+                            <span>Mantenimiento del Plan</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("ProgramacionFinal", "WebPlanAnual")">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span>Programación Final</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>*@
+
+
+            <li class="nav-item">
+
+                <div class="nav-link" style="display: inline-block; font-weight: bold; color: #ffffff; text-decoration: none;" id="toggleSubMenu3">
+                    <a href="@Url.Action("EjecucionPlanAnual", "WebPlanAnual")" style="display: inline-block; color: #ffffff;">
+                        <i class="fas fa-home"></i>  Ejecución del Plan
+                    </a>
+
+                </div>
+            </li>
+
+
+
+
+
+            <hr class="sidebar-divider">
+
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "Home")">
+                    <i class="fas fa-fw fa-backspace"></i>
+                    <span>Salir</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider">
+
+
+
+
+
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle" style="color :lightseagreen"></button>
+            </div>
+
+
+            @Scripts.Render("~/bundles/js")
+
+
+
+        </ul>
+
+        <div id="content-wrapper" class="d-flex flex-column ">
+
+            <div id="content">
+
+                <nav class="navbar navbar-expand topbar mb-4 static-top navbar-light bg-dark shadow">
+
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+
+
+                    <link rel="stylesheet" type="text/css" href="../Content/css/dist_js-year-calendar.min.css" />
+                    <link rel="stylesheet" type="text/css" href="../Content/css/cdn.datatables.net.min.css" />
+                    <link rel="stylesheet" type="text/css" href="../Content/css/bootstrap-datepicker.min.css" />
+
+                    <script type="text/javascript" src="../Content/js/dist_js-year-calendar.min.js"></script>
+                    <script type="text/javascript" src="../Content/js/locales_js-year-calendar.es.js"></script>
+                    <script type="text/javascript" src="../Content/js/cdn.datatables.net.min.js"></script>
+                    <script type="text/javascript" src="../Content/js/cdn.datatables.net_ellipsis.js"></script>
+                    <script type="text/javascript" src="../Content/js/bootstrap-datepicker.min.js"></script>
+                    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                    
+
+
+
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+
+
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-white-50 small">@ViewBag.nombre</span>
+                                <div class="topbar-divider"></div>
+                                <i class="fas fa-user rounded-circle"></i>
+
+                            </a>
+
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End of Topbar -->
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+
+                    <div class="content mt-3">
+                        @RenderBody()
+
+                        @*MODAL VER VOTACIONES POR EVALUACIÓN*@
+                        <div class="modal fade" id="modal-votacion-evaluacion" tabindex="-1" role="dialog">
+                            <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h6 class="modal-title">Votaciones Plan Anual @(ViewBag.PlanAnualSeleccionado != null ? ViewBag.PlanAnualSeleccionado.Anio_Plan : "") - @(ViewBag.NegocioSeleccionado != null ? ViewBag.NegocioSeleccionado.Negocio : "")</h6>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div id="resultado-votaciones-evaluacion"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*MODAL CREAR VOTACIÓN*@
+                        <div class="modal fade" id="modal-crear-votacion" tabindex="-1" role="dialog">
+                            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h6 class="modal-title">Agregar Votación - Plan Anual @(ViewBag.PlanAnualSeleccionado != null ? ViewBag.PlanAnualSeleccionado.Anio_Plan : "")</h6>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div id="resultado-crear-votacion"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*MODAL EDITAR VOTACIÓN*@
+                        <div class="modal fade" id="modal-editar-votacion" tabindex="-1" role="dialog">
+                            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h6 class="modal-title">Editar Votación - Plan Anual @(ViewBag.PlanAnualSeleccionado != null ? ViewBag.PlanAnualSeleccionado.Anio_Plan : "")</h6>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div id="resultado-editar-votacion"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*MODAL ELIMINAR VOTACIÓN*@
+                        <div class="modal fade" id="modal-eliminar-votacion" tabindex="-1" role="dialog">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h6 class="modal-title">Eliminar Votación</h6>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    @using (Html.BeginForm("PV_EliminarVotacion", "WebPlanAnual", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <div class="modal-body">
+                                            <span>¿Estás seguro que deseas eliminar la votación realizada?</span>
+                                            <input id="inputEliminarVotacion" name="idEvaluacionPlan" type="text" hidden />
+
+                                            <div class="form-group text-center pt-3">
+                                                <button type="button" class="btn font-weight-normal btn-outline-secondary btn-group-toggle mr-2" data-dismiss="modal">
+                                                    <i class="fas fa-times-circle"></i> Cancelar
+                                                </button>
+                                                <button type="submit" class="btn font-weight-normal btn-danger btn-group-toggle">
+                                                    <i class="fas fa-trash-alt"></i> Eliminar votación
+                                                </button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div> <!-- .content -->
+                    <!--
+                        GRAFICOS AQUI
+                    -->
+                    <!-- Nav Item - Dashboard -->
+                    <!-- /.container-fluid -->
+                </div>
+                <!-- End of Main Content -->
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; PACIFICO @DateTime.Today.Year </span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- End of Footer -->
+            </div>
+
+        </div>
+        <!-- End of Page Wrapper -->
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="login.html">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+</html>
+
+<script type="text/javascript" class="init">
+    $(document).ready(function () {
+        if ('@TempData["Icon"]' == "success") {
+            Swal.fire({
+                title: '@TempData["Title"]',
+                text: '@TempData["Text"]',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }
+        else if ('@TempData["Icon"]' == "error") {
+            Swal.fire({
+                title: '@TempData["Title"]',
+                text: '@TempData["Text"]',
+                icon: 'error',
+                confirmButtonColor: 'lightseagreen'
+            });
+        }
+
+        $('#fecha-inicio').datepicker({
+            format: 'dd/mm/yyyy'
+        });
+    });
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        var toggleSubMenu = document.getElementById("toggleSubMenu");
+        var subMenu = document.getElementById("subMenu");
+        var iconoFlecha = document.getElementById("iconoFlecha");
+
+        var toggleSubMenu2 = document.getElementById("toggleSubMenu2");
+        var subMenu2 = document.getElementById("subMenu2");
+        var iconoFlecha2 = document.getElementById("iconoFlecha2");
+
+        toggleSubMenu.addEventListener("click", function (event) {
+            if (!event.target.matches("a")) {
+                if (subMenu.style.display === "none") {
+                    subMenu.style.display = "block";
+                    iconoFlecha.classList.remove("fa-chevron-down");
+                    iconoFlecha.classList.add("fa-chevron-up");
+                } else {
+                    subMenu.style.display = "none";
+                    iconoFlecha.classList.remove("fa-chevron-up");
+                    iconoFlecha.classList.add("fa-chevron-down");
+                }
+            }
+        });
+
+        toggleSubMenu2.addEventListener("click", function (event) {
+            if (!event.target.matches("a")) {
+                if (subMenu2.style.display === "none") {
+                    subMenu2.style.display = "block";
+                    iconoFlecha2.classList.remove("fa-chevron-down");
+                    iconoFlecha2.classList.add("fa-chevron-up");
+                } else {
+                    subMenu2.style.display = "none";
+                    iconoFlecha2.classList.remove("fa-chevron-up");
+                    iconoFlecha2.classList.add("fa-chevron-down");
+                }
+            }
+        });
+    });
+
+
+    function llamarVotacionEvaluacion(idEvaluacionPlan, lastPage) {
+    var laURLDeLaVista = '@Url.Action("PV_VerVotacionEvaluacionPlan", "WebPlanAnual")';
+    $.ajax({
+        cache: false,
+        async: true,
+        type: "GET",
+        url: laURLDeLaVista,
+        data: { idEvaluacionPlan: idEvaluacionPlan, lastPage: lastPage },
+        success: function (response) {
+            $('#resultado-votaciones-evaluacion').html('');
+            $('#resultado-votaciones-evaluacion').html(response);
+        },
+        error: function (xhr, status, error) {
+            console.log("Error: " + error);
+            console.log("Status: " + status);
+            console.log("Response: " + xhr.responseText);
+        }
+    });
+}
+
+    function llamarCrearVotacion(idEvaluacionPlan) {
+        var laURLDeLaVista = '@Url.Action("PV_CrearVotacion", "WebPlanAnual")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { idEvaluacionPlan: idEvaluacionPlan },
+                success: function (response) {
+                    $('#resultado-crear-votacion').html('');
+                    $('#resultado-crear-votacion').html(response);
+                }
+            });
+    }
+    function llamarEditarVotacion(idEvaluacionPlan) {
+        var laURLDeLaVista = '@Url.Action("PV_EditarVotacion", "WebPlanAnual")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { idEvaluacionPlan: idEvaluacionPlan },
+                success: function (response) {
+                    $('#resultado-editar-votacion').html('');
+                    $('#resultado-editar-votacion').html(response);
+                }
+            });
+    }
+    function cambiarPesoSeleccionado(idCriterio) {
+        var e = document.getElementById("selectOpcionVotacion_" + idCriterio);
+        var option = e.options[e.selectedIndex];
+        var peso = option.getAttribute("data-peso");
+
+        document.getElementById("inputPesoOpcion_" + idCriterio).setAttribute('value', peso);
+    }
+    function llamarEliminarVotacion(idEvaluacionPlan) {
+        document.getElementById("inputEliminarVotacion").setAttribute('value', idEvaluacionPlan);
+    }
+
+
+
+</script>
+

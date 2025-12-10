@@ -1,0 +1,55 @@
+﻿@model WebTIGA.Models.ContenedorModelos
+@{
+    ViewBag.Title = "ElaboracionPlanAnual";
+    Layout = "~/Views/Shared/_Layout_Plan_Anual.cshtml";
+}
+
+<body>
+
+    <header>
+        <h1>Elaboración del Plan Dinámico</h1>
+        <p>Módulo para realizar la administración y planificación del Plan Anual de las evaluaciones de Auditoría Interna</p>
+    </header>
+    <div class="container-plan-anual">
+
+
+        <div class="box" onclick="window.location.href='../WebPlanAnual/MantenimientoPlan'">
+            <h3>Mantenimiento del Plan</h3>
+            <p>Realiza los cambios en las evaluaciones de un plan anual</p>
+            <div class="row justify-content-end">
+                <div class="col-lg-4">
+                    <img src="~/img/plan-anual/icon-mantenimiento.png" class="img-fluid" />
+                </div>
+            </div>
+        </div>
+
+        <div class="box" onclick="window.location.href='../WebPlanAnual/ProgramacionFinal'">
+            <h3>Programación Final</h3>
+            <p>Realiza el scoring y programación de las evaluaciones del plan anual</p>
+            <div class="row justify-content-end mt-auto">
+                <div class="col-lg-4">
+                    <img src="~/img/plan-anual/icon-programacion.png" class="img-fluid" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

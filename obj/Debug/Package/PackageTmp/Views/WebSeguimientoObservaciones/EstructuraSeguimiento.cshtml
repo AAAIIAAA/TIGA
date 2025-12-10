@@ -1,0 +1,645 @@
+﻿@using WebTIGA;
+
+@model WebTIGA.Models.ContenedorModelos
+@{
+    ViewBag.Title = "Estructura de Seguimiento";
+    Layout = "~/Views/Shared/_Layout_Seguimiento_Observaciones.cshtml";
+
+    var listaUnidades = Model.TG_Unidad_Responsable.ToList();
+}
+
+
+<div class="card shadow mb-4">
+    <div class="row card-header py-3">
+        <div class="col-lg-2">
+
+            <a href="@Url.Action("Inicio", "WebSeguimientoObservaciones")" class="text-decoration-none me-3">
+                <i class="fas fa-arrow-left text-dark" style="font-size: 24px;"></i>
+            </a>
+        </div>
+        <div class="col-lg-8 text-center">
+
+            <h5 class="m-0 font-weight-bold text-dark text-center">Estructura de Seguimiento</h5>
+        </div>
+        <div></div>
+    </div>
+
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="tree">
+                    <ul id="myUL">
+                        @foreach (var item0 in listaUnidades.Where(l => l.Nivel == 0 && l.flagActivo == 1).OrderBy(l => l.Nombre))
+                        {
+                            <li>
+                                @if (listaUnidades.Where(l => l.ID_Padre == item0.ID && l.flagActivo == 1).Count() == 0)
+                                {
+                                    <span><i class="far fa-id-badge"></i> @item0.Nombre</span>
+                                    <div class="btn-group dropright">
+                                        <button type="button" class="btn btn-light btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="sr-only"></span></button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="javascript: verUnidadResponsable(@item0.ID);"><i class="fas fa-eye"></i> Ver responsables</a>
+
+                                            @if (ViewBag.idRolValidacion == 5 || ViewBag.idRolValidacion == 2)
+                                            {
+                                                <a class="dropdown-item" href="#" onclick="agregarUnidadResponsable(@item0.ID);" data-toggle="modal" data-target="#modalAgregarUnidad"><i class="fas fa-plus"></i> Agregar</a>
+                                                <a class="dropdown-item" href="#" onclick="editarUnidadResponsable(@item0.ID);" data-toggle="modal" data-target="#modalEditarUnidad"><i class="fas fa-pen"></i> Editar</a>
+                                                <a class="dropdown-item" href="#" onclick="llamarEliminarUnidad(@item0.ID);" data-toggle="modal" data-target="#modalEliminarUnidad"><i class="fas fa-trash"></i> Eliminar</a>
+                                                @* <a class="dropdown-item" href="#" onclick="llamarHistorialUnidad(@item0.ID);" data-toggle="modal" data-target="#modalHistorialUnidad"><i class="fas fa-history"></i> Historial</a>*@
+
+
+                                            }
+
+
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="caret"><i class="fas fa-folder"></i> @item0.Nombre</span>
+                                    <div class="btn-group dropright">
+                                        <button type="button" class="btn btn-light btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="sr-only"></span></button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="javascript: verUnidadResponsable(@item0.ID);"><i class="fas fa-eye"></i> Ver responsables</a>
+                                            @if (ViewBag.idRolValidacion == 5 || ViewBag.idRolValidacion == 2)
+                                            {
+                                                <a class="dropdown-item" href="#" onclick="agregarUnidadResponsable(@item0.ID);" data-toggle="modal" data-target="#modalAgregarUnidad"><i class="fas fa-plus"></i> Agregar</a>
+                                                <a class="dropdown-item" href="#" onclick="editarUnidadResponsable(@item0.ID);" data-toggle="modal" data-target="#modalEditarUnidad"><i class="fas fa-pen"></i> Editar</a>
+                                                <a class="dropdown-item" href="#" onclick="llamarEliminarUnidad(@item0.ID);" data-toggle="modal" data-target="#modalEliminarUnidad"><i class="fas fa-trash"></i> Eliminar</a>
+                                                @* <a class="dropdown-item" href="#" onclick="llamarHistorialUnidad(@item0.ID);" data-toggle="modal" data-target="#modalHistorialUnidad"><i class="fas fa-history"></i> Historial</a>*@
+
+
+                                            }
+                                        </div>
+                                    </div>
+                                    <ul class="nested">
+                                        @foreach (var item1 in listaUnidades.Where(l => l.ID_Padre == item0.ID && l.Nivel == 1 && l.flagActivo == 1).OrderBy(l => l.Nombre))
+                                        {
+                                            <li>
+                                                @if (listaUnidades.Where(l => l.ID_Padre == item1.ID && l.flagActivo == 1).Count() == 0)
+                                                {
+                                                    <span><i class="far fa-id-badge"></i> @item1.Nombre</span>
+                                                    <div class="btn-group dropright">
+                                                        <button type="button" class="btn btn-light btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="sr-only"></span></button>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item" href="javascript: verUnidadResponsable(@item1.ID);"><i class="fas fa-eye"></i> Ver responsables</a>
+                                                            @if (ViewBag.idRolValidacion == 5 || ViewBag.idRolValidacion == 2)
+                                                            {
+                                                                <a class="dropdown-item" href="#" onclick="agregarUnidadResponsable(@item1.ID);" data-toggle="modal" data-target="#modalAgregarUnidad"><i class="fas fa-plus"></i> Agregar</a>
+                                                                <a class="dropdown-item" href="#" onclick="editarUnidadResponsable(@item1.ID);" data-toggle="modal" data-target="#modalEditarUnidad"><i class="fas fa-pen"></i> Editar</a>
+                                                                <a class="dropdown-item" href="#" onclick="llamarEliminarUnidad(@item1.ID);" data-toggle="modal" data-target="#modalEliminarUnidad"><i class="fas fa-trash"></i> Eliminar</a>
+                                                                @* <a class="dropdown-item" href="#" onclick="llamarHistorialUnidad(@item0.ID);" data-toggle="modal" data-target="#modalHistorialUnidad"><i class="fas fa-history"></i> Historial</a>*@
+
+
+                                                            }
+
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <span class="caret"><i class="fas fa-folder"></i> @item1.Nombre</span>
+                                                    <div class="btn-group dropright">
+                                                        <button type="button" class="btn btn-light btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="sr-only"></span></button>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item" href="javascript: verUnidadResponsable(@item1.ID);"><i class="fas fa-eye"></i> Ver responsables</a>
+                                                            @if (ViewBag.idRolValidacion == 5 || ViewBag.idRolValidacion == 2)
+                                                            {
+                                                                <a class="dropdown-item" href="#" onclick="agregarUnidadResponsable(@item1.ID);" data-toggle="modal" data-target="#modalAgregarUnidad"><i class="fas fa-plus"></i> Agregar</a>
+                                                                <a class="dropdown-item" href="#" onclick="editarUnidadResponsable(@item1.ID);" data-toggle="modal" data-target="#modalEditarUnidad"><i class="fas fa-pen"></i> Editar</a>
+                                                                <a class="dropdown-item" href="#" onclick="llamarEliminarUnidad(@item1.ID);" data-toggle="modal" data-target="#modalEliminarUnidad"><i class="fas fa-trash"></i> Eliminar</a>
+                                                                @* <a class="dropdown-item" href="#" onclick="llamarHistorialUnidad(@item0.ID);" data-toggle="modal" data-target="#modalHistorialUnidad"><i class="fas fa-history"></i> Historial</a>*@
+
+
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <ul class="nested">
+                                                        @foreach (var item2 in listaUnidades.Where(l => l.ID_Padre == item1.ID && l.Nivel == 2 && l.flagActivo == 1).OrderBy(l => l.Nombre))
+                                                        {
+                                                            <li>
+                                                                @if (listaUnidades.Where(l => l.ID_Padre == item2.ID && l.flagActivo == 1).Count() == 0)
+                                                                {
+                                                                    <span><i class="far fa-id-badge"></i> @item2.Nombre</span>
+                                                                    <div class="btn-group dropright">
+                                                                        <button type="button" class="btn btn-light btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="sr-only"></span></button>
+                                                                        <div class="dropdown-menu">
+                                                                            <a class="dropdown-item" href="javascript: verUnidadResponsable(@item2.ID);"><i class="fas fa-eye"></i> Ver responsables</a>
+                                                                            @if (ViewBag.idRolValidacion == 5 || ViewBag.idRolValidacion == 2)
+                                                                            {
+                                                                                <a class="dropdown-item" href="#" onclick="agregarUnidadResponsable(@item2.ID);" data-toggle="modal" data-target="#modalAgregarUnidad"><i class="fas fa-plus"></i> Agregar</a>
+                                                                                <a class="dropdown-item" href="#" onclick="editarUnidadResponsable(@item2.ID);" data-toggle="modal" data-target="#modalEditarUnidad"><i class="fas fa-pen"></i> Editar</a>
+                                                                                <a class="dropdown-item" href="#" onclick="llamarEliminarUnidad(@item2.ID);" data-toggle="modal" data-target="#modalEliminarUnidad"><i class="fas fa-trash"></i> Eliminar</a>
+                                                                                @* <a class="dropdown-item" href="#" onclick="llamarHistorialUnidad(@item0.ID);" data-toggle="modal" data-target="#modalHistorialUnidad"><i class="fas fa-history"></i> Historial</a>*@
+
+
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span class="caret"><i class="fas fa-folder"></i> @item2.Nombre</span>
+                                                                    <div class="btn-group dropright">
+                                                                        <button type="button" class="btn btn-light btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="sr-only"></span></button>
+                                                                        <div class="dropdown-menu">
+                                                                            <a class="dropdown-item" href="javascript: verUnidadResponsable(@item2.ID);"><i class="fas fa-eye"></i> Ver responsables</a>
+                                                                            @if (ViewBag.idRolValidacion == 5 || ViewBag.idRolValidacion == 2)
+                                                                            {
+                                                                                <a class="dropdown-item" href="#" onclick="agregarUnidadResponsable(@item2.ID);" data-toggle="modal" data-target="#modalAgregarUnidad"><i class="fas fa-plus"></i> Agregar</a>
+                                                                                <a class="dropdown-item" href="#" onclick="editarUnidadResponsable(@item2.ID);" data-toggle="modal" data-target="#modalEditarUnidad"><i class="fas fa-pen"></i> Editar</a>
+                                                                                <a class="dropdown-item" href="#" onclick="llamarEliminarUnidad(@item2.ID);" data-toggle="modal" data-target="#modalEliminarUnidad"><i class="fas fa-trash"></i> Eliminar</a>
+                                                                                @* <a class="dropdown-item" href="#" onclick="llamarHistorialUnidad(@item0.ID);" data-toggle="modal" data-target="#modalHistorialUnidad"><i class="fas fa-history"></i> Historial</a>*@
+
+
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                    <ul class="nested">
+                                                                        @foreach (var item3 in listaUnidades.Where(l => l.ID_Padre == item2.ID && l.Nivel == 3 && l.flagActivo == 1).OrderBy(l => l.Nombre))
+                                                                        {
+                                                                            <li>
+                                                                                @if (listaUnidades.Where(l => l.ID_Padre == item3.ID && l.flagActivo == 1).Count() == 0)
+                                                                                {
+                                                                                    <span><i class="far fa-id-badge"></i> @item3.Nombre</span>
+                                                                                    <div class="btn-group dropright">
+                                                                                        <button type="button" class="btn btn-light btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="sr-only"></span></button>
+                                                                                        <div class="dropdown-menu">
+                                                                                            <a class="dropdown-item" href="javascript: verUnidadResponsable(@item3.ID);"><i class="fas fa-eye"></i> Ver responsables</a>
+                                                                                            @if (ViewBag.idRolValidacion == 5 || ViewBag.idRolValidacion == 2)
+                                                                                            {
+                                                                                                <a class="dropdown-item" href="#" onclick="agregarUnidadResponsable(@item3.ID);" data-toggle="modal" data-target="#modalAgregarUnidad"><i class="fas fa-plus"></i> Agregar</a>
+                                                                                                <a class="dropdown-item" href="#" onclick="editarUnidadResponsable(@item3.ID);" data-toggle="modal" data-target="#modalEditarUnidad"><i class="fas fa-pen"></i> Editar</a>
+                                                                                                <a class="dropdown-item" href="#" onclick="llamarEliminarUnidad(@item3.ID);" data-toggle="modal" data-target="#modalEliminarUnidad"><i class="fas fa-trash"></i> Eliminar</a>
+                                                                                                @* <a class="dropdown-item" href="#" onclick="llamarHistorialUnidad(@item0.ID);" data-toggle="modal" data-target="#modalHistorialUnidad"><i class="fas fa-history"></i> Historial</a>*@
+
+
+                                                                                            }
+                                                                                        </div>
+                                                                                    </div>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <span class="caret"><i class="fas fa-folder"></i> @item3.Nombre</span>
+                                                                                    <div class="btn-group dropright">
+                                                                                        <button type="button" class="btn btn-light btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="sr-only"></span></button>
+                                                                                        <div class="dropdown-menu">
+                                                                                            <a class="dropdown-item" href="javascript: verUnidadResponsable(@item3.ID);"><i class="fas fa-eye"></i> Ver responsables</a>
+                                                                                            @if (ViewBag.idRolValidacion == 5 || ViewBag.idRolValidacion == 2)
+                                                                                            {
+                                                                                                <a class="dropdown-item" href="#" onclick="agregarUnidadResponsable(@item3.ID);" data-toggle="modal" data-target="#modalAgregarUnidad"><i class="fas fa-plus"></i> Agregar</a>
+                                                                                                <a class="dropdown-item" href="#" onclick="editarUnidadResponsable(@item3.ID);" data-toggle="modal" data-target="#modalEditarUnidad"><i class="fas fa-pen"></i> Editar</a>
+                                                                                                <a class="dropdown-item" href="#" onclick="llamarEliminarUnidad(@item3.ID);" data-toggle="modal" data-target="#modalEliminarUnidad"><i class="fas fa-trash"></i> Eliminar</a>
+                                                                                                @* <a class="dropdown-item" href="#" onclick="llamarHistorialUnidad(@item0.ID);" data-toggle="modal" data-target="#modalHistorialUnidad"><i class="fas fa-history"></i> Historial</a>*@
+
+
+                                                                                            }
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <ul class="nested">
+                                                                                        @foreach (var item4 in listaUnidades.Where(l => l.ID_Padre == item3.ID && l.Nivel == 4 && l.flagActivo == 1).OrderBy(l => l.Nombre))
+                                                                                        {
+                                                                                            <li>
+                                                                                                @if (listaUnidades.Where(l => l.ID_Padre == item4.ID && l.flagActivo == 1).Count() == 0)
+                                                                                                {
+                                                                                                    <span><i class="far fa-id-badge"></i> @item4.Nombre</span>
+                                                                                                    <div class="btn-group dropright">
+                                                                                                        <button type="button" class="btn btn-light btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="sr-only"></span></button>
+                                                                                                        <div class="dropdown-menu">
+                                                                                                            <a class="dropdown-item" href="javascript: verUnidadResponsable(@item4.ID);"><i class="fas fa-eye"></i> Ver responsables</a>
+                                                                                                            @if (ViewBag.idRolValidacion == 5 || ViewBag.idRolValidacion == 2)
+                                                                                                            {
+                                                                                                                <a class="dropdown-item" href="#" onclick="agregarUnidadResponsable(@item4.ID);" data-toggle="modal" data-target="#modalAgregarUnidad"><i class="fas fa-plus"></i> Agregar</a>
+                                                                                                                <a class="dropdown-item" href="#" onclick="editarUnidadResponsable(@item4.ID);" data-toggle="modal" data-target="#modalEditarUnidad"><i class="fas fa-pen"></i> Editar</a>
+                                                                                                                <a class="dropdown-item" href="#" onclick="llamarEliminarUnidad(@item4.ID);" data-toggle="modal" data-target="#modalEliminarUnidad"><i class="fas fa-trash"></i> Eliminar</a>
+                                                                                                                @* <a class="dropdown-item" href="#" onclick="llamarHistorialUnidad(@item0.ID);" data-toggle="modal" data-target="#modalHistorialUnidad"><i class="fas fa-history"></i> Historial</a>*@
+
+
+                                                                                                            }
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                }
+                                                                                                else
+                                                                                                {
+                                                                                                    <span class="caret"><i class="fas fa-folder"></i> @item4.Nombre</span>
+                                                                                                    <div class="btn-group dropright">
+                                                                                                        <button type="button" class="btn btn-light btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="sr-only"></span></button>
+                                                                                                        <div class="dropdown-menu">
+                                                                                                            <a class="dropdown-item" href="javascript: verUnidadResponsable(@item4.ID);"><i class="fas fa-eye"></i> Ver responsables</a>
+                                                                                                            @if (ViewBag.idRolValidacion == 5 || ViewBag.idRolValidacion == 2)
+                                                                                                            {
+                                                                                                                <a class="dropdown-item" href="#" onclick="agregarUnidadResponsable(@item4.ID);" data-toggle="modal" data-target="#modalAgregarUnidad"><i class="fas fa-plus"></i> Agregar</a>
+                                                                                                                <a class="dropdown-item" href="#" onclick="editarUnidadResponsable(@item4.ID);" data-toggle="modal" data-target="#modalEditarUnidad"><i class="fas fa-pen"></i> Editar</a>
+                                                                                                                <a class="dropdown-item" href="#" onclick="llamarEliminarUnidad(@item4.ID);" data-toggle="modal" data-target="#modalEliminarUnidad"><i class="fas fa-trash"></i> Eliminar</a>
+                                                                                                                @* <a class="dropdown-item" href="#" onclick="llamarHistorialUnidad(@item0.ID);" data-toggle="modal" data-target="#modalHistorialUnidad"><i class="fas fa-history"></i> Historial</a>*@
+
+
+                                                                                                            }
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <ul class="nested">
+                                                                                                        @foreach (var item5 in listaUnidades.Where(l => l.ID_Padre == item4.ID && l.Nivel == 5 && l.flagActivo == 1).OrderBy(l => l.Nombre))
+                                                                                                        {
+                                                                                                            <li>
+                                                                                                                <span><i class="far fa-id-badge"></i> @item5.Nombre</span>
+                                                                                                                <div class="btn-group dropright">
+                                                                                                                    <button type="button" class="btn btn-light btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="sr-only"></span></button>
+                                                                                                                    <div class="dropdown-menu">
+                                                                                                                        <a class="dropdown-item" href="javascript: verUnidadResponsable(@item5.ID);"><i class="fas fa-eye"></i> Ver responsables</a>
+                                                                                                                        @if (ViewBag.idRolValidacion == 5 || ViewBag.idRolValidacion == 2)
+                                                                                                                        {
+                                                                                                                            <a class="dropdown-item" href="#" onclick="agregarUnidadResponsable(@item5.ID);" data-toggle="modal" data-target="#modalAgregarUnidad"><i class="fas fa-plus"></i> Agregar</a>
+                                                                                                                            <a class="dropdown-item" href="#" onclick="editarUnidadResponsable(@item5.ID);" data-toggle="modal" data-target="#modalEditarUnidad"><i class="fas fa-pen"></i> Editar</a>
+                                                                                                                            <a class="dropdown-item" href="#" onclick="llamarEliminarUnidad(@item5.ID);" data-toggle="modal" data-target="#modalEliminarUnidad"><i class="fas fa-trash"></i> Eliminar</a>
+                                                                                                                            @* <a class="dropdown-item" href="#" onclick="llamarHistorialUnidad(@item0.ID);" data-toggle="modal" data-target="#modalHistorialUnidad"><i class="fas fa-history"></i> Historial</a>*@
+
+
+                                                                                                                        }
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </li>
+                                                                                                        }
+                                                                                                    </ul>
+                                                                                                }
+                                                                                            </li>
+                                                                                        }
+                                                                                    </ul>
+                                                                                }
+                                                                            </li>
+                                                                        }
+                                                                    </ul>
+                                                                }
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                }
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6 ">
+                <div id="resultado"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL AGREGAR UNIDAD*@
+<div class="modal fade" id="modalAgregarUnidad" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Agregar Unidad</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="resultado-agregar-unidad"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL EDITAR UNIDAD*@
+<div class="modal fade" id="modalEditarUnidad" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Editar Unidad</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="resultado-editar-unidad"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL ELIMINAR UNIDAD CONTACTO*@
+<div class="modal fade" id="modalEliminarUnidad" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar Unidad</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("EliminarUnidad", "WebSeguimientoObservaciones", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    ¿Estás seguro que deseas eliminar esta información? Esta operación es irreversible.
+                    <input id="inputIdUnidad" name="idUnidad" type="text" hidden />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" style="background-color :lightseagreen">Eliminar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+@*MODAL AGREGAR UNIDAD CONTACTO*@
+<div class="modal fade" id="modalAgregarUnidadContacto" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Agregar responsable</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="resultado-agregar-unidad-contacto"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL EDITAR UNIDAD CONTACTO*@
+<div class="modal fade" id="modalEditarUnidadContacto" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Editar Contacto</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="resultado-editar-unidad-contacto"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL ELIMINAR UNIDAD CONTACTO*@
+<div class="modal fade" id="modalEliminarUnidadContacto" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar Contacto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("EliminarUnidadContacto", "WebSeguimientoObservaciones", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    ¿Estás seguro que deseas eliminar esta información? Esta operación es irreversible.
+                    <input id="inputIdUnidadResponsable" name="ID_Unidad_Responsable" type="text" hidden />
+                    <input id="inputIdContacto" name="ID_Contacto" type="text" hidden />
+                    <input id="inputIdRol" name="ID_Rol" type="text" hidden />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" style="background-color :lightseagreen">Eliminar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" class="init">
+
+    $(document).ready(function () {
+        $('#tabla_historial_contacto').dataTable({
+            "dom": "<'row pb-1'<'col-sm-12 col-md-12 text-right'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-12 col-md-5'><'col-sm-12 col-md-7'p>>",
+            "order": [[1, 'asc']],
+            "searching": false,
+            "paging": false,
+            "scrollX": true,
+            "scrollY": "52vh",
+            "language": {
+                "zeroRecords": "No hay datos disponibles para los filtros seleccionados",
+                "info": "Mostrandose _TOTAL_ registros",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros)",
+                "search": "Buscar:"
+            },
+            "buttons": []
+        });
+    });
+
+
+
+
+    if ('@TempData["IdUnidad"]' != null) {
+        verUnidadResponsable('@TempData["IdUnidad"]');
+    }
+
+    function verUnidadResponsable(id) {
+        var laURLDeLaVista = '@Url.Action("PV_VerUnidadResponsable", "WebSeguimientoObservaciones")';
+        $.ajax({
+            cache: false,
+            async: true,
+            type: "GET",
+            url: laURLDeLaVista,
+            data: { idUnidad: id },
+            success: function (response) {
+                $('#resultado').html('');
+                $('#resultado').html(response);
+            }
+        });
+    }
+
+    function agregarUnidadResponsable(id) {
+        var laURLDeLaVista = '@Url.Action("PV_AgregarUnidadResponsable", "WebSeguimientoObservaciones")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { idUnidad: id },
+                success: function (response) {
+                    $('#resultado-agregar-unidad').html('');
+                    $('#resultado-agregar-unidad').html(response);
+                }
+            });
+    }
+
+    function editarUnidadResponsable(id) {
+        var laURLDeLaVista = '@Url.Action("PV_EditarUnidadResponsable", "WebSeguimientoObservaciones")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { idUnidad: id },
+                success: function (response) {
+                    $('#resultado-editar-unidad').html('');
+                    $('#resultado-editar-unidad').html(response);
+                }
+            });
+    }
+
+    $(function () {
+        $('.tree li:has(ul)').addClass('parent_li');
+
+        var toggler = document.getElementsByClassName('caret');
+        var i;
+
+        for (i = 0; i < toggler.length; i++) {
+            toggler[i].addEventListener('click', function () {
+                this.parentElement.querySelector('.nested').classList.toggle('active');
+
+                if (this.parentElement.querySelector('.nested').classList.contains('active')) {
+                    $(this).find(' > i').addClass('fa-folder-open').removeClass('fa-folder');
+                } else {
+                    $(this).find(' > i').addClass('fa-folder').removeClass('fa-folder-open');
+                }
+            });
+        }
+    });
+
+    function llamarAgregarUnidadContacto(idUnidad) {
+        var laURLDeLaVista = '@Url.Action("PV_AgregarUnidadContacto", "WebSeguimientoObservaciones")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { idUnidad: idUnidad },
+                success: function (response) {
+                    $('#resultado-agregar-unidad-contacto').html('');
+                    $('#resultado-agregar-unidad-contacto').html(response);
+                }
+            });
+    }
+
+    function llamarEditarUnidadContacto(idUnidad, idContacto, idRol) {
+        var laURLDeLaVista = '@Url.Action("PV_EditarUnidadContacto", "WebSeguimientoObservaciones")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { idUnidadAnt: idUnidad, idRolAnt: idRol, idContactoAnt: idContacto },
+                success: function (response) {
+                    $('#resultado-editar-unidad-contacto').html('');
+                    $('#resultado-editar-unidad-contacto').html(response);
+                }
+            });
+    }
+
+    function cambiarAgregarRol(idUnidad, idRol) {
+        var laURLDeLaVista = '@Url.Action("PV_AgregarUnidadContacto", "WebSeguimientoObservaciones")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { idUnidad: idUnidad, idNuevoRol: idRol },
+                success: function (response) {
+                    $('#resultado-agregar-unidad-contacto').html('');
+                    $('#resultado-agregar-unidad-contacto').html(response);
+                }
+            });
+    }
+
+    function cambiarEditarRol(unidadAnt, rolAnt, contactoAnt, rolSelec) {
+        var laURLDeLaVista = '@Url.Action("PV_EditarUnidadContacto", "WebSeguimientoObservaciones")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { idUnidadAnt: unidadAnt, idRolAnt: rolAnt, idContactoAnt: contactoAnt, idNuevoRol: rolSelec },
+                success: function (response) {
+                    $('#resultado-editar-unidad-contacto').html('');
+                    $('#resultado-editar-unidad-contacto').html(response);
+                }
+            });
+    }
+
+    function cambiarAgregarUnidad(id, nivel) {
+        var laURLDeLaVista = '@Url.Action("PV_AgregarUnidadResponsable", "WebSeguimientoObservaciones")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { idUnidad: id, nivel: nivel },
+                success: function (response) {
+                    $('#resultado-agregar-unidad').html('');
+                    $('#resultado-agregar-unidad').html(response);
+                }
+            });
+    }
+
+    function cambiarEditarUnidad(id, nivel) {
+        var laURLDeLaVista = '@Url.Action("PV_EditarUnidadResponsable", "WebSeguimientoObservaciones")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: { idUnidad: id, nivel: nivel },
+                success: function (response) {
+                    $('#resultado-editar-unidad').html('');
+                    $('#resultado-editar-unidad').html(response);
+                }
+            });
+    }
+
+    function llamarEliminarUnidad(idUnidad) {
+        document.getElementById("inputIdUnidad").setAttribute('value', idUnidad);
+    }
+
+    function llamarEliminarUnidadContacto(idUnidad, idRol, idContacto) {
+        document.getElementById("inputIdUnidadResponsable").setAttribute('value', idUnidad);
+        document.getElementById("inputIdRol").setAttribute('value', idRol);
+        document.getElementById("inputIdContacto").setAttribute('value', idContacto);
+    }
+
+    $(document).ready(function () {
+
+        if ('@TempData["Icon"]' == "success") {
+            Swal.fire({
+                title: '@TempData["Title"]',
+                text: '@TempData["Text"]',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }
+        else if ('@TempData["Icon"]' == "error") {
+            Swal.fire({
+                title: '@TempData["Title"]',
+                text: '@TempData["Text"]',
+                icon: 'error',
+                confirmButtonColor: 'lightseagreen'
+            });
+        }
+    });
+
+    
+
+
+
+
+</script>
+
+

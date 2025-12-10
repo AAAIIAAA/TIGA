@@ -1,0 +1,98 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+
+<div style="font-size: 0.8rem !important">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+       
+        <hr class="mt-0 font-weight-bold" />
+
+        <div id="listaEvaluacionesFusionar" class="container-fluid">
+            
+
+            <div class="form-row">
+                <div class="form-group col-11">
+                    <input type="text" class="form-control form-control-sm" name="listaEvalPlan[0].ID_Evaluacion_Plan" value="@ViewBag.EvalPlanSel.ID_Evaluacion_Plan" hidden>
+                    <input type="text" class="form-control form-control-sm" value="@ViewBag.EvalPlanSel.DPA_Evaluacion.Evaluacion" readonly>
+                    <span class="pt-2 badge text-wrap font-weight-normal text-danger" style="font-size: 0.8rem !important">
+                        <i class="fas fa-info-circle"></i> La evaluación resultante heredará los datos de la primera evaluación seleccionada a reemplazar.
+                    </span>
+                </div>
+               
+
+            </div>
+            
+        </div>
+
+        <p class="m-0 font-weight-bold text-dark font-italic"> Ingrese los datos nuevos del proyecto a reemplazar:</p>
+        <hr class="mt-0 font-weight-bold" />
+
+        <div class="container-fluid">
+            <input type="text" class="form-control form-control-sm" name="DPA_Evaluacion.ID_Negocio" value="@ViewBag.EvalPlanSel.DPA_Evaluacion.ID_Negocio" hidden>
+            <input type="text" class="form-control form-control-sm" name="ID_Plan_Anual" value="@ViewBag.EvalPlanSel.ID_Plan_Anual" hidden>
+
+
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label>Nombre de la Evaluación *</label>
+                    <input type="text" class="form-control form-control-sm" name="DPA_Evaluacion.Evaluacion" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-5">
+                    <label>Último Calificativo *</label>
+                    <select class="form-control form-control-sm" name="Ultimo_Calificativo" required>
+                        <option value="" selected disabled> - </option>
+                        @foreach (var Item in ViewBag.listaUltimoCalificativo)
+                        {
+                            <option>@Item</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-7">
+                    <label>Riesgo Asociado *</label>
+                    <select class="form-control form-control-sm" name="ID_Riesgo_Asociado" required>
+                        <option value="" selected disabled> - </option>
+                        @foreach (var Item in Model.DPA_Riesgo_Asociado)
+                        {
+                            <option value="@Item.ID_Riesgo_Asociado">@Item.Nombre_Riesgo</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group text-center pt-3">
+            <button type="button" class="btn btn-sm  btn-outline-secondary btn-group-toggle font-weight-normal mr-2" data-dismiss="modal">
+                <i class="fas fa-times-circle"></i> Cancelar
+            </button>
+            <button type="submit" class="btn btn-sm btn-info btn-group-toggle font-weight-normal">
+                <i class="fas fa-save"></i> Reemplazar evaluacion
+            </button>
+        </div>
+
+    }
+</div>
+
+@*<script type="text/javascript" class="init">
+
+    $("#btnAgregarEvalPlan-fusion").click(function () {
+        $('#listaEvaluacionesFusionar').append($('#selectEvaluacionOculto-fusion').html());
+
+        var elementos = document.querySelectorAll('.evalPlanFusionadas');
+        for (var i = 1; i < elementos.length; i++) {
+            elementos[i].setAttribute('name', 'listaEvalPlan[' + (i+1) + '].ID_Evaluacion_Plan');
+            elementos[i].required = true;
+        }
+    });
+
+    function funcionPrueba(e) {
+        e.parentElement.parentElement.remove();
+        var elementos = document.querySelectorAll('.evalPlanFusionadas');
+        for (var i = 1; i < elementos.length; i++) {
+            elementos[i].setAttribute('name', 'listaEvalPlan[' + (i+1) + '].ID_Evaluacion_Plan');
+        }
+    }
+</script>*@

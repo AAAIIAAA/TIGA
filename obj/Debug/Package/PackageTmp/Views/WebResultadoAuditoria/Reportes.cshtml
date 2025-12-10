@@ -1,0 +1,108 @@
+﻿@model WebTIGA.Models.ContenedorModelos
+@{
+    Layout = "~/Views/Shared/_Layout_Resultados_Auditoria.cshtml";
+    ViewBag.Title = "Reportes";
+}
+@{ 
+
+    string color = "";
+}
+<html>
+<head>
+    @*<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">*@
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstr apcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+
+
+
+</head>
+<body>
+    <div class="row">
+
+        <div class="col-lg-12">
+            <div class="card text-white bg-secondary mb-3">
+                <div class="card-header"><strong>REPORTES DE AUDITORIA</strong></div>
+                <div class="card-body">
+                    @using (Html.BeginForm())
+                    {
+                        <div class="row">
+
+                            <div class="col-lg-4">
+
+                                REPORTES : <br />
+
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+
+
+        @foreach (var item in Model.SP_WT_REPORTES)
+        {
+
+            <div class="col-lg-4">
+                <div class="card  bg-gray-100 mb-3">
+                    <div class="card-header">@item.Nombre</div>
+                    <div class="card-body  text-center">
+                        <h5 class="card-title">Ver detalle</h5>
+                        <a href="@item.Enlace">
+                            <i class="fas fa-list-alt fa-10x"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        }
+
+
+
+        <div class="col-lg-4">
+
+
+
+        </div>
+
+        <div class="col-lg-4">
+
+
+
+        </div>
+
+        <div class="col-lg-4">
+
+
+        </div>
+        <div class="col-lg-4">
+
+
+        </div>
+
+        <div class="col-lg-4">
+
+
+
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+</body>
+</html>

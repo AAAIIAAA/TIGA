@@ -1,0 +1,213 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+
+@{ 
+    var listaFunciones = new List<string> { "01-Auditor", "02-Jefe de Auditoría", "03-Gerente Adjunto", "04-Gerente", "05-Practicante" };
+    var listaEquipos = new List<string> { "Calidad", "Procesos de Seguros", "Procesos de Prestación", "Procesos de Pensiones", "Procesos de TI","Analítica e Innovación en Auditoría" };
+    var listaSubgerencias = new List<string> { "Jefferson Rojas Palomino" ,"Daniela Del Pilar Rodriguez Diaz", "Romulo Fernando Lomparte Alvarado", "Jorge Portocarrero Colunge", "Miguel Vetter", "Yanina Mercedes Delfin Lazo" };
+    var listaPlanillas = new List<string> { "PS", "EPS", "EPV", "PRI" };
+    var listaCargos = new List<string> { "Analista", "Auditor", "Gerente", "Gerente Adjunto", "Jefe de Auditoría", "Practicante" };
+}
+
+<html lang="en">
+<head>
+   
+
+</head>
+<body>
+    <div class="card shadow mb-2">
+        <div class="container pt-4">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <input type="text" class="form-control" name="idRotacion" value="@ViewBag.Rotacion.IdRotacion" hidden>
+                <input type="text" class="form-control" name="idPersona" value="@ViewBag.Rotacion.IdPersona" hidden>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputFechaIngreso">Fecha de Ingreso *</label>
+                        <div class="input-group date" id="fecha-ingreso">
+                            <input class="form-control" id="FechaIngreso" name="FechaIngreso" value="@ViewBag.Rotacion.FechaIngreso" type="text" autocomplete="off" required />
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-white">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputFechaSalida">Fecha de Salida</label>
+                        <div class="input-group date" id="fecha-salida">
+                            <input class="form-control" id="FechaSalida" name="FechaSalida" value="@ViewBag.Rotacion.FechaSalida" type="text" />
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-white">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputFuncion">Función *</label>
+                        <select class="form-control" id="inputFuncion" name="Función" required>
+                            @if (ViewBag.Rotacion.Función == null)
+                            {
+                                <option selected disabled value="">-- Seleccione --</option>
+                            }
+                            @foreach (var Item in listaFunciones)
+                            {
+                                if (Item == ViewBag.Rotacion.Función)
+                                {
+                                    <option selected>@Item</option>
+                                }
+                                else
+                                {
+                                    <option>@Item</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputCargo">Cargo *</label>
+                        <select class="form-control" id="inputCargo" name="Cargo" required>
+                            @if (ViewBag.Rotacion.Cargo == null)
+                            {
+                                <option selected disabled value="">-- Seleccione --</option>
+                            }
+                            @foreach (var Item in listaCargos)
+                            {
+                                if (Item == ViewBag.Rotacion.Cargo)
+                                {
+                                    <option selected>@Item</option>
+                                }
+                                else
+                                {
+                                    <option>@Item</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="inputPlanilla">Planilla</label>
+                        <select class="form-control" id="inputPlanilla" name="Planilla" required>
+                            @if (ViewBag.Rotacion.Planilla == null)
+                            {
+                                <option selected disabled value="">-- Seleccione --</option>
+                            }
+                            @foreach (var Item in listaPlanillas)
+                            {
+                                if (Item == ViewBag.Rotacion.Planilla)
+                                {
+                                    <option selected>@Item</option>
+                                }
+                                else
+                                {
+                                    <option>@Item</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputMatricula">Matrícula *</label>
+                        <input type="text" class="form-control" id="inputMatricula" name="Matrícula" value="@ViewBag.Rotacion.Matrícula" autocomplete="off" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputEquipo">Equipo *</label>
+                        <select class="form-control" id="inputEquipo" name="Equipo" required>
+                            @if (ViewBag.Rotacion.Equipo == null)
+                            {
+                                <option selected disabled value="">-- Seleccione --</option>
+                            }
+                            @foreach (var Item in listaEquipos)
+                            {
+                                if (Item == ViewBag.Rotacion.Equipo)
+                                {
+                                    <option selected>@Item</option>
+                                }
+                                else
+                                {
+                                    <option>@Item</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group col-md-6">
+                        <label for="inputSubgerencia">SubGerencia *</label>
+                        <select class="form-control" id="inputSubgerencia" name="SubGerencia" required>
+                            @if (ViewBag.Rotacion.SubGerencia == null)
+                            {
+                                <option selected disabled value="">-- Seleccione --</option>
+                            }
+                            @foreach (var Item in listaSubgerencias)
+                            {
+                                if (Item == ViewBag.Rotacion.SubGerencia)
+                                {
+                                    <option selected>@Item</option>
+                                }
+                                else
+                                {
+                                    <option>@Item</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputJefeDirecto">Jefe Directo</label>
+                        <select class="form-control" id="inputJefeDirecto" name="IdJefeDirecto" required>
+                            @if (ViewBag.Rotacion.IdJefeDirecto == null)
+                            {
+                                <option selected disabled value="">-- Seleccione --</option>
+                            }
+                            @foreach (var Item in Model.View_AU_Drop_JefeDirectos)
+                            {
+                                if (Item.IdPersona == ViewBag.Rotacion.IdJefeDirecto)
+                                {
+                                    <option selected value="@Item.IdPersona">@Item.NombreJefe</option>
+                                }
+                                else
+                                {
+                                    <option value="@Item.IdPersona">@Item.NombreJefe</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group text-center pt-3">
+                    <button type="submit" class="btn btn-info btn-group-toggle" style="background-color :lightseagreen">
+                        <i class="fas fa-save"></i> Guardar Cambios
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+<script>
+
+    $(function () {
+        $('#fecha-ingreso').datepicker({
+            format: 'dd/mm/yyyy'
+        });
+        $('#fecha-salida').datepicker({
+            format: 'dd/mm/yyyy'
+        });
+    });
+
+</script>
+
+
+

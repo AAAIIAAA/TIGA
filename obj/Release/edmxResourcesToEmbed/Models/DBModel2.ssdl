@@ -1,0 +1,3252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PROYECTOSIAV2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="basesBC">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ORIGEN" Type="varchar(max)" />
+    <Property Name="AÑO" Type="int" />
+    <Property Name="PERIODO" Type="int" />
+    <Property Name="CUENTACONTABLE" Type="varchar(max)" />
+    <Property Name="DESCRIPCION" Type="varchar(max)" />
+    <Property Name="SALDOINICIALLOCAL" Type="money" />
+    <Property Name="DEBITOLOCAL" Type="money" />
+    <Property Name="CREDITOLOCAL" Type="money" />
+    <Property Name="SALDOFINALLOCAL" Type="money" />
+    <Property Name="MOVIMIENTOLOCAL" Type="money" />
+    <Property Name="SALDOINICIALDOLAR" Type="money" />
+    <Property Name="DEBITODOLAR" Type="money" />
+    <Property Name="CREDITODOLAR" Type="money" />
+    <Property Name="SALDOFINALDOLAR" Type="money" />
+    <Property Name="MOVIMIENTODOLAR" Type="money" />
+    <Property Name="VALIDA" Type="varchar(max)" />
+    <Property Name="BGPL" Type="varchar(max)" />
+    <Property Name="USERID_REGISTRO" Type="varchar(max)" />
+    <Property Name="FECHA_REGISTRO" Type="datetime" />
+    <Property Name="FECHA_MODIFICACION" Type="datetime" />
+    <Property Name="USERID_MODIFICACION" Type="varchar(max)" />
+    <Property Name="ESTADO" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="basesBCHojaTrabajo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AÑO" Type="int" />
+    <Property Name="PERIODO" Type="int" />
+    <Property Name="FECHA_CARGA" Type="datetime" />
+    <Property Name="CUENTA CONTABLE" Type="nvarchar" MaxLength="50" />
+    <Property Name="DESCRIPCION" Type="nvarchar(max)" />
+    <Property Name="MOVIMIENTO LOCAL" Type="decimal" Precision="20" Scale="2" />
+    <Property Name="SALDO FINAL LOCAL" Type="decimal" Precision="20" Scale="2" />
+    <Property Name="INFORME VARIACIONES BG" Type="nvarchar(max)" />
+    <Property Name="INFORME VARIACIONES GYP" Type="nvarchar(max)" />
+    <Property Name="PL PACIFICO (CONCEPTO)" Type="nvarchar(max)" />
+    <Property Name="PL PACIFICO (AGRUPACION)" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="BC_Cuentas_Proyectos">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Num_Cuenta" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ID_Plan" Type="int" />
+    <Property Name="ID_Proyecto" Type="int" />
+  </EntityType>
+  <EntityType Name="Compañia">
+    <Key>
+      <PropertyRef Name="IdCompañia" />
+    </Key>
+    <Property Name="IdCompañia" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DAC_Ejecucion_Script">
+    <Key>
+      <PropertyRef Name="idEjecucionScript" />
+    </Key>
+    <Property Name="idEjecucionScript" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="50" />
+    <Property Name="descripcion" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="DAC_Estado">
+    <Key>
+      <PropertyRef Name="idEstado" />
+    </Key>
+    <Property Name="idEstado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar(max)" />
+    <Property Name="descripcion" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="DAC_HistorialCambios">
+    <Key>
+      <PropertyRef Name="idHistorico" />
+    </Key>
+    <Property Name="idHistorico" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idScript" Type="int" />
+    <Property Name="idReporte" Type="int" />
+    <Property Name="idUsuario" Type="int" />
+    <Property Name="estado" Type="nvarchar(max)" />
+    <Property Name="detalle" Type="nvarchar(max)" />
+    <Property Name="nombreArchivo" Type="varchar(max)" />
+    <Property Name="fechaModificacion" Type="smalldatetime" />
+    <Property Name="contentType" Type="nvarchar(max)" />
+    <Property Name="data" Type="varbinary(max)" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PROYECTOSIAV2.dbo.DAC_HistorialReportesScript' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="DAC_HistorialReportesScript">
+    <Key>
+      <PropertyRef Name="idHistorialReporte" />
+    </Key>
+    <Property Name="idHistorialReporte" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idScript" Type="int" />
+    <Property Name="idUsuario" Type="int" />
+    <Property Name="estado" Type="nvarchar(max)" />
+    <Property Name="nombreArchivo" Type="varchar(max)" />
+    <Property Name="fechaModificacion" Type="smalldatetime" />
+    <Property Name="contentType" Type="nvarchar(max)" />
+    <Property Name="data" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="DAC_Peridiocidad_Ejecucion">
+    <Key>
+      <PropertyRef Name="idPeriodicidadEjec" />
+    </Key>
+    <Property Name="idPeriodicidadEjec" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="50" />
+    <Property Name="descripcion" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="DAC_Periodo_Analisis">
+    <Key>
+      <PropertyRef Name="idPeriodoAnalisis" />
+    </Key>
+    <Property Name="idPeriodoAnalisis" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="50" />
+    <Property Name="descripcion" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="DAC_Scripts">
+    <Key>
+      <PropertyRef Name="idScript" />
+    </Key>
+    <Property Name="idScript" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombreScript" Type="nvarchar(max)" />
+    <Property Name="codigoScript" Type="nvarchar" MaxLength="50" />
+    <Property Name="idNegocio" Type="int" />
+    <Property Name="fases" Type="int" />
+    <Property Name="idTipScript" Type="int" />
+    <Property Name="idAuditor" Type="int" />
+    <Property Name="idEstados" Type="int" />
+    <Property Name="idProyecto" Type="int" />
+    <Property Name="idEjecScript" Type="int" />
+    <Property Name="idPerEjec" Type="int" />
+    <Property Name="idPeriodoA" Type="int" />
+  </EntityType>
+  <EntityType Name="DAC_ScriptsContinua">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Código Script" Type="nvarchar" MaxLength="255" />
+    <Property Name="Año" Type="int" />
+    <Property Name="Negocio" Type="nvarchar" MaxLength="255" />
+    <Property Name="Nombre_Script" Type="nvarchar" MaxLength="255" />
+    <Property Name="Script_Abreviado" Type="nvarchar" MaxLength="255" />
+    <Property Name="Descripción de Script" Type="nvarchar" MaxLength="255" />
+    <Property Name="Fuente" Type="nvarchar" MaxLength="255" />
+    <Property Name="idTipScript" Type="int" />
+    <Property Name="Gestor_Responsable" Type="nvarchar" MaxLength="255" />
+    <Property Name="idGerenteAdjunto" Type="int" />
+    <Property Name="idAuditor" Type="int" />
+    <Property Name="idAreaAuditada" Type="int" />
+    <Property Name="idContactoAuditado" Type="int" />
+    <Property Name="Fase 1" Type="int" />
+    <Property Name="Fase 2" Type="int" />
+    <Property Name="Fase 3" Type="int" />
+    <Property Name="Fase 4" Type="int" />
+    <Property Name="Ejecución de Script" Type="nvarchar" MaxLength="255" />
+    <Property Name="Cantidad de Meses de análisis" Type="nvarchar" MaxLength="255" />
+    <Property Name="Ruta" Type="nvarchar(max)" />
+    <Property Name="graficaPowerBI" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="DAC_Tipologia_Script">
+    <Key>
+      <PropertyRef Name="idTipologiaScript" />
+    </Key>
+    <Property Name="idTipologiaScript" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="50" />
+    <Property Name="description" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="DD_Cambios_Universo">
+    <Key>
+      <PropertyRef Name="idCambioUniverso" />
+    </Key>
+    <Property Name="idCambioUniverso" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_Universo" Type="int" />
+    <Property Name="Accion" Type="nvarchar" MaxLength="50" />
+    <Property Name="id_Referencia" Type="int" />
+    <Property Name="id_Usuario" Type="int" />
+  </EntityType>
+  <EntityType Name="DD_Informe">
+    <Key>
+      <PropertyRef Name="IdInforme" />
+    </Key>
+    <Property Name="IdInforme" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar(max)" />
+    <Property Name="IdNegocios" Type="int" />
+    <Property Name="Descripcion" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="DD_PlanAnual">
+    <Key>
+      <PropertyRef Name="IdPlanAnual" />
+    </Key>
+    <Property Name="IdPlanAnual" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdCompañia" Type="int" />
+    <Property Name="Nombre" Type="nvarchar(max)" />
+    <Property Name="FechaInicio" Type="date" />
+    <Property Name="FechaCierre" Type="date" />
+    <Property Name="Estado" Type="nvarchar(max)" />
+    <Property Name="Calidad" Type="char" MaxLength="2" />
+  </EntityType>
+  <EntityType Name="DD_ProcesoEvaluado">
+    <Key>
+      <PropertyRef Name="IdProcesoEvaluado" />
+    </Key>
+    <Property Name="IdProcesoEvaluado" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar(max)" />
+    <Property Name="IdNegocios" Type="int" />
+    <Property Name="MacroPadre" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="DD_Proyecto">
+    <Key>
+      <PropertyRef Name="IdProyecto" />
+    </Key>
+    <Property Name="IdProyecto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdPlanAnual" Type="int" />
+    <Property Name="IdInforme" Type="int" />
+    <Property Name="Codigo" Type="varchar" MaxLength="50" />
+    <Property Name="Riesgo" Type="varchar" MaxLength="50" />
+    <Property Name="Compañia" Type="varchar" MaxLength="10" />
+    <Property Name="IdEstadosProyecto" Type="int" />
+    <Property Name="Macroproceso" Type="varchar(max)" />
+    <Property Name="Plan" Type="int" />
+    <Property Name="IdCanal" Type="int" />
+    <Property Name="IdLineaNegocio" Type="int" />
+    <Property Name="NroInfo.PPS" Type="int" />
+    <Property Name="NroInfo.EPV" Type="int" />
+    <Property Name="NroInfo.EPS" Type="int" />
+    <Property Name="NroInfo.PRE" Type="int" />
+    <Property Name="Evaluación" Type="varchar(max)" />
+    <Property Name="Tipo" Type="varchar(max)" />
+    <Property Name="Expectativa" Type="varchar(max)" />
+    <Property Name="Criticidad" Type="int" />
+    <Property Name="FechaInicioPlan" Type="date" />
+    <Property Name="FechaFinPlan" Type="date" />
+    <Property Name="FechaInicioEjecución" Type="date" />
+    <Property Name="FechaFinEjecución" Type="date" />
+    <Property Name="DíasProyecto" Type="int" />
+    <Property Name="DíasExtra" Type="int" />
+    <Property Name="DíasEjecución" Type="int" />
+    <Property Name="FechaEnvío" Type="date" />
+    <Property Name="Enviadopor" Type="varchar(max)" />
+    <Property Name="PAC" Type="int" />
+    <Property Name="CAI" Type="varchar(max)" />
+    <Property Name="Observaciones" Type="varchar(max)" />
+    <Property Name="FechaBloqueo" Type="date" />
+    <Property Name="Auditor 1" Type="varchar(max)" />
+    <Property Name="Auditor 2" Type="varchar(max)" />
+    <Property Name="Auditor 3" Type="varchar(max)" />
+    <Property Name="Auditor 4" Type="varchar(max)" />
+    <Property Name="Auditor 5" Type="varchar(max)" />
+    <Property Name="Responsable(s)" Type="varchar(max)" />
+    <Property Name="Supervisor(es)" Type="varchar(max)" />
+    <Property Name="Subgerente(s)" Type="varchar(max)" />
+    <Property Name="Gerente" Type="varchar(max)" />
+    <Property Name="FechaEmisión" Type="date" />
+    <Property Name="Anexo30" Type="int" />
+    <Property Name="IdProcesoEvaluado" Type="int" />
+    <Property Name="IdRiesgoDelTrabajo" Type="int" />
+    <Property Name="IdRiesgoInherente" Type="int" />
+    <Property Name="IdAdministraciónDelRiesgo" Type="int" />
+    <Property Name="FechaCOA" Type="date" />
+    <Property Name="FechaLimiteRegulador" Type="date" />
+    <Property Name="FechaEnvioRegulador" Type="date" />
+    <Property Name="ProyectoSIEMBRA" Type="int" />
+    <Property Name="CantidadSprint" Type="int" />
+    <Property Name="IDEvaluacion_Plan" Type="int" />
+    <Property Name="IDRiesgoBCP" Type="int" />
+    <Property Name="FechaReemplazo" Type="date" />
+    <Property Name="IdProyectoReemplazo" Type="int" />
+    <Property Name="Cant_Pruebas_analiticas_plan" Type="int" />
+    <Property Name="Cant_Pruebas_analiticas_real" Type="int" />
+  </EntityType>
+  <EntityType Name="DD_Universo">
+    <Key>
+      <PropertyRef Name="idUniverso" />
+    </Key>
+    <Property Name="idUniverso" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar(max)" />
+    <Property Name="idNegocio" Type="int" />
+    <Property Name="Equipo" Type="nvarchar(max)" />
+    <Property Name="Riesgo" Type="nvarchar" MaxLength="50" />
+    <Property Name="Estado" Type="int" />
+  </EntityType>
+  <EntityType Name="DPA_Auditor_Evaluacion">
+    <Key>
+      <PropertyRef Name="ID_Auditor_Evaluacion" />
+    </Key>
+    <Property Name="ID_Auditor_Evaluacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Usuario" Type="int" Nullable="false" />
+    <Property Name="ID_Evaluacion_Plan" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DPA_Auditor_Tiempo_Extra">
+    <Key>
+      <PropertyRef Name="ID_Auditor_Tiempo_Extra" />
+    </Key>
+    <Property Name="ID_Auditor_Tiempo_Extra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Fecha_Inicio" Type="date" />
+    <Property Name="Fecha_Fin" Type="date" />
+    <Property Name="ID_Usuario" Type="int" Nullable="false" />
+    <Property Name="ID_Tipo_Tiempo_Extra" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DPA_Criterio_Scoring">
+    <Key>
+      <PropertyRef Name="ID_Criterio_Scoring" />
+    </Key>
+    <Property Name="ID_Criterio_Scoring" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Criterio" Type="nvarchar" MaxLength="50" />
+    <Property Name="Peso" Type="float" />
+    <Property Name="Anio_Plan" Type="int" />
+  </EntityType>
+  <EntityType Name="DPA_Criterio_Votacion">
+    <Key>
+      <PropertyRef Name="ID_Criterio" />
+    </Key>
+    <Property Name="ID_Criterio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Criterio" Type="nvarchar" MaxLength="100" />
+    <Property Name="Peso_Criterio" Type="decimal" Precision="18" Scale="1" />
+  </EntityType>
+  <EntityType Name="DPA_Equipo">
+    <Key>
+      <PropertyRef Name="ID_Equipo" />
+    </Key>
+    <Property Name="ID_Equipo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre_Equipo" Type="varchar" MaxLength="255" />
+    <Property Name="Abreviacion_Equipo" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="DPA_Evaluacion">
+    <Key>
+      <PropertyRef Name="ID_Evaluacion" />
+    </Key>
+    <Property Name="ID_Evaluacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Evaluacion" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ID_Negocio" Type="int" Nullable="false" />
+    <Property Name="ID_Proceso_Evaluado" Type="int" />
+    <Property Name="Objetivo" Type="nvarchar(max)" />
+    <Property Name="Centro_Costo" Type="nvarchar" MaxLength="255" />
+    <Property Name="Atributo_Universo" Type="nvarchar" MaxLength="255" />
+    <Property Name="Tipo_Evaluacion" Type="nvarchar" MaxLength="255" />
+    <Property Name="ID_Equipo_Responsable" Type="int" />
+    <Property Name="PAC" Type="nvarchar" MaxLength="255" />
+    <Property Name="Anexo_30" Type="nvarchar" MaxLength="255" />
+    <Property Name="Regulatorio" Type="nvarchar" MaxLength="255" />
+    <Property Name="N_SBS" Type="nvarchar" MaxLength="255" />
+    <Property Name="Evaluacion_SBS" Type="nvarchar(max)" />
+    <Property Name="SOX" Type="nvarchar" MaxLength="255" />
+    <Property Name="Fase_SOX" Type="nvarchar" MaxLength="255" />
+    <Property Name="Nombre_Mesa" Type="nvarchar" MaxLength="255" />
+    <Property Name="Comentario" Type="nvarchar(max)" />
+    <Property Name="Squad_COE_Area" Type="nvarchar(max)" />
+    <Property Name="Aplicaciones" Type="nvarchar(max)" />
+    <Property Name="RPA" Type="nvarchar(max)" />
+    <Property Name="Chatbot" Type="nvarchar" MaxLength="255" />
+    <Property Name="IA" Type="nvarchar" MaxLength="255" />
+    <Property Name="API" Type="nvarchar(max)" />
+    <Property Name="N_Riesgos" Type="int" />
+    <Property Name="N_Controles" Type="int" />
+    <Property Name="Accesos_Aplicacion" Type="nvarchar(max)" />
+    <Property Name="Accesos_BD" Type="nvarchar(max)" />
+    <Property Name="Ratio_Dias_Control" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Uso_Analitica_EWP" Type="nvarchar(max)" />
+    <Property Name="Uso_Analitica_Registrado" Type="nvarchar(max)" />
+    <Property Name="Analítica_Tipo_Pruebas" Type="nvarchar(max)" />
+    <Property Name="SIEMBRA" Type="nvarchar" MaxLength="255" />
+    <Property Name="SIEGA" Type="nvarchar" MaxLength="255" />
+    <Property Name="RIEGA" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="DPA_Evaluacion_Plan">
+    <Key>
+      <PropertyRef Name="ID_Evaluacion_Plan" />
+    </Key>
+    <Property Name="ID_Evaluacion_Plan" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Evaluacion" Type="int" Nullable="false" />
+    <Property Name="ID_Plan_Anual" Type="int" Nullable="false" />
+    <Property Name="ID_Riesgo_Asociado" Type="int" />
+    <Property Name="Ultimo_Calificativo" Type="nvarchar" MaxLength="255" />
+    <Property Name="Criticidad_Elegida" Type="nvarchar" MaxLength="255" />
+    <Property Name="Dias_Ajustado" Type="int" />
+    <Property Name="N_Aud_Ajustado" Type="int" />
+    <Property Name="Fecha_Inicio" Type="date" />
+    <Property Name="Fecha_Fin" Type="date" />
+    <Property Name="Programado" Type="nvarchar" MaxLength="255" />
+    <Property Name="Codigo_Proyecto" Type="nvarchar" MaxLength="255" />
+    <Property Name="Fecha_Emision" Type="date" />
+  </EntityType>
+  <EntityType Name="DPA_Log_Evaluacion">
+    <Key>
+      <PropertyRef Name="ID_Log" />
+    </Key>
+    <Property Name="ID_Log" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Usuario" Type="int" Nullable="false" />
+    <Property Name="ID_Evaluacion" Type="int" />
+    <Property Name="Evaluacion" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Nuevo_Nombre" Type="nvarchar(max)" />
+    <Property Name="ID_Negocio" Type="int" Nullable="false" />
+    <Property Name="ID_Tipo_Operacion" Type="int" Nullable="false" />
+    <Property Name="Detalle_Operacion" Type="nvarchar" MaxLength="150" />
+    <Property Name="Timestamp" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DPA_Log_Evaluacion_Plan">
+    <Key>
+      <PropertyRef Name="ID_Log" />
+    </Key>
+    <Property Name="ID_Log" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Usuario" Type="int" Nullable="false" />
+    <Property Name="ID_Evaluacion_Plan" Type="int" Nullable="false" />
+    <Property Name="ID_Tipo_Operacion" Type="int" Nullable="false" />
+    <Property Name="Detalle_Operacion" Type="nvarchar" MaxLength="150" />
+    <Property Name="ID_Referencia" Type="int" />
+    <Property Name="Timestamp" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DPA_Negocio">
+    <Key>
+      <PropertyRef Name="ID_Negocio" />
+    </Key>
+    <Property Name="ID_Negocio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Negocio" Type="nvarchar" MaxLength="50" />
+    <Property Name="Abreviacion" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="DPA_Opcion_Votacion">
+    <Key>
+      <PropertyRef Name="ID_Opcion_Votacion" />
+    </Key>
+    <Property Name="ID_Opcion_Votacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Opcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Peso_Opcion" Type="decimal" Precision="18" Scale="1" Nullable="false" />
+    <Property Name="ID_Criterio" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DPA_Plan_Anual">
+    <Key>
+      <PropertyRef Name="ID_Plan_Anual" />
+    </Key>
+    <Property Name="ID_Plan_Anual" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Anio_Plan" Type="int" />
+    <Property Name="Fecha_Inicio" Type="date" />
+    <Property Name="Fecha_Fin" Type="date" />
+    <Property Name="Flag_Edicion" Type="int" />
+  </EntityType>
+  <EntityType Name="DPA_Riesgo_Asociado">
+    <Key>
+      <PropertyRef Name="ID_Riesgo_Asociado" />
+    </Key>
+    <Property Name="ID_Riesgo_Asociado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre_Riesgo" Type="nvarchar" MaxLength="255" />
+    <Property Name="Estado" Type="int" />
+  </EntityType>
+  <EntityType Name="DPA_Scoring_Evaluacion">
+    <Key>
+      <PropertyRef Name="ID_Scoring_Evaluacion" />
+    </Key>
+    <Property Name="ID_Scoring_Evaluacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Criterio_Scoring" Type="int" Nullable="false" />
+    <Property Name="Scoring" Type="int" Nullable="false" />
+    <Property Name="ID_Evaluacion_Plan" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DPA_Tipo_Tiempo_Extra">
+    <Key>
+      <PropertyRef Name="ID_Tipo_Tiempo_Extra" />
+    </Key>
+    <Property Name="ID_Tipo_Tiempo_Extra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Tipo" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="DPA_Votacion">
+    <Key>
+      <PropertyRef Name="ID_Votacion" />
+    </Key>
+    <Property Name="ID_Votacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Evaluacion_Plan" Type="int" Nullable="false" />
+    <Property Name="ID_Usuario" Type="int" Nullable="false" />
+    <Property Name="ID_Opcion_Votacion" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Modulo">
+    <Key>
+      <PropertyRef Name="IdModulo" />
+    </Key>
+    <Property Name="IdModulo" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="100" />
+    <Property Name="Enlace" Type="varchar(max)" />
+    <Property Name="IMG" Type="varchar" MaxLength="50" />
+    <Property Name="Descripcion" Type="varchar(max)" />
+    <Property Name="Externo" Type="int" />
+    <Property Name="Habilitado" Type="int" />
+  </EntityType>
+  <EntityType Name="ModuloRol">
+    <Key>
+      <PropertyRef Name="IdModulo" />
+      <PropertyRef Name="IdRol" />
+    </Key>
+    <Property Name="IdModulo" Type="int" Nullable="false" />
+    <Property Name="IdRol" Type="int" Nullable="false" />
+    <Property Name="Estado" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Persona">
+    <Key>
+      <PropertyRef Name="IdPersona" />
+    </Key>
+    <Property Name="IdPersona" Type="int" Nullable="false" />
+    <Property Name="IdCompañia" Type="int" Nullable="false" />
+    <Property Name="Nombres" Type="nvarchar(max)" />
+    <Property Name="Apellidos" Type="nvarchar(max)" />
+    <Property Name="Email" Type="nvarchar(max)" />
+    <Property Name="Dni" Type="char" MaxLength="8" />
+    <Property Name="Activo" Type="int" />
+    <Property Name="Función" Type="varchar" MaxLength="30" />
+    <Property Name="Matrícula" Type="varchar" MaxLength="50" />
+    <Property Name="SubGerencia" Type="varchar" MaxLength="50" />
+    <Property Name="Equipo" Type="varchar" MaxLength="200" />
+    <Property Name="FechaIngreso" Type="date" />
+    <Property Name="NombreSharepoint" Type="varchar" MaxLength="50" />
+    <Property Name="Administrador" Type="tinyint" />
+    <Property Name="NombreTC" Type="varchar" MaxLength="50" />
+    <Property Name="NombreSharepoint2" Type="varchar" MaxLength="50" />
+    <Property Name="NombreSharepoint3" Type="varchar" MaxLength="50" />
+    <Property Name="NombreSharepoint4" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="R1_DupNAB$">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FECDOCOTR" Type="datetime" />
+    <Property Name="CODMONEDA" Type="nvarchar" MaxLength="255" />
+    <Property Name="MTODOCINGLOCAL" Type="float" />
+    <Property Name="NUMREFDOCAUX" Type="nvarchar" MaxLength="255" />
+    <Property Name="AÑOCORTE" Type="float" />
+    <Property Name="MESCORTE" Type="float" />
+    <Property Name="TIPODOCING" Type="nvarchar" MaxLength="255" />
+    <Property Name="CODENTFINANING" Type="nvarchar" MaxLength="255" />
+    <Property Name="DESCENTFINAN" Type="nvarchar" MaxLength="255" />
+    <Property Name="CODAGENCIA" Type="nvarchar" MaxLength="255" />
+    <Property Name="TIPOOFIBCP" Type="nvarchar" MaxLength="255" />
+    <Property Name="NOMOFIBCP" Type="nvarchar" MaxLength="255" />
+    <Property Name="MTODOCINGMONEDA" Type="float" />
+    <Property Name="TIPOCAMBIO" Type="float" />
+    <Property Name="DESCCTAENTFINAN" Type="nvarchar" MaxLength="255" />
+    <Property Name="NUMCTAENTFINAN" Type="nvarchar" MaxLength="255" />
+    <Property Name="FECING" Type="datetime" />
+    <Property Name="STSRELING" Type="nvarchar" MaxLength="255" />
+    <Property Name="NUMRELING" Type="float" />
+    <Property Name="CODCAJA" Type="nvarchar" MaxLength="255" />
+    <Property Name="DESCCAJA" Type="nvarchar" MaxLength="255" />
+    <Property Name="CODCAJERO" Type="nvarchar" MaxLength="255" />
+    <Property Name="STSDOCING" Type="nvarchar" MaxLength="255" />
+    <Property Name="INDCONCIL" Type="nvarchar" MaxLength="255" />
+    <Property Name="OBSRELING" Type="nvarchar" MaxLength="255" />
+    <Property Name="OBSERVACION" Type="nvarchar" MaxLength="255" />
+    <Property Name="NOMBRE_TERCERO" Type="nvarchar" MaxLength="255" />
+    <Property Name="TIPO" Type="nvarchar" MaxLength="255" />
+    <Property Name="NUMRELCTA" Type="float" />
+    <Property Name="CODTARJCRED" Type="nvarchar" MaxLength="255" />
+    <Property Name="FECVALDOCING" Type="datetime" />
+    <Property Name="DIROFIBCP" Type="nvarchar" MaxLength="255" />
+    <Property Name="AUX" Type="nvarchar" MaxLength="255" />
+    <Property Name="Estado" Type="nvarchar" MaxLength="255" />
+    <Property Name="IdUsuario" Type="int" />
+    <Property Name="Detalle" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Rol">
+    <Key>
+      <PropertyRef Name="IdRol" />
+    </Key>
+    <Property Name="IdRol" Type="int" Nullable="false" />
+    <Property Name="Tiporol" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Rotacion">
+    <Key>
+      <PropertyRef Name="IdRotacion" />
+    </Key>
+    <Property Name="IdRotacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdPersona" Type="int" Nullable="false" />
+    <Property Name="FechaIngreso" Type="date" />
+    <Property Name="FechaSalida" Type="date" />
+    <Property Name="Función" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Cargo" Type="varchar" MaxLength="30" />
+    <Property Name="Matrícula" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="SubGerencia" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Equipo" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Planilla" Type="varchar" MaxLength="50" />
+    <Property Name="IdJefeDirecto" Type="int" />
+  </EntityType>
+  <EntityType Name="TD_VacacionesRegistro">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Tipo" Type="varchar(max)" />
+    <Property Name="FechaInicio" Type="date" />
+    <Property Name="FechaFin" Type="date" />
+    <Property Name="Periodo" Type="varchar(max)" />
+    <Property Name="IdUsuario" Type="int" />
+    <Property Name="Descripción" Type="varchar(max)" />
+    <Property Name="Ajuste" Type="int" />
+    <Property Name="Ejecutado" Type="int" />
+  </EntityType>
+  <EntityType Name="TG_Actividad_Justificacion">
+    <Key>
+      <PropertyRef Name="IdActividadJustificacion" />
+    </Key>
+    <Property Name="IdActividadJustificacion" Type="int" Nullable="false" />
+    <Property Name="Texto" Type="nvarchar" MaxLength="250" />
+    <Property Name="Estado" Type="nvarchar" MaxLength="20" />
+    <Property Name="Activo" Type="int" />
+  </EntityType>
+  <EntityType Name="TG_AdministraciónDelRiesgo">
+    <Key>
+      <PropertyRef Name="IdAdministraciónDelRiesgo" />
+    </Key>
+    <Property Name="IdAdministraciónDelRiesgo" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TG_Ampliación">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Observación" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Motivo" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Nuevo_Plan" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Fecha_Propuesta" Type="date" />
+    <Property Name="ID_Aprobador" Type="int" Nullable="false" />
+    <Property Name="Usuario" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Fecha_Registro" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TG_Aprobador">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Emisor" Type="nvarchar" MaxLength="250" />
+    <Property Name="Orden" Type="int" />
+    <Property Name="Estado" Type="int" />
+  </EntityType>
+  <EntityType Name="TG_Contacto">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="100" />
+    <Property Name="Apellido" Type="nvarchar" MaxLength="100" />
+    <Property Name="Email" Type="nvarchar" MaxLength="100" />
+    <Property Name="flagAuditor" Type="int" />
+  </EntityType>
+  <EntityType Name="TG_Estados_Proyecto">
+    <Key>
+      <PropertyRef Name="IdEstadosProyecto" />
+    </Key>
+    <Property Name="IdEstadosProyecto" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TG_Estructura_Seguimiento_Historial">
+    <Key>
+      <PropertyRef Name="ID_Estructura_Seguimiento_Historial" />
+    </Key>
+    <Property Name="ID_Estructura_Seguimiento_Historial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Unidad_Responsable" Type="nvarchar" MaxLength="150" />
+    <Property Name="Accion" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Campo" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Campo_Before" Type="nvarchar" MaxLength="150" />
+    <Property Name="Campo_After" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Fecha_Cambio" Type="datetime" Nullable="false" />
+    <Property Name="Usuario" Type="nvarchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TG_Informe">
+    <Key>
+      <PropertyRef Name="IdInforme" />
+    </Key>
+    <Property Name="IdInforme" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar(max)" />
+    <Property Name="IdNegocios" Type="int" />
+    <Property Name="Descripcion" Type="varchar(max)" />
+    <Property Name="Activo" Type="int" />
+  </EntityType>
+  <EntityType Name="TG_Observacion_Cambio">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Identificador" Type="int" Nullable="false" />
+    <Property Name="ID_OBSERVACION" Type="nvarchar" MaxLength="50" />
+    <Property Name="ID_UNIDAD_RESPONSABLE" Type="int" />
+    <Property Name="TITULO_OBSERVACION" Type="varchar(max)" />
+    <Property Name="EMISOR" Type="varchar" MaxLength="50" />
+    <Property Name="AÑO" Type="int" />
+    <Property Name="NEGOCIO" Type="varchar" MaxLength="50" />
+    <Property Name="INFORME" Type="varchar" MaxLength="50" />
+    <Property Name="BANMEDICA" Type="varchar" MaxLength="50" />
+    <Property Name="ENVIADO_EXT" Type="varchar" MaxLength="50" />
+    <Property Name="FECHA_ENVIADO" Type="date" />
+    <Property Name="INFRACCIÓN" Type="varchar" MaxLength="50" />
+    <Property Name="USUARIO" Type="varchar" MaxLength="50" />
+    <Property Name="FECHA_REGISTRO" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TG_Persona">
+    <Key>
+      <PropertyRef Name="Identificador" />
+    </Key>
+    <Property Name="Identificador" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdPersona" Type="int" Nullable="false" />
+    <Property Name="IdCompañia" Type="int" Nullable="false" />
+    <Property Name="Nombres" Type="nvarchar(max)" />
+    <Property Name="Apellidos" Type="nvarchar(max)" />
+    <Property Name="Email" Type="nvarchar(max)" />
+    <Property Name="Dni" Type="char" MaxLength="8" />
+    <Property Name="Activo" Type="int" />
+    <Property Name="Función" Type="varchar" MaxLength="30" />
+    <Property Name="Matrícula" Type="varchar" MaxLength="50" />
+    <Property Name="SubGerencia" Type="varchar" MaxLength="50" />
+    <Property Name="Equipo" Type="varchar" MaxLength="200" />
+    <Property Name="FechaIngreso" Type="date" />
+    <Property Name="NombreSharepoint" Type="varchar" MaxLength="50" />
+    <Property Name="Administrador" Type="tinyint" />
+    <Property Name="NombreTC" Type="varchar" MaxLength="50" />
+    <Property Name="NombreSharepoint2" Type="varchar" MaxLength="50" />
+    <Property Name="NombreSharepoint3" Type="varchar" MaxLength="50" />
+    <Property Name="NombreSharepoint4" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TG_Proceso_Evaluado">
+    <Key>
+      <PropertyRef Name="IdProcesoEvaluado" />
+    </Key>
+    <Property Name="IdProcesoEvaluado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="TG_ProcesoEvaluado">
+    <Key>
+      <PropertyRef Name="IdProcesoEvaluado" />
+    </Key>
+    <Property Name="IdProcesoEvaluado" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar(max)" />
+    <Property Name="IdNegocios" Type="int" />
+    <Property Name="MacroPadre" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="TG_Proyecto">
+    <Key>
+      <PropertyRef Name="IdProyecto" />
+    </Key>
+    <Property Name="IdProyecto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdPlanAnual" Type="int" />
+    <Property Name="IdInforme" Type="int" />
+    <Property Name="Codigo" Type="varchar" MaxLength="50" />
+    <Property Name="Riesgo" Type="varchar" MaxLength="50" />
+    <Property Name="Compañia" Type="varchar" MaxLength="10" />
+    <Property Name="IdEstadosProyecto" Type="int" />
+    <Property Name="Macroproceso" Type="varchar(max)" />
+    <Property Name="Plan" Type="int" />
+    <Property Name="Evaluación" Type="varchar(max)" />
+    <Property Name="Tipo" Type="varchar(max)" />
+    <Property Name="Criticidad" Type="varchar(max)" />
+    <Property Name="FechaInicioPlan" Type="date" />
+    <Property Name="FechaFinPlan" Type="date" />
+    <Property Name="FechaInicioEjecución" Type="date" />
+    <Property Name="FechaFinEjecución" Type="date" />
+    <Property Name="DíasProyecto" Type="int" />
+    <Property Name="DíasEjecución" Type="int" />
+    <Property Name="FechaEnvío" Type="date" />
+    <Property Name="Enviadopor" Type="varchar(max)" />
+    <Property Name="PAC" Type="int" />
+    <Property Name="Anexo30" Type="int" />
+    <Property Name="CAI" Type="varchar(max)" />
+    <Property Name="Cuatrimestral" Type="varchar(max)" />
+    <Property Name="Observaciones" Type="varchar(max)" />
+    <Property Name="FechaBloqueo" Type="date" />
+    <Property Name="Auditor_1_plan" Type="varchar(max)" />
+    <Property Name="Auditor_2_plan" Type="varchar(max)" />
+    <Property Name="Auditor_3_plan" Type="varchar(max)" />
+    <Property Name="Auditor_4_plan" Type="varchar(max)" />
+    <Property Name="Auditor_5_plan" Type="varchar(max)" />
+    <Property Name="Supervisor_plan" Type="varchar(max)" />
+    <Property Name="Subgerente_plan" Type="varchar(max)" />
+    <Property Name="Auditor_1_ejecucion" Type="varchar(max)" />
+    <Property Name="Auditor_2_ejecucion" Type="varchar(max)" />
+    <Property Name="Auditor_3_ejecucion" Type="varchar(max)" />
+    <Property Name="Auditor_4_ejecucion" Type="varchar(max)" />
+    <Property Name="Auditor_5_ejecucion" Type="varchar(max)" />
+    <Property Name="Supervisor_ejecucion" Type="varchar(max)" />
+    <Property Name="Subgerente_ejecucion" Type="varchar(max)" />
+    <Property Name="Gerente" Type="varchar(max)" />
+    <Property Name="FechaEmisión" Type="date" />
+    <Property Name="IdProcesoEvaluado" Type="int" />
+    <Property Name="IdRiesgoDelTrabajo" Type="int" />
+    <Property Name="IdRiesgoInherente" Type="int" />
+    <Property Name="IDRiesgoBCP" Type="int" />
+    <Property Name="IdAdministraciónDelRiesgo" Type="int" />
+    <Property Name="FechaCOA" Type="date" />
+    <Property Name="CantidadSprint" Type="int" />
+    <Property Name="IDEvaluacion_Plan" Type="int" />
+    <Property Name="FechaReemplazo" Type="date" />
+    <Property Name="IdProyectoReemplazo" Type="int" />
+    <Property Name="Cant_Pruebas_analiticas_plan" Type="int" />
+    <Property Name="Cant_Pruebas_analiticas_real" Type="int" />
+    <Property Name="PlanAnual_flag" Type="int" />
+    <Property Name="Criticidad_num" Type="int" />
+    <Property Name="MapaAseguramiento" Type="int" />
+    <Property Name="Controles_Auto_plan" Type="int" />
+  </EntityType>
+  <EntityType Name="TG_Proyecto_Riesgo_Control">
+    <Key>
+      <PropertyRef Name="IdProyecto_Riesgo_Control" />
+    </Key>
+    <Property Name="IdProyecto_Riesgo_Control" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Referencia_del_proceso" Type="nvarchar" MaxLength="50" />
+    <Property Name="NroRiesgo" Type="varchar(max)" />
+    <Property Name="NroControl" Type="varchar(max)" />
+    <Property Name="1eraLinea" Type="int" />
+    <Property Name="2daLinea" Type="int" />
+    <Property Name="3eraLinea" Type="int" />
+    <Property Name="Riesgo_1eraLinea" Type="int" />
+    <Property Name="Riesgo_2daLinea" Type="int" />
+    <Property Name="Control_1eraLinea" Type="int" />
+    <Property Name="Control_2daLinea" Type="int" />
+  </EntityType>
+  <EntityType Name="TG_Riesgo_Del_Trabajo">
+    <Key>
+      <PropertyRef Name="IdRiesgoDelTrabajo" />
+    </Key>
+    <Property Name="IdRiesgoDelTrabajo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="TG_RiesgoBCP">
+    <Key>
+      <PropertyRef Name="IDTipo" />
+    </Key>
+    <Property Name="IDTipo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar(max)" />
+    <Property Name="IDTipoBCP" Type="int" />
+  </EntityType>
+  <EntityType Name="TG_RiesgoInherente">
+    <Key>
+      <PropertyRef Name="IdRiesgoInherente" />
+    </Key>
+    <Property Name="IdRiesgoInherente" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TG_Rol">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="250" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TG_Unidad_Responsable">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Identificador" Type="int" Nullable="false" />
+    <Property Name="ID_Padre" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Nivel" Type="int" Nullable="false" />
+    <Property Name="flagActivo" Type="int" Nullable="false" />
+    <Property Name="Entidad" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PROYECTOSIAV2.dbo.TG_Unidad_Responsable_Contacto' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="TG_Unidad_Responsable_Contacto">
+    <Key>
+      <PropertyRef Name="ID_Unidad_Responsable" />
+      <PropertyRef Name="ID_Contacto" />
+      <PropertyRef Name="ID_Rol" />
+    </Key>
+    <Property Name="ID_Unidad_Responsable" Type="int" Nullable="false" />
+    <Property Name="ID_Contacto" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ID_Rol" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TG_Unidad_Responsable_Referencia">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Identificador" Type="int" Nullable="false" />
+    <Property Name="ID_Unidad_Responsable" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Entidad" Type="nvarchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="TS_Contacto">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="100" />
+    <Property Name="Apellido" Type="nvarchar" MaxLength="100" />
+    <Property Name="Email" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="TS_Observacion_Cambio">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_OBSERVACION" Type="int" />
+    <Property Name="ID_UNIDAD_RESPONSABLE" Type="int" />
+    <Property Name="TITULO_OBSERVACION" Type="varchar(max)" />
+    <Property Name="EMISOR" Type="varchar" MaxLength="50" />
+    <Property Name="AÑO" Type="int" />
+    <Property Name="NEGOCIO" Type="varchar" MaxLength="50" />
+    <Property Name="INFORME" Type="varchar" MaxLength="50" />
+    <Property Name="BANMEDICA" Type="varchar" MaxLength="50" />
+    <Property Name="ENVIADO_EXT" Type="varchar" MaxLength="50" />
+    <Property Name="FECHA_ENVIADO" Type="date" />
+    <Property Name="INFRACCIÓN" Type="varchar" MaxLength="50" />
+    <Property Name="USUARIO" Type="varchar" MaxLength="50" />
+    <Property Name="FECHA_REGISTRO" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TS_Rol">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="250" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TS_Unidad_Responsable">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Padre" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Nivel" Type="int" Nullable="false" />
+    <Property Name="flagActivo" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PROYECTOSIAV2.dbo.TS_Unidad_Responsable_Contacto' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="TS_Unidad_Responsable_Contacto">
+    <Key>
+      <PropertyRef Name="ID_Unidad_Responsable" />
+      <PropertyRef Name="ID_Contacto" />
+    </Key>
+    <Property Name="ID_Unidad_Responsable" Type="int" Nullable="false" />
+    <Property Name="ID_Contacto" Type="int" Nullable="false" />
+    <Property Name="ID_Rol" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TS_Unidad_Responsable_Referencia">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Unidad_Responsable" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="IdUsuario" />
+    </Key>
+    <Property Name="IdUsuario" Type="int" Nullable="false" />
+    <Property Name="IdPersona" Type="int" Nullable="false" />
+    <Property Name="Usuario" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Contraseña" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="token_recovery" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="Usuario_Log">
+    <Key>
+      <PropertyRef Name="ID_Operacion" />
+    </Key>
+    <Property Name="ID_Operacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Usuario" Type="int" Nullable="false" />
+    <Property Name="Timestamp" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UsuarioModuloRol">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdUsuario" Type="int" Nullable="false" />
+    <Property Name="IdModulo" Type="int" Nullable="false" />
+    <Property Name="IdRol" Type="int" Nullable="false" />
+    <Property Name="Estado" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PROYECTOSIAV2.dbo.TS_Estructura' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="TS_Estructura">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Nombre" />
+      <PropertyRef Name="ID_Padre" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="ID_Padre" Type="int" Nullable="false" />
+    <Property Name="GERENCIA NIVEL 0" Type="nvarchar" MaxLength="250" />
+    <Property Name="GERENCIA NIVEL 1" Type="nvarchar" MaxLength="250" />
+    <Property Name="GERENCIA NIVEL 2" Type="nvarchar" MaxLength="250" />
+    <Property Name="GERENCIA NIVEL 3" Type="nvarchar" MaxLength="250" />
+    <Property Name="GERENCIA NIVEL 4" Type="nvarchar" MaxLength="250" />
+    <Property Name="GERENCIA NIVEL 5" Type="nvarchar" MaxLength="250" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PROYECTOSIAV2.dbo.VIEW_ADMINISTRACION_USUARIOS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VIEW_ADMINISTRACION_USUARIOS">
+    <Key>
+      <PropertyRef Name="IdUsuario" />
+      <PropertyRef Name="IdModulo" />
+      <PropertyRef Name="IdRol" />
+      <PropertyRef Name="Persona" />
+    </Key>
+    <Property Name="IdUsuario" Type="int" Nullable="false" />
+    <Property Name="Persona" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IdModulo" Type="int" Nullable="false" />
+    <Property Name="IdRol" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PROYECTOSIAV2.dbo.View_AU_Administrador_Usuarios' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_AU_Administrador_Usuarios">
+    <Key>
+      <PropertyRef Name="IdPersona" />
+      <PropertyRef Name="IdUsuario" />
+      <PropertyRef Name="Usuario" />
+    </Key>
+    <Property Name="IdPersona" Type="int" Nullable="false" />
+    <Property Name="IdUsuario" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar(max)" />
+    <Property Name="Usuario" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" />
+    <Property Name="Estado" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PROYECTOSIAV2.dbo.View_AU_Drop_JefeDirecto' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_AU_Drop_JefeDirecto">
+    <Key>
+      <PropertyRef Name="IdPersona" />
+    </Key>
+    <Property Name="IdPersona" Type="int" Nullable="false" />
+    <Property Name="NombreJefe" Type="nvarchar(max)" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PROYECTOSIAV2.dbo.View_AU_Drop_UsuariosTM' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_AU_Drop_UsuariosTM">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Nombre" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="101" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PROYECTOSIAV2.dbo.View_AU_Persona_Usuario_Rotacion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_AU_Persona_Usuario_Rotacion">
+    <Key>
+      <PropertyRef Name="IdPersona" />
+      <PropertyRef Name="IdCompañia" />
+      <PropertyRef Name="IdUsuario" />
+      <PropertyRef Name="IdRotacion" />
+      <PropertyRef Name="Usuario" />
+      <PropertyRef Name="Contraseña" />
+    </Key>
+    <Property Name="IdPersona" Type="int" Nullable="false" />
+    <Property Name="IdCompañia" Type="int" Nullable="false" />
+    <Property Name="IdUsuario" Type="int" Nullable="false" />
+    <Property Name="IdRotacion" Type="int" Nullable="false" />
+    <Property Name="IdJefeDirecto" Type="int" />
+    <Property Name="Nombres" Type="nvarchar(max)" />
+    <Property Name="Apellidos" Type="nvarchar(max)" />
+    <Property Name="Email" Type="nvarchar(max)" />
+    <Property Name="Dni" Type="char" MaxLength="8" />
+    <Property Name="Función" Type="varchar" MaxLength="30" />
+    <Property Name="Matrícula" Type="varchar" MaxLength="50" />
+    <Property Name="SubGerencia" Type="varchar" MaxLength="50" />
+    <Property Name="Equipo" Type="varchar" MaxLength="200" />
+    <Property Name="NombreSharepoint" Type="varchar" MaxLength="50" />
+    <Property Name="Usuario" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Contraseña" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FechaIngreso" Type="date" />
+    <Property Name="FechaSalida" Type="date" />
+    <Property Name="Cargo" Type="varchar" MaxLength="30" />
+    <Property Name="Planilla" Type="varchar" MaxLength="50" />
+    <Property Name="Activo" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PROYECTOSIAV2.dbo.View_BC_Cuentas_Proyectos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_BC_Cuentas_Proyectos">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Cuenta_Contable" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Cuenta_Contable" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DESCRIPCION" Type="nvarchar(max)" />
+    <Property Name="Plan_Anual" Type="nvarchar(max)" />
+    <Property Name="Macroproceso" Type="varchar(max)" />
+    <Property Name="Evaluación" Type="varchar(max)" />
+    <Property Name="Cod_Proyecto" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PROYECTOSIAV2.dbo.View_BC_Hojas_Cargadas' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_BC_Hojas_Cargadas">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="AÑO" Type="int" />
+    <Property Name="PERIODO" Type="int" />
+    <Property Name="FECHA_CARGA" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PROYECTOSIAV2.dbo.View_DAC_Vista_List_Scripts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="View_DAC_Vista_List_Scripts">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Código Script" Type="nvarchar" MaxLength="255" />
+    <Property Name="Año" Type="int" />
+    <Property Name="Nombre Script" Type="nvarchar" MaxLength="255" />
+    <Property Name="Descripción de Script" Type="nvarchar" MaxLength="255" />
+    <Property Name="Gestor" Type="nvarchar" MaxLength="255" />
+    <Property Name="IdGA" Type="int" />
+    <Property Name="Gerente Adjunto" Type="nvarchar(max)" />
+    <Property Name="IdAud" Type="int" />
+    <Property Name="Auditor" Type="nvarchar(max)" />
+    <Property Name="Monitoreo" Type="nvarchar" MaxLength="255" />
+    <Property Name="Fase 1" Type="int" />
+    <Property Name="Fase 2" Type="int" />
+    <Property Name="Fase 3" Type="int" />
+    <Property Name="Fase 4" Type="int" />
+    <Property Name="Estado" Type="nvarchar(max)" />
+    <Property Name="Ruta" Type="nvarchar(max)" />
+    <Property Name="graficaPowerBI" Type="nvarchar(max)" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PROYECTOSIAV2.dbo.VIEW_NEGOCIOS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VIEW_NEGOCIOS">
+    <Key>
+      <PropertyRef Name="Neg" />
+    </Key>
+    <Property Name="Neg" Type="varchar" MaxLength="18" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PROYECTOSIAV2.dbo.VIEW_USUARIOS_FORGOT_PASSWORD' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VIEW_USUARIOS_FORGOT_PASSWORD">
+    <Key>
+      <PropertyRef Name="IdUsuario" />
+      <PropertyRef Name="IdPersona" />
+      <PropertyRef Name="Usuario" />
+      <PropertyRef Name="Contraseña" />
+      <PropertyRef Name="Email" />
+    </Key>
+    <Property Name="IdUsuario" Type="int" Nullable="false" />
+    <Property Name="IdPersona" Type="int" Nullable="false" />
+    <Property Name="Usuario" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Contraseña" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="token_recovery" Type="varchar" MaxLength="200" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PROYECTOSIAV2.dbo.VIEW_USUARIOS_LOGIN' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VIEW_USUARIOS_LOGIN">
+    <Key>
+      <PropertyRef Name="IdUsuario" />
+      <PropertyRef Name="IdPersona" />
+      <PropertyRef Name="Usuario" />
+      <PropertyRef Name="Contraseña" />
+      <PropertyRef Name="Email" />
+    </Key>
+    <Property Name="IdUsuario" Type="int" Nullable="false" />
+    <Property Name="IdPersona" Type="int" Nullable="false" />
+    <Property Name="Usuario" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Contraseña" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PROYECTOSIAV2.dbo.VIEW_WT_USUARIOS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VIEW_WT_USUARIOS">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Usuario" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Usuario" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Usuario__IdPerso__0EF836A4">
+    <End Role="Persona" Type="Self.Persona" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Persona">
+        <PropertyRef Name="IdPersona" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="IdPersona" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DAC_DAC_HistorialCambios_DAC_Scripts">
+    <End Role="DAC_Scripts" Type="Self.DAC_Scripts" Multiplicity="0..1" />
+    <End Role="DAC_HistorialCambios" Type="Self.DAC_HistorialCambios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DAC_Scripts">
+        <PropertyRef Name="idScript" />
+      </Principal>
+      <Dependent Role="DAC_HistorialCambios">
+        <PropertyRef Name="idScript" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DAC_HistorialCambios_DAC_HistorialCambios">
+    <End Role="DAC_HistorialCambios" Type="Self.DAC_HistorialCambios" Multiplicity="1" />
+    <End Role="DAC_HistorialCambios1" Type="Self.DAC_HistorialCambios" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="DAC_HistorialCambios">
+        <PropertyRef Name="idHistorico" />
+      </Principal>
+      <Dependent Role="DAC_HistorialCambios1">
+        <PropertyRef Name="idHistorico" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DAC_HistorialCambios_Persona">
+    <End Role="Persona" Type="Self.Persona" Multiplicity="0..1" />
+    <End Role="DAC_HistorialCambios" Type="Self.DAC_HistorialCambios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Persona">
+        <PropertyRef Name="IdPersona" />
+      </Principal>
+      <Dependent Role="DAC_HistorialCambios">
+        <PropertyRef Name="idUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DAC_Scripts_DAC_Ejecucion_Script">
+    <End Role="DAC_Ejecucion_Script" Type="Self.DAC_Ejecucion_Script" Multiplicity="0..1" />
+    <End Role="DAC_Scripts" Type="Self.DAC_Scripts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DAC_Ejecucion_Script">
+        <PropertyRef Name="idEjecucionScript" />
+      </Principal>
+      <Dependent Role="DAC_Scripts">
+        <PropertyRef Name="idEjecScript" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DAC_Scripts_DAC_Peridiocidad_Ejecucion">
+    <End Role="DAC_Peridiocidad_Ejecucion" Type="Self.DAC_Peridiocidad_Ejecucion" Multiplicity="0..1" />
+    <End Role="DAC_Scripts" Type="Self.DAC_Scripts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DAC_Peridiocidad_Ejecucion">
+        <PropertyRef Name="idPeriodicidadEjec" />
+      </Principal>
+      <Dependent Role="DAC_Scripts">
+        <PropertyRef Name="idPerEjec" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DAC_Scripts_DAC_Periodo_Analisis">
+    <End Role="DAC_Periodo_Analisis" Type="Self.DAC_Periodo_Analisis" Multiplicity="0..1" />
+    <End Role="DAC_Scripts" Type="Self.DAC_Scripts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DAC_Periodo_Analisis">
+        <PropertyRef Name="idPeriodoAnalisis" />
+      </Principal>
+      <Dependent Role="DAC_Scripts">
+        <PropertyRef Name="idPeriodoA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DAC_Scripts_DAC_Tipologia_Script">
+    <End Role="DAC_Tipologia_Script" Type="Self.DAC_Tipologia_Script" Multiplicity="0..1" />
+    <End Role="DAC_Scripts" Type="Self.DAC_Scripts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DAC_Tipologia_Script">
+        <PropertyRef Name="idTipologiaScript" />
+      </Principal>
+      <Dependent Role="DAC_Scripts">
+        <PropertyRef Name="idTipScript" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DAC_Scripts_DD_Proyecto">
+    <End Role="DD_Proyecto" Type="Self.DD_Proyecto" Multiplicity="0..1" />
+    <End Role="DAC_Scripts" Type="Self.DAC_Scripts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DD_Proyecto">
+        <PropertyRef Name="IdProyecto" />
+      </Principal>
+      <Dependent Role="DAC_Scripts">
+        <PropertyRef Name="idProyecto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DAC_Scripts_Persona">
+    <End Role="Persona" Type="Self.Persona" Multiplicity="0..1" />
+    <End Role="DAC_Scripts" Type="Self.DAC_Scripts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Persona">
+        <PropertyRef Name="IdPersona" />
+      </Principal>
+      <Dependent Role="DAC_Scripts">
+        <PropertyRef Name="idAuditor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DD_Cambios_Universo_DD_Universo">
+    <End Role="DD_Universo" Type="Self.DD_Universo" Multiplicity="0..1" />
+    <End Role="DD_Cambios_Universo" Type="Self.DD_Cambios_Universo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DD_Universo">
+        <PropertyRef Name="idUniverso" />
+      </Principal>
+      <Dependent Role="DD_Cambios_Universo">
+        <PropertyRef Name="id_Universo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DD_Cambios_Universo_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="DD_Cambios_Universo" Type="Self.DD_Cambios_Universo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="DD_Cambios_Universo">
+        <PropertyRef Name="id_Usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DD_Proyecto_DD_Proyecto">
+    <End Role="DD_Proyecto" Type="Self.DD_Proyecto" Multiplicity="1" />
+    <End Role="DD_Proyecto1" Type="Self.DD_Proyecto" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="DD_Proyecto">
+        <PropertyRef Name="IdProyecto" />
+      </Principal>
+      <Dependent Role="DD_Proyecto1">
+        <PropertyRef Name="IdProyecto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DD_Proyecto_DPA_Evaluacion_Plan">
+    <End Role="DPA_Evaluacion_Plan" Type="Self.DPA_Evaluacion_Plan" Multiplicity="0..1" />
+    <End Role="DD_Proyecto" Type="Self.DD_Proyecto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DPA_Evaluacion_Plan">
+        <PropertyRef Name="ID_Evaluacion_Plan" />
+      </Principal>
+      <Dependent Role="DD_Proyecto">
+        <PropertyRef Name="IDEvaluacion_Plan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DD_Proyecto_IdInforme">
+    <End Role="DD_Informe" Type="Self.DD_Informe" Multiplicity="0..1" />
+    <End Role="DD_Proyecto" Type="Self.DD_Proyecto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DD_Informe">
+        <PropertyRef Name="IdInforme" />
+      </Principal>
+      <Dependent Role="DD_Proyecto">
+        <PropertyRef Name="IdInforme" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DD_Proyecto_IdProcesoEvaluado">
+    <End Role="DD_ProcesoEvaluado" Type="Self.DD_ProcesoEvaluado" Multiplicity="0..1" />
+    <End Role="DD_Proyecto" Type="Self.DD_Proyecto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DD_ProcesoEvaluado">
+        <PropertyRef Name="IdProcesoEvaluado" />
+      </Principal>
+      <Dependent Role="DD_Proyecto">
+        <PropertyRef Name="IdProcesoEvaluado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DD_Universo_DD_Informe">
+    <End Role="DD_Informe" Type="Self.DD_Informe" Multiplicity="0..1" />
+    <End Role="DD_Universo" Type="Self.DD_Universo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DD_Informe">
+        <PropertyRef Name="IdInforme" />
+      </Principal>
+      <Dependent Role="DD_Universo">
+        <PropertyRef Name="idNegocio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DPA_Auditor_Evaluacion_DPA_Evaluacion_Plan">
+    <End Role="DPA_Evaluacion_Plan" Type="Self.DPA_Evaluacion_Plan" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DPA_Auditor_Evaluacion" Type="Self.DPA_Auditor_Evaluacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DPA_Evaluacion_Plan">
+        <PropertyRef Name="ID_Evaluacion_Plan" />
+      </Principal>
+      <Dependent Role="DPA_Auditor_Evaluacion">
+        <PropertyRef Name="ID_Evaluacion_Plan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DPA_Auditor_Evaluacion_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DPA_Auditor_Evaluacion" Type="Self.DPA_Auditor_Evaluacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="DPA_Auditor_Evaluacion">
+        <PropertyRef Name="ID_Usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DPA_Auditor_Tiempo_Extra_DPA_Tipo_Tiempo_Extra">
+    <End Role="DPA_Tipo_Tiempo_Extra" Type="Self.DPA_Tipo_Tiempo_Extra" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DPA_Auditor_Tiempo_Extra" Type="Self.DPA_Auditor_Tiempo_Extra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DPA_Tipo_Tiempo_Extra">
+        <PropertyRef Name="ID_Tipo_Tiempo_Extra" />
+      </Principal>
+      <Dependent Role="DPA_Auditor_Tiempo_Extra">
+        <PropertyRef Name="ID_Tipo_Tiempo_Extra" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DPA_Auditor_Tiempo_Extra_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DPA_Auditor_Tiempo_Extra" Type="Self.DPA_Auditor_Tiempo_Extra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="DPA_Auditor_Tiempo_Extra">
+        <PropertyRef Name="ID_Usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DPA_Evaluacion_DPA_Equipo">
+    <End Role="DPA_Equipo" Type="Self.DPA_Equipo" Multiplicity="0..1" />
+    <End Role="DPA_Evaluacion" Type="Self.DPA_Evaluacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DPA_Equipo">
+        <PropertyRef Name="ID_Equipo" />
+      </Principal>
+      <Dependent Role="DPA_Evaluacion">
+        <PropertyRef Name="ID_Equipo_Responsable" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DPA_Evaluacion_DPA_Negocio">
+    <End Role="DPA_Negocio" Type="Self.DPA_Negocio" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DPA_Evaluacion" Type="Self.DPA_Evaluacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DPA_Negocio">
+        <PropertyRef Name="ID_Negocio" />
+      </Principal>
+      <Dependent Role="DPA_Evaluacion">
+        <PropertyRef Name="ID_Negocio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DPA_Evaluacion_Plan_DPA_Evaluacion">
+    <End Role="DPA_Evaluacion" Type="Self.DPA_Evaluacion" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DPA_Evaluacion_Plan" Type="Self.DPA_Evaluacion_Plan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DPA_Evaluacion">
+        <PropertyRef Name="ID_Evaluacion" />
+      </Principal>
+      <Dependent Role="DPA_Evaluacion_Plan">
+        <PropertyRef Name="ID_Evaluacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DPA_Evaluacion_Plan_DPA_Plan_Anual">
+    <End Role="DPA_Plan_Anual" Type="Self.DPA_Plan_Anual" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DPA_Evaluacion_Plan" Type="Self.DPA_Evaluacion_Plan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DPA_Plan_Anual">
+        <PropertyRef Name="ID_Plan_Anual" />
+      </Principal>
+      <Dependent Role="DPA_Evaluacion_Plan">
+        <PropertyRef Name="ID_Plan_Anual" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DPA_Log_Evaluacion_Plan_DPA_Evaluacion_Plan">
+    <End Role="DPA_Evaluacion_Plan" Type="Self.DPA_Evaluacion_Plan" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DPA_Log_Evaluacion_Plan" Type="Self.DPA_Log_Evaluacion_Plan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DPA_Evaluacion_Plan">
+        <PropertyRef Name="ID_Evaluacion_Plan" />
+      </Principal>
+      <Dependent Role="DPA_Log_Evaluacion_Plan">
+        <PropertyRef Name="ID_Evaluacion_Plan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DPA_Log_Evaluacion_Plan_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DPA_Log_Evaluacion_Plan" Type="Self.DPA_Log_Evaluacion_Plan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="DPA_Log_Evaluacion_Plan">
+        <PropertyRef Name="ID_Usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DPA_Opcion_DPA_Criterio">
+    <End Role="DPA_Criterio_Votacion" Type="Self.DPA_Criterio_Votacion" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DPA_Opcion_Votacion" Type="Self.DPA_Opcion_Votacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DPA_Criterio_Votacion">
+        <PropertyRef Name="ID_Criterio" />
+      </Principal>
+      <Dependent Role="DPA_Opcion_Votacion">
+        <PropertyRef Name="ID_Criterio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DPA_Scoring_Evaluacion_DPA_Criterio_Scoring">
+    <End Role="DPA_Criterio_Scoring" Type="Self.DPA_Criterio_Scoring" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DPA_Scoring_Evaluacion" Type="Self.DPA_Scoring_Evaluacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DPA_Criterio_Scoring">
+        <PropertyRef Name="ID_Criterio_Scoring" />
+      </Principal>
+      <Dependent Role="DPA_Scoring_Evaluacion">
+        <PropertyRef Name="ID_Criterio_Scoring" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DPA_Scoring_Evaluacion_DPA_Evaluacion_Plan">
+    <End Role="DPA_Evaluacion_Plan" Type="Self.DPA_Evaluacion_Plan" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DPA_Scoring_Evaluacion" Type="Self.DPA_Scoring_Evaluacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DPA_Evaluacion_Plan">
+        <PropertyRef Name="ID_Evaluacion_Plan" />
+      </Principal>
+      <Dependent Role="DPA_Scoring_Evaluacion">
+        <PropertyRef Name="ID_Evaluacion_Plan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DPA_Votacion_DPA_Evaluacion_Plan">
+    <End Role="DPA_Evaluacion_Plan" Type="Self.DPA_Evaluacion_Plan" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DPA_Votacion" Type="Self.DPA_Votacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DPA_Evaluacion_Plan">
+        <PropertyRef Name="ID_Evaluacion_Plan" />
+      </Principal>
+      <Dependent Role="DPA_Votacion">
+        <PropertyRef Name="ID_Evaluacion_Plan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DPA_Votacion_DPA_Opcion_Votacion">
+    <End Role="DPA_Opcion_Votacion" Type="Self.DPA_Opcion_Votacion" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DPA_Votacion" Type="Self.DPA_Votacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DPA_Opcion_Votacion">
+        <PropertyRef Name="ID_Opcion_Votacion" />
+      </Principal>
+      <Dependent Role="DPA_Votacion">
+        <PropertyRef Name="ID_Opcion_Votacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DPA_Votacion_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DPA_Votacion" Type="Self.DPA_Votacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="DPA_Votacion">
+        <PropertyRef Name="ID_Usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HistorialReportesScript_Persona">
+    <End Role="Persona" Type="Self.Persona" Multiplicity="0..1" />
+    <End Role="DAC_HistorialReportesScript" Type="Self.DAC_HistorialReportesScript" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Persona">
+        <PropertyRef Name="IdPersona" />
+      </Principal>
+      <Dependent Role="DAC_HistorialReportesScript">
+        <PropertyRef Name="idUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HistorialReportesScript_scripts">
+    <End Role="DAC_Scripts" Type="Self.DAC_Scripts" Multiplicity="0..1" />
+    <End Role="DAC_HistorialReportesScript" Type="Self.DAC_HistorialReportesScript" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DAC_Scripts">
+        <PropertyRef Name="idScript" />
+      </Principal>
+      <Dependent Role="DAC_HistorialReportesScript">
+        <PropertyRef Name="idScript" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ModuloRol_IdModulo">
+    <End Role="Modulo" Type="Self.Modulo" Multiplicity="1" />
+    <End Role="ModuloRol" Type="Self.ModuloRol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Modulo">
+        <PropertyRef Name="IdModulo" />
+      </Principal>
+      <Dependent Role="ModuloRol">
+        <PropertyRef Name="IdModulo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ModuloRol_IdRol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ModuloRol" Type="Self.ModuloRol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="IdRol" />
+      </Principal>
+      <Dependent Role="ModuloRol">
+        <PropertyRef Name="IdRol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Persona_IdCompañia">
+    <End Role="Compañia" Type="Self.Compañia" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Compañia">
+        <PropertyRef Name="IdCompañia" />
+      </Principal>
+      <Dependent Role="Persona">
+        <PropertyRef Name="IdCompañia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PlanAnual_IdCompañia">
+    <End Role="Compañia" Type="Self.Compañia" Multiplicity="0..1" />
+    <End Role="DD_PlanAnual" Type="Self.DD_PlanAnual" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Compañia">
+        <PropertyRef Name="IdCompañia" />
+      </Principal>
+      <Dependent Role="DD_PlanAnual">
+        <PropertyRef Name="IdCompañia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rotacion_IdPersona">
+    <End Role="Persona" Type="Self.Persona" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Rotacion" Type="Self.Rotacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Persona">
+        <PropertyRef Name="IdPersona" />
+      </Principal>
+      <Dependent Role="Rotacion">
+        <PropertyRef Name="IdPersona" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScriptsContinua_Contacto">
+    <End Role="TS_Contacto" Type="Self.TS_Contacto" Multiplicity="0..1" />
+    <End Role="DAC_ScriptsContinua" Type="Self.DAC_ScriptsContinua" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TS_Contacto">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DAC_ScriptsContinua">
+        <PropertyRef Name="idContactoAuditado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScriptsContinua_Fase1_Estado">
+    <End Role="DAC_Estado" Type="Self.DAC_Estado" Multiplicity="0..1" />
+    <End Role="DAC_ScriptsContinua" Type="Self.DAC_ScriptsContinua" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DAC_Estado">
+        <PropertyRef Name="idEstado" />
+      </Principal>
+      <Dependent Role="DAC_ScriptsContinua">
+        <PropertyRef Name="Fase 1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScriptsContinua_Fase2_Estado">
+    <End Role="DAC_Estado" Type="Self.DAC_Estado" Multiplicity="0..1" />
+    <End Role="DAC_ScriptsContinua" Type="Self.DAC_ScriptsContinua" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DAC_Estado">
+        <PropertyRef Name="idEstado" />
+      </Principal>
+      <Dependent Role="DAC_ScriptsContinua">
+        <PropertyRef Name="Fase 2" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScriptsContinua_Fase3_Estado">
+    <End Role="DAC_Estado" Type="Self.DAC_Estado" Multiplicity="0..1" />
+    <End Role="DAC_ScriptsContinua" Type="Self.DAC_ScriptsContinua" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DAC_Estado">
+        <PropertyRef Name="idEstado" />
+      </Principal>
+      <Dependent Role="DAC_ScriptsContinua">
+        <PropertyRef Name="Fase 3" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScriptsContinua_Fase4_Estado">
+    <End Role="DAC_Estado" Type="Self.DAC_Estado" Multiplicity="0..1" />
+    <End Role="DAC_ScriptsContinua" Type="Self.DAC_ScriptsContinua" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DAC_Estado">
+        <PropertyRef Name="idEstado" />
+      </Principal>
+      <Dependent Role="DAC_ScriptsContinua">
+        <PropertyRef Name="Fase 4" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScriptsContinua_Persona_Auditor">
+    <End Role="Persona" Type="Self.Persona" Multiplicity="0..1" />
+    <End Role="DAC_ScriptsContinua" Type="Self.DAC_ScriptsContinua" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Persona">
+        <PropertyRef Name="IdPersona" />
+      </Principal>
+      <Dependent Role="DAC_ScriptsContinua">
+        <PropertyRef Name="idAuditor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScriptsContinua_Persona_Gerente">
+    <End Role="Persona" Type="Self.Persona" Multiplicity="0..1" />
+    <End Role="DAC_ScriptsContinua" Type="Self.DAC_ScriptsContinua" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Persona">
+        <PropertyRef Name="IdPersona" />
+      </Principal>
+      <Dependent Role="DAC_ScriptsContinua">
+        <PropertyRef Name="idGerenteAdjunto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScriptsContinua_TipScript">
+    <End Role="DAC_Tipologia_Script" Type="Self.DAC_Tipologia_Script" Multiplicity="0..1" />
+    <End Role="DAC_ScriptsContinua" Type="Self.DAC_ScriptsContinua" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DAC_Tipologia_Script">
+        <PropertyRef Name="idTipologiaScript" />
+      </Principal>
+      <Dependent Role="DAC_ScriptsContinua">
+        <PropertyRef Name="idTipScript" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TS_Unidad_Responsable_Contacto_TS_Contacto">
+    <End Role="TS_Contacto" Type="Self.TS_Contacto" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TS_Unidad_Responsable_Contacto" Type="Self.TS_Unidad_Responsable_Contacto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TS_Contacto">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TS_Unidad_Responsable_Contacto">
+        <PropertyRef Name="ID_Contacto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TS_Unidad_Responsable_Contacto_TS_Rol">
+    <End Role="TS_Rol" Type="Self.TS_Rol" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TS_Unidad_Responsable_Contacto" Type="Self.TS_Unidad_Responsable_Contacto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TS_Rol">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TS_Unidad_Responsable_Contacto">
+        <PropertyRef Name="ID_Rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TS_Unidad_Responsable_Contacto_TS_Unidad_Responsable">
+    <End Role="TS_Unidad_Responsable" Type="Self.TS_Unidad_Responsable" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TS_Unidad_Responsable_Contacto" Type="Self.TS_Unidad_Responsable_Contacto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TS_Unidad_Responsable">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TS_Unidad_Responsable_Contacto">
+        <PropertyRef Name="ID_Unidad_Responsable" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TS_Unidad_Responsable_Referencia_TS_Unidad_Responsable">
+    <End Role="TS_Unidad_Responsable" Type="Self.TS_Unidad_Responsable" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TS_Unidad_Responsable_Referencia" Type="Self.TS_Unidad_Responsable_Referencia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TS_Unidad_Responsable">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TS_Unidad_Responsable_Referencia">
+        <PropertyRef Name="ID_Unidad_Responsable" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuario_Log_Usuario_Log">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Usuario_Log" Type="Self.Usuario_Log" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="Usuario_Log">
+        <PropertyRef Name="ID_Usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsuarioModuloRol_IdUsuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="UsuarioModuloRol" Type="Self.UsuarioModuloRol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="UsuarioModuloRol">
+        <PropertyRef Name="IdUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_Detalle_Acciones_Obs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID" Type="varchar" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="TITULO_OBSERVACION" Type="varchar(max)" />
+          <Property Name="NOMBRE_0" Type="nvarchar" MaxLength="255" />
+          <Property Name="NOMBRE_1" Type="nvarchar" MaxLength="255" />
+          <Property Name="NOMBRE_2" Type="nvarchar" MaxLength="255" />
+          <Property Name="NOMBRE_3" Type="nvarchar" MaxLength="255" />
+          <Property Name="NOMBRE_4" Type="nvarchar" MaxLength="255" />
+          <Property Name="NOMBRE_5" Type="nvarchar" MaxLength="255" />
+          <Property Name="NEGOCIO" Type="varchar" MaxLength="50" />
+          <Property Name="EMISOR" Type="varchar" MaxLength="50" />
+          <Property Name="AÑO" Type="int" />
+          <Property Name="USUARIO" Type="varchar" MaxLength="50" />
+          <Property Name="INFORME" Type="varchar" MaxLength="50" />
+          <Property Name="FECHA_REGISTRO" Type="datetime" Nullable="false" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="fn_Detalle_Ampliaciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID" Type="varchar" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="Usuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fecha_Registro" Type="datetime" Nullable="false" />
+          <Property Name="Motivo" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Nuevo_Plan" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Fecha_Propuesta" Type="date" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="fn_Stock_Observaciones_Integrado_v6" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Fecha_Corte" Type="nvarchar" Mode="In" />
+    <Parameter Name="PRIMA" Type="int" Mode="In" />
+    <Parameter Name="SEGUROS" Type="int" Mode="In" />
+    <Parameter Name="OBSERVACION" Type="int" Mode="In" />
+    <Parameter Name="O_MEJORA" Type="int" Mode="In" />
+    <Parameter Name="EN_FECHA" Type="int" Mode="In" />
+    <Parameter Name="VENCIDO" Type="int" Mode="In" />
+    <Parameter Name="PENDIENTES" Type="int" Mode="In" />
+    <Parameter Name="CERRADOS" Type="int" Mode="In" />
+    <Parameter Name="IMPLEMENTADAS" Type="int" Mode="In" />
+    <Parameter Name="ANIO" Type="varchar" Mode="In" />
+    <Parameter Name="ID" Type="varchar" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="SITUACION" Type="varchar" MaxLength="50" />
+          <Property Name="Identificador" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PROYECTO" Type="nvarchar" MaxLength="60" />
+          <Property Name="NOMBRE PROYECTO" Type="nvarchar" MaxLength="255" />
+          <Property Name="TITULO OBSERVACION" Type="nvarchar" MaxLength="255" />
+          <Property Name="OBSERVACION" Type="nvarchar(max)" />
+          <Property Name="RECOMENDACION" Type="nvarchar(max)" />
+          <Property Name="UNIDAD RESPONSABLE" Type="nvarchar" MaxLength="255" />
+          <Property Name="PROPIETARIO" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EMAIL PROPIETARIO" Type="nvarchar" MaxLength="255" />
+          <Property Name="OBSERVADOR" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="COLABORADOR" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="FECHA EMISIÓN" Type="date" />
+          <Property Name="RIESGO" Type="nvarchar" MaxLength="255" />
+          <Property Name="FECHA ESTIMADA" Type="date" />
+          <Property Name="FECHA DE VENCIMIENTO" Type="date" />
+          <Property Name="ÚLTIMA RESPUESTA" Type="text" />
+          <Property Name="FECHA ÚLTIMA RESPUESTA" Type="datetime" />
+          <Property Name="ÚLTIMA IMPLEMENTACIÓN" Type="text" />
+          <Property Name="FECHA ÚLTIMA IMPLEMENTACIÓN" Type="datetime" />
+          <Property Name="DESCRIPCIÓN CIERRE" Type="text" />
+          <Property Name="FECHA CIERRE" Type="datetime" />
+          <Property Name="FECHA CARGA" Type="datetime" />
+          <Property Name="COORDINADOR" Type="nvarchar" MaxLength="50" />
+          <Property Name="TIPO OBSERVACIÓN" Type="nvarchar" MaxLength="255" />
+          <Property Name="EMISOR" Type="varchar" MaxLength="50" />
+          <Property Name="ESTADO" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="AÑO" Type="varchar" MaxLength="30" />
+          <Property Name="ID_UnidadResponsable" Type="int" />
+          <Property Name="FECHA CORTE" Type="date" />
+          <Property Name="GERENCIA NIVEL 0" Type="nvarchar" MaxLength="255" />
+          <Property Name="GERENCIA NIVEL 1" Type="nvarchar" MaxLength="255" />
+          <Property Name="GERENCIA NIVEL 2" Type="nvarchar" MaxLength="255" />
+          <Property Name="GERENCIA NIVEL 3" Type="nvarchar" MaxLength="255" />
+          <Property Name="GERENCIA NIVEL 4" Type="nvarchar" MaxLength="255" />
+          <Property Name="GERENCIA NIVEL 5" Type="nvarchar" MaxLength="255" />
+          <Property Name="NEGOCIO" Type="varchar" MaxLength="50" />
+          <Property Name="Retirado" Type="varchar" MaxLength="14" Nullable="false" />
+          <Property Name="DÍAS IMPLEMENTADO" Type="int" />
+          <Property Name="AMPLIACIONES APROBADAS" Type="int" />
+          <Property Name="ÚLTIMO APROBADOR" Type="nvarchar" MaxLength="50" />
+          <Property Name="MOTIVO" Type="nvarchar(max)" />
+          <Property Name="NUEVO PLAN" Type="nvarchar(max)" />
+          <Property Name="FECHA PROPUESTA" Type="date" />
+          <Property Name="INFORME" Type="varchar" MaxLength="50" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="fn_Stock_Observaciones_Integrado_v7" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Fecha_Corte" Type="nvarchar" Mode="In" />
+    <Parameter Name="PRIMA" Type="int" Mode="In" />
+    <Parameter Name="SEGUROS" Type="int" Mode="In" />
+    <Parameter Name="OBSERVACION" Type="int" Mode="In" />
+    <Parameter Name="O_MEJORA" Type="int" Mode="In" />
+    <Parameter Name="EN_FECHA" Type="int" Mode="In" />
+    <Parameter Name="VENCIDO" Type="int" Mode="In" />
+    <Parameter Name="PENDIENTES" Type="int" Mode="In" />
+    <Parameter Name="CERRADOS" Type="int" Mode="In" />
+    <Parameter Name="IMPLEMENTADAS" Type="int" Mode="In" />
+    <Parameter Name="ANIO" Type="varchar" Mode="In" />
+    <Parameter Name="ID" Type="varchar" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="SITUACION" Type="varchar" MaxLength="50" />
+          <Property Name="Identificador" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PROYECTO" Type="nvarchar" MaxLength="500" />
+          <Property Name="NOMBRE PROYECTO" Type="nvarchar" MaxLength="500" />
+          <Property Name="TITULO OBSERVACION" Type="nvarchar" MaxLength="500" />
+          <Property Name="OBSERVACION" Type="nvarchar(max)" />
+          <Property Name="RECOMENDACION" Type="nvarchar(max)" />
+          <Property Name="UNIDAD RESPONSABLE" Type="nvarchar" MaxLength="255" />
+          <Property Name="PROPIETARIO" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EMAIL PROPIETARIO" Type="nvarchar" MaxLength="255" />
+          <Property Name="OBSERVADOR" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="COLABORADOR" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="FECHA EMISIÓN" Type="date" />
+          <Property Name="RIESGO" Type="nvarchar" MaxLength="255" />
+          <Property Name="FECHA ESTIMADA" Type="date" />
+          <Property Name="FECHA DE VENCIMIENTO" Type="date" />
+          <Property Name="ÚLTIMA RESPUESTA" Type="text" />
+          <Property Name="PRIMERA RESPUESTA" Type="nvarchar(max)" />
+          <Property Name="FECHA ÚLTIMA RESPUESTA" Type="datetime" />
+          <Property Name="ÚLTIMA IMPLEMENTACIÓN" Type="text" />
+          <Property Name="FECHA ÚLTIMA IMPLEMENTACIÓN" Type="datetime" />
+          <Property Name="DESCRIPCIÓN CIERRE" Type="text" />
+          <Property Name="FECHA CIERRE" Type="datetime" />
+          <Property Name="FECHA CARGA" Type="datetime" />
+          <Property Name="COORDINADOR" Type="nvarchar" MaxLength="50" />
+          <Property Name="TIPO OBSERVACIÓN" Type="nvarchar" MaxLength="255" />
+          <Property Name="EMISOR" Type="varchar" MaxLength="50" />
+          <Property Name="ESTADO" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="AÑO" Type="varchar" MaxLength="30" />
+          <Property Name="ID_UnidadResponsable" Type="int" />
+          <Property Name="FECHA CORTE" Type="date" />
+          <Property Name="GERENCIA NIVEL 0" Type="nvarchar" MaxLength="255" />
+          <Property Name="GERENCIA NIVEL 1" Type="nvarchar" MaxLength="255" />
+          <Property Name="GERENCIA NIVEL 2" Type="nvarchar" MaxLength="255" />
+          <Property Name="GERENCIA NIVEL 3" Type="nvarchar" MaxLength="255" />
+          <Property Name="GERENCIA NIVEL 4" Type="nvarchar" MaxLength="255" />
+          <Property Name="GERENCIA NIVEL 5" Type="nvarchar" MaxLength="255" />
+          <Property Name="NEGOCIO" Type="varchar" MaxLength="50" />
+          <Property Name="Retirado" Type="varchar" MaxLength="14" Nullable="false" />
+          <Property Name="DÍAS IMPLEMENTADO" Type="int" />
+          <Property Name="AMPLIACIONES APROBADAS" Type="int" />
+          <Property Name="ÚLTIMO APROBADOR" Type="nvarchar" MaxLength="50" />
+          <Property Name="MOTIVO" Type="nvarchar(max)" />
+          <Property Name="NUEVO PLAN" Type="nvarchar(max)" />
+          <Property Name="FECHA PROPUESTA" Type="date" />
+          <Property Name="INFORME" Type="varchar" MaxLength="50" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="fn_TG_Obtener_Proyectos_v1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id_plan_anual" Type="int" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="IdProyecto" Type="int" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="50" />
+          <Property Name="Riesgo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Compania" Type="varchar" MaxLength="10" />
+          <Property Name="Macroproceso" Type="varchar(max)" Nullable="false" />
+          <Property Name="Plan" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Evaluacion" Type="varchar(max)" />
+          <Property Name="Estado" Type="varchar" MaxLength="27" Nullable="false" />
+          <Property Name="ProcesoEvaluado" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Tipo" Type="varchar(max)" Nullable="false" />
+          <Property Name="Criticidad" Type="varchar(max)" Nullable="false" />
+          <Property Name="FechaInicioPlan" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="FechaFinPlan" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="FechaInicioEjecucion" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="FechaFinEjecucion" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="DiasPlanGA" Type="int" Nullable="false" />
+          <Property Name="DiasEjecutadoGA" Type="int" Nullable="false" />
+          <Property Name="Auditor1_plan" Type="varchar(max)" />
+          <Property Name="Auditor2_plan" Type="varchar(max)" />
+          <Property Name="Auditor3_plan" Type="varchar(max)" />
+          <Property Name="Auditor4_plan" Type="varchar(max)" />
+          <Property Name="Auditor5_plan" Type="varchar(max)" />
+          <Property Name="AuditoresSenior_plan" Type="varchar(max)" Nullable="false" />
+          <Property Name="GerenteAdjunto_plan" Type="varchar(max)" Nullable="false" />
+          <Property Name="Auditor1_ejecucion" Type="varchar(max)" />
+          <Property Name="Auditor2_ejecucion" Type="varchar(max)" />
+          <Property Name="Auditor3_ejecucion" Type="varchar(max)" />
+          <Property Name="Auditor4_ejecucion" Type="varchar(max)" />
+          <Property Name="Auditor5_ejecucion" Type="varchar(max)" />
+          <Property Name="AuditoresSenior_ejecucion" Type="varchar(max)" Nullable="false" />
+          <Property Name="GerenteAdjunto_ejecucion" Type="varchar(max)" Nullable="false" />
+          <Property Name="Gerente" Type="varchar(max)" Nullable="false" />
+          <Property Name="FechaEnvio" Type="date" />
+          <Property Name="EnviadoPor" Type="varchar(max)" Nullable="false" />
+          <Property Name="PAC" Type="int" Nullable="false" />
+          <Property Name="Cuatrimestral" Type="varchar(max)" />
+          <Property Name="CAI" Type="varchar(max)" Nullable="false" />
+          <Property Name="Anexo30" Type="int" Nullable="false" />
+          <Property Name="Observaciones" Type="varchar(max)" Nullable="false" />
+          <Property Name="FechaBloqueo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Anio" Type="int" />
+          <Property Name="FechaEmision" Type="varchar" MaxLength="10" />
+          <Property Name="Calificativo" Type="nvarchar" MaxLength="255" />
+          <Property Name="Calificativo_" Type="numeric" Precision="24" Scale="4" Nullable="false" />
+          <Property Name="IFC_Inherente" Type="numeric" Precision="20" Scale="2" />
+          <Property Name="IFC_Residual" Type="numeric" Precision="20" Scale="2" />
+          <Property Name="Cobertura_IFC_Residual" Type="numeric" Precision="20" Scale="2" />
+          <Property Name="Riesgo_Final" Type="nvarchar" MaxLength="255" />
+          <Property Name="Riesgo_Del_Trabajo" Type="varchar(max)" />
+          <Property Name="Riesgo_Inherente" Type="varchar" MaxLength="50" />
+          <Property Name="Administracion_Del_Riesgo" Type="varchar" MaxLength="50" />
+          <Property Name="Entrega_Informe_Gerencia_segun_COA_Ultimo_Dia" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Entrega_Informe_Gerencia_Ultimo_Dia" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Entrega_Informe_Gerencia_Ejecucion_Real" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Emision_Borrador_Informe_Ultimo_Dia" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Emision_Borrador_Informe_Ejecucion_Real" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Emision_Informe_Ultimo_Dia" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Emision_Informe_Ejecucion_Real" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Flag_plan" Type="int" />
+          <Property Name="Criticidad_num" Type="int" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="fn_TG_Obtener_Proyectos_v2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id_plan_anual" Type="int" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="IdProyecto" Type="int" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="50" />
+          <Property Name="Riesgo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Compania" Type="varchar" MaxLength="10" />
+          <Property Name="Macroproceso" Type="varchar(max)" Nullable="false" />
+          <Property Name="Plan" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Evaluacion" Type="varchar(max)" />
+          <Property Name="Estado" Type="varchar" MaxLength="27" Nullable="false" />
+          <Property Name="ProcesoEvaluado" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Tipo" Type="varchar(max)" Nullable="false" />
+          <Property Name="Criticidad" Type="varchar(max)" Nullable="false" />
+          <Property Name="FechaInicioPlan" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="FechaFinPlan" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="FechaInicioEjecucion" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="FechaFinEjecucion" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="DiasPlanGA" Type="int" Nullable="false" />
+          <Property Name="DiasEjecutadoGA" Type="int" Nullable="false" />
+          <Property Name="Auditor1_plan" Type="varchar(max)" />
+          <Property Name="Auditor2_plan" Type="varchar(max)" />
+          <Property Name="Auditor3_plan" Type="varchar(max)" />
+          <Property Name="Auditor4_plan" Type="varchar(max)" />
+          <Property Name="Auditor5_plan" Type="varchar(max)" />
+          <Property Name="AuditoresSenior_plan" Type="varchar(max)" Nullable="false" />
+          <Property Name="GerenteAdjunto_plan" Type="varchar(max)" Nullable="false" />
+          <Property Name="Auditor1_ejecucion" Type="varchar(max)" />
+          <Property Name="Auditor2_ejecucion" Type="varchar(max)" />
+          <Property Name="Auditor3_ejecucion" Type="varchar(max)" />
+          <Property Name="Auditor4_ejecucion" Type="varchar(max)" />
+          <Property Name="Auditor5_ejecucion" Type="varchar(max)" />
+          <Property Name="AuditoresSenior_ejecucion" Type="varchar(max)" Nullable="false" />
+          <Property Name="GerenteAdjunto_ejecucion" Type="varchar(max)" Nullable="false" />
+          <Property Name="Gerente" Type="varchar(max)" Nullable="false" />
+          <Property Name="FechaEnvio" Type="date" />
+          <Property Name="EnviadoPor" Type="varchar(max)" Nullable="false" />
+          <Property Name="PAC" Type="int" Nullable="false" />
+          <Property Name="Cuatrimestral" Type="varchar(max)" />
+          <Property Name="CAI" Type="varchar(max)" Nullable="false" />
+          <Property Name="Anexo30" Type="int" Nullable="false" />
+          <Property Name="Observaciones" Type="varchar(max)" Nullable="false" />
+          <Property Name="FechaBloqueo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Anio" Type="int" />
+          <Property Name="FechaEmision" Type="varchar" MaxLength="10" />
+          <Property Name="Calificativo" Type="nvarchar" MaxLength="255" />
+          <Property Name="Calificativo_" Type="numeric" Precision="24" Scale="4" Nullable="false" />
+          <Property Name="IFC_Inherente" Type="numeric" Precision="20" Scale="2" />
+          <Property Name="IFC_Residual" Type="numeric" Precision="20" Scale="2" />
+          <Property Name="Cobertura_IFC_Residual" Type="numeric" Precision="20" Scale="2" />
+          <Property Name="Riesgo_Final" Type="nvarchar" MaxLength="255" />
+          <Property Name="Riesgo_Del_Trabajo" Type="varchar(max)" />
+          <Property Name="Riesgo_Inherente" Type="varchar" MaxLength="50" />
+          <Property Name="Administracion_Del_Riesgo" Type="varchar" MaxLength="50" />
+          <Property Name="Entrega_Informe_Gerencia_segun_COA_Ultimo_Dia" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Entrega_Informe_Gerencia_Ultimo_Dia" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Entrega_Informe_Gerencia_Ejecucion_Real" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Emision_Borrador_Informe_Ultimo_Dia" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Emision_Borrador_Informe_Ejecucion_Real" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Emision_Informe_Ultimo_Dia" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Emision_Informe_Ejecucion_Real" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Flag_plan" Type="int" />
+          <Property Name="Criticidad_num" Type="int" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="pa_man_DS_Estructura_Contactos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID_Unidad" Type="int" Mode="In" />
+  </Function>
+  <Function Name="pa_man_TG_Estructura_Contactos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID_Unidad" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_Ampliacion_Ins" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID_Observacion" Type="varchar" Mode="In" />
+    <Parameter Name="fecha_registro" Type="varchar" Mode="In" />
+    <Parameter Name="fecha_propuesta" Type="varchar" Mode="In" />
+    <Parameter Name="motivo" Type="varchar(max)" Mode="In" />
+    <Parameter Name="plan" Type="varchar(max)" Mode="In" />
+    <Parameter Name="aprovador" Type="varchar" Mode="In" />
+    <Parameter Name="Usuario" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SP_Ampliacion_Ins_v1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID_Observacion" Type="varchar" Mode="In" />
+    <Parameter Name="fecha_registro" Type="varchar" Mode="In" />
+    <Parameter Name="fecha_propuesta" Type="varchar" Mode="In" />
+    <Parameter Name="motivo" Type="varchar(max)" Mode="In" />
+    <Parameter Name="plan" Type="varchar(max)" Mode="In" />
+    <Parameter Name="aprovador" Type="varchar" Mode="In" />
+    <Parameter Name="Usuario" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SP_AU_CRUD_URC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Operacion" Type="int" Mode="In" />
+    <Parameter Name="Id_Unidad_Ant" Type="int" Mode="In" />
+    <Parameter Name="Id_Rol_Ant" Type="int" Mode="In" />
+    <Parameter Name="Id_Contacto_Ant" Type="int" Mode="In" />
+    <Parameter Name="Id_Nuevo_Rol" Type="int" Mode="In" />
+    <Parameter Name="Id_Nuevo_Contacto" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_AU_Drop_ContactosTM" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Rol_Id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_AU_Rotacion_Usuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idPersona" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_AU_UsuariosTM" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_BC_BG_INFORME" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PERIODO" Type="int" Mode="In" />
+    <Parameter Name="ET" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_BC_CUENTAS_CONTABLES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PERIODO" Type="int" Mode="In" />
+    <Parameter Name="ET" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_BC_CUENTAS_SIGNIFICATIVAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PERIODO" Type="int" Mode="In" />
+    <Parameter Name="ET" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_BC_GYP_INFORME" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PERIODO" Type="int" Mode="In" />
+    <Parameter Name="ET" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_BC_HOJA_PERIODO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PERIODO" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_BC_PROYECTO_PLAN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IDPLAN" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_BC_RESUMEN_CCSS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PERIODO" Type="int" Mode="In" />
+    <Parameter Name="ET" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_DAC_SCRIPTS_POR_ESTADOS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_DD_Proyecto_Actividad_Informe_Obtener_v2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdProyecto" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_DD_Proyecto_Actividad_Informe_Obtener_v3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdProyecto" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_DD_Proyecto_Actividad_Informe_Obtener_v4" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdProyecto" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_DD_Proyecto_Obtener_detalle_v2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdProyecto" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_DD_Proyecto_Obtener_detalle_v3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdProyecto" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_DD_Proyecto_Obtener_detalle_v5" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdProyecto" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_DPA_Carga_Plan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idPlanAnual" Type="int" Mode="In" />
+    <Parameter Name="idNegocio" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_DPA_Crear_Nuevo_Plan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idPlanAnterior" Type="int" Mode="In" />
+    <Parameter Name="anioNuevoPlan" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_DPA_Fechas_Auditor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idPersona" Type="int" Mode="In" />
+    <Parameter Name="idPlanAnual" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_DPA_Fechas_No_Laborables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Anio" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_DPA_Log_Evaluacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_DPA_Log_Evaluacion_Plan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_DPA_Log_Plan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_DPA_Mantenimiento_Plan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idPlanAnual" Type="int" Mode="In" />
+    <Parameter Name="idNegocio" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_DPA_Programacion_Final" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idPlanAnual" Type="int" Mode="In" />
+    <Parameter Name="idNegocio" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_DPA_View_Asignar_Proyecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idPersona" Type="int" Mode="In" />
+    <Parameter Name="idPlanAnual" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_DPA_Votacion_Auditor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idUsuario" Type="int" Mode="In" />
+    <Parameter Name="idPlanAnual" Type="int" Mode="In" />
+    <Parameter Name="idNegocio" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_DPA_Votacion_Auditor_v2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idUsuario" Type="int" Mode="In" />
+    <Parameter Name="idPlanAnual" Type="int" Mode="In" />
+    <Parameter Name="idNegocio" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_DPA_Votacion_Evaluacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idEvaluacionPlan" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_DPA_Votacion_Evaluacion_v2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idEvaluacionPlan" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_GRAF_HORAS_TOTAL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FECHA_INICIO" Type="date" Mode="In" />
+    <Parameter Name="FECHA_FIN" Type="date" Mode="In" />
+  </Function>
+  <Function Name="SP_GRAF_MEDIDA_DE_TIEMPO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FECHA_INICIO" Type="date" Mode="In" />
+    <Parameter Name="FECHA_FIN" Type="date" Mode="In" />
+  </Function>
+  <Function Name="SP_GRAF_MEDIDA_DE_TIEMPO2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FECHA_INICIO" Type="date" Mode="In" />
+    <Parameter Name="FECHA_FIN" Type="date" Mode="In" />
+  </Function>
+  <Function Name="SP_GRAF_TABLA_HORAS2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FECHA_INICIO" Type="date" Mode="In" />
+    <Parameter Name="FECHA_FIN" Type="date" Mode="In" />
+  </Function>
+  <Function Name="SP_MODULOS_USUARIOS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id_USUARIO" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_Observacion_Cambio_Ins_v3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID_Observacion" Type="varchar" Mode="In" />
+    <Parameter Name="Unidad_Responsable" Type="varchar" Mode="In" />
+    <Parameter Name="Negocio" Type="varchar" Mode="In" />
+    <Parameter Name="Informe" Type="varchar" Mode="In" />
+    <Parameter Name="Emisor" Type="varchar" Mode="In" />
+    <Parameter Name="Año" Type="int" Mode="In" />
+    <Parameter Name="Usuario" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SP_RA_REPORTE_CLAVE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Emision_Inicio" Type="nvarchar" Mode="In" />
+    <Parameter Name="Emision_Fin" Type="nvarchar" Mode="In" />
+    <Parameter Name="Eleccion_Clave" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_RA_REPORTE_EFECT_CONTROL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Anio" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_RA_REPORTE_GENERAL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Emision_Inicio" Type="nvarchar" Mode="In" />
+    <Parameter Name="Emision_Fin" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="SP_RA_REPORTE_MENSUAL_CREDICORP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Fecha_Corte" Type="nvarchar" Mode="In" />
+    <Parameter Name="Fecha_Corte_Comentarios" Type="nvarchar" Mode="In" />
+    <Parameter Name="Equipo" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="SP_RA_REPORTE_OBS_CERRADAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Fecha_Status_Inicio" Type="nvarchar" Mode="In" />
+    <Parameter Name="Fecha_Status_Fin" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="SP_RA_REPORTE_OBS_RIESGO_ALTO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Fecha_Corte" Type="nvarchar" Mode="In" />
+    <Parameter Name="IdPlanAnual" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_RA_REPORTE_PROYECTOS_RIESGO_ALTO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FechaInicio" Type="nvarchar" Mode="In" />
+    <Parameter Name="FechaFin" Type="nvarchar" Mode="In" />
+    <Parameter Name="IdPlanAnual" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_RA_REPORTE_SOX" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Emision_Inicio" Type="nvarchar" Mode="In" />
+    <Parameter Name="Emision_Fin" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="SP_RA_REPORTE_STATUS_ACTIVIDADES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idPlanAnual" Type="int" Mode="In" />
+    <Parameter Name="codNegocio" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_RE_EVOLUTIVO_AUDIT_VENCIDAS_BASE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AUDITOR" Type="varchar(max)" Mode="In" />
+    <Parameter Name="EQUIPO" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="SP_RE_EVOLUTIVO_TOP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FECHAAÑO" Type="int" Mode="In" />
+    <Parameter Name="FECHAMES" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_RE_EVOLUTIVO_VENCIDAS_EQUIPO_BASE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FECHAAÑO" Type="int" Mode="In" />
+    <Parameter Name="FECHAMES" Type="int" Mode="In" />
+    <Parameter Name="EQUIPO" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="SP_RE_EVOLUTIVO_VENCIDAS2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FECHAAÑO" Type="int" Mode="In" />
+    <Parameter Name="FECHAMES" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_TBL_DETALLE_GENERAL_TEC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FECHA_INICIO" Type="date" Mode="In" />
+    <Parameter Name="FECHA_FIN" Type="date" Mode="In" />
+  </Function>
+  <Function Name="SP_TG_Proyecto_Actividad_Informe_Ins" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdProyecto" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_TG_Proyecto_Actividad_Informe_Ins_v2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="codigo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SP_TG_Proyecto_del" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idproyecto" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_TG_Proyecto_Ins" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="codigo" Type="varchar" Mode="In" />
+    <Parameter Name="evaluacion" Type="varchar" Mode="In" />
+    <Parameter Name="plan_anual" Type="int" Mode="In" />
+    <Parameter Name="estado" Type="int" Mode="In" />
+    <Parameter Name="riesgo" Type="varchar" Mode="In" />
+    <Parameter Name="plan" Type="varchar" Mode="In" />
+    <Parameter Name="compañia" Type="int" Mode="In" />
+    <Parameter Name="pruebas_plan" Type="int" Mode="In" />
+    <Parameter Name="macroproceso" Type="varchar" Mode="In" />
+    <Parameter Name="tipo" Type="varchar" Mode="In" />
+    <Parameter Name="criticidad" Type="int" Mode="In" />
+    <Parameter Name="proceso_evaluado" Type="int" Mode="In" />
+    <Parameter Name="riesgo_bcp" Type="int" Mode="In" />
+    <Parameter Name="riesgo_inherente" Type="int" Mode="In" />
+    <Parameter Name="admin_riesgo" Type="int" Mode="In" />
+    <Parameter Name="fecha_inicio_plan" Type="varchar" Mode="In" />
+    <Parameter Name="fecha_fin_plan" Type="varchar" Mode="In" />
+    <Parameter Name="dias_plan" Type="int" Mode="In" />
+    <Parameter Name="emision_informe" Type="varchar" Mode="In" />
+    <Parameter Name="correo_inicio" Type="varchar" Mode="In" />
+    <Parameter Name="enviado_por" Type="varchar" Mode="In" />
+    <Parameter Name="fecha_inicio_ejec" Type="varchar" Mode="In" />
+    <Parameter Name="fecha_fin_ejec" Type="varchar" Mode="In" />
+    <Parameter Name="dias_ejec" Type="varchar" Mode="In" />
+    <Parameter Name="pac" Type="int" Mode="In" />
+    <Parameter Name="anexo30" Type="int" Mode="In" />
+    <Parameter Name="po" Type="varchar" Mode="In" />
+    <Parameter Name="scrum_master" Type="varchar" Mode="In" />
+    <Parameter Name="auditor1" Type="varchar" Mode="In" />
+    <Parameter Name="auditor2" Type="varchar" Mode="In" />
+    <Parameter Name="auditor3" Type="varchar" Mode="In" />
+    <Parameter Name="auditor4" Type="varchar" Mode="In" />
+    <Parameter Name="auditor5" Type="varchar" Mode="In" />
+    <Parameter Name="observaciones" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="SP_TG_Proyecto_Ins_v2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="codigo" Type="varchar" Mode="In" />
+    <Parameter Name="evaluacion" Type="varchar" Mode="In" />
+    <Parameter Name="plan_anual" Type="int" Mode="In" />
+    <Parameter Name="estado" Type="int" Mode="In" />
+    <Parameter Name="riesgo" Type="varchar" Mode="In" />
+    <Parameter Name="plan" Type="varchar" Mode="In" />
+    <Parameter Name="compañia" Type="int" Mode="In" />
+    <Parameter Name="pruebas_plan" Type="int" Mode="In" />
+    <Parameter Name="macroproceso" Type="varchar" Mode="In" />
+    <Parameter Name="tipo" Type="varchar" Mode="In" />
+    <Parameter Name="criticidad" Type="int" Mode="In" />
+    <Parameter Name="proceso_evaluado" Type="int" Mode="In" />
+    <Parameter Name="riesgo_bcp" Type="int" Mode="In" />
+    <Parameter Name="riesgo_inherente" Type="int" Mode="In" />
+    <Parameter Name="admin_riesgo" Type="int" Mode="In" />
+    <Parameter Name="fecha_inicio_plan" Type="varchar" Mode="In" />
+    <Parameter Name="fecha_fin_plan" Type="varchar" Mode="In" />
+    <Parameter Name="dias_plan" Type="int" Mode="In" />
+    <Parameter Name="emision_informe" Type="varchar" Mode="In" />
+    <Parameter Name="correo_inicio" Type="varchar" Mode="In" />
+    <Parameter Name="enviado_por" Type="varchar" Mode="In" />
+    <Parameter Name="fecha_inicio_ejec" Type="varchar" Mode="In" />
+    <Parameter Name="fecha_fin_ejec" Type="varchar" Mode="In" />
+    <Parameter Name="dias_ejec" Type="int" Mode="In" />
+    <Parameter Name="pac" Type="int" Mode="In" />
+    <Parameter Name="anexo30" Type="int" Mode="In" />
+    <Parameter Name="po" Type="varchar" Mode="In" />
+    <Parameter Name="scrum_master" Type="varchar" Mode="In" />
+    <Parameter Name="auditor1" Type="varchar" Mode="In" />
+    <Parameter Name="auditor2" Type="varchar" Mode="In" />
+    <Parameter Name="auditor3" Type="varchar" Mode="In" />
+    <Parameter Name="auditor4" Type="varchar" Mode="In" />
+    <Parameter Name="auditor5" Type="varchar" Mode="In" />
+    <Parameter Name="observaciones" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="SP_TG_Proyecto_Ins_v5" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="codigo" Type="varchar" Mode="In" />
+    <Parameter Name="evaluacion" Type="varchar" Mode="In" />
+    <Parameter Name="plan_anual" Type="int" Mode="In" />
+    <Parameter Name="estado" Type="int" Mode="In" />
+    <Parameter Name="riesgo" Type="varchar" Mode="In" />
+    <Parameter Name="plan" Type="varchar" Mode="In" />
+    <Parameter Name="compañia" Type="int" Mode="In" />
+    <Parameter Name="pruebas_plan" Type="int" Mode="In" />
+    <Parameter Name="macroproceso" Type="varchar" Mode="In" />
+    <Parameter Name="tipo" Type="varchar" Mode="In" />
+    <Parameter Name="criticidad" Type="int" Mode="In" />
+    <Parameter Name="proceso_evaluado" Type="int" Mode="In" />
+    <Parameter Name="riesgo_bcp" Type="int" Mode="In" />
+    <Parameter Name="riesgo_inherente" Type="int" Mode="In" />
+    <Parameter Name="admin_riesgo" Type="int" Mode="In" />
+    <Parameter Name="fecha_inicio_plan" Type="varchar" Mode="In" />
+    <Parameter Name="fecha_fin_plan" Type="varchar" Mode="In" />
+    <Parameter Name="dias_plan" Type="int" Mode="In" />
+    <Parameter Name="emision_informe" Type="varchar" Mode="In" />
+    <Parameter Name="correo_inicio" Type="varchar" Mode="In" />
+    <Parameter Name="enviado_por" Type="varchar" Mode="In" />
+    <Parameter Name="fecha_inicio_ejec" Type="varchar" Mode="In" />
+    <Parameter Name="fecha_fin_ejec" Type="varchar" Mode="In" />
+    <Parameter Name="dias_ejec" Type="int" Mode="In" />
+    <Parameter Name="pac" Type="int" Mode="In" />
+    <Parameter Name="mapa_aseg" Type="int" Mode="In" />
+    <Parameter Name="anexo30" Type="int" Mode="In" />
+    <Parameter Name="po" Type="varchar" Mode="In" />
+    <Parameter Name="scrum_master" Type="varchar" Mode="In" />
+    <Parameter Name="auditor1" Type="varchar" Mode="In" />
+    <Parameter Name="auditor2" Type="varchar" Mode="In" />
+    <Parameter Name="auditor3" Type="varchar" Mode="In" />
+    <Parameter Name="auditor4" Type="varchar" Mode="In" />
+    <Parameter Name="auditor5" Type="varchar" Mode="In" />
+    <Parameter Name="observaciones" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="SP_TG_Update_Actividad_v2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdProyectoActividad" Type="int" Mode="In" />
+    <Parameter Name="Estado" Type="varchar(max)" Mode="In" />
+    <Parameter Name="FechaEjeReal" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="FechaRevisado" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Revisor" Type="varchar(max)" Mode="In" />
+    <Parameter Name="IdActividadJustificacion" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_TT_DETALLE_ETAPAS_FASES_ACTIVIDADES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FECHA" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_TT_DETALLE_FILTRAR_PROYECTO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="YEAR" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_TT_DETALLE_PROYECTO_ACTIVIDAD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FECHA" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_TT_DIAS_CONTROL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="YEAR" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_TT_DISTR_DIAS_AUDITOR_POR_CONTROL_EQUIPO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="YEAR" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_TT_DISTR_DIAS_AUDITOR_POR_FASE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="YEAR" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_TT_EQUIPO_ETAPAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FECHA" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_TT_ERROR_FASES_DISTRIBUCION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="INICIO" Type="date" Mode="In" />
+    <Parameter Name="FIN" Type="date" Mode="In" />
+  </Function>
+  <Function Name="SP_VACACIONES_REGISTRO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TIPO" Type="nvarchar" Mode="In" />
+    <Parameter Name="ID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_VACACIONES_REGISTRO2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TIPO" Type="nvarchar" Mode="In" />
+    <Parameter Name="ID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_ADMINISTRADOR_USUARIOS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID_USUARIO" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_CONTROL_PERIODO_DIAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FECHA" Type="date" Mode="In" />
+    <Parameter Name="ID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_CONTROL_PERIODO_DIAS_NUEVO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FECHA" Type="date" Mode="In" />
+    <Parameter Name="ID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_GANTT_VACACIONES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DATE" Type="date" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_RA_CONTROLES_EVALUADOS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NEGOCIO" Type="nvarchar" Mode="In" />
+    <Parameter Name="GERENCIA" Type="nvarchar" Mode="In" />
+    <Parameter Name="FECHA" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_RA_DETALLE_CONTROLES_EVALUADOS_1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NEGOCIO" Type="nvarchar" Mode="In" />
+    <Parameter Name="GERENCIA" Type="nvarchar" Mode="In" />
+    <Parameter Name="FECHA" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_RA_DETALLE_CONTROLES_EVALUADOS_2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NEGOCIO" Type="nvarchar" Mode="In" />
+    <Parameter Name="GERENCIA" Type="nvarchar" Mode="In" />
+    <Parameter Name="FECHA" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_RA_DETALLE_CONTROLES_EVALUADOS_3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NEGOCIO" Type="nvarchar" Mode="In" />
+    <Parameter Name="GERENCIA" Type="nvarchar" Mode="In" />
+    <Parameter Name="FECHA" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_RA_DETALLE_RESULTADOS_AUDITORIA_1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NEGOCIO" Type="nvarchar" Mode="In" />
+    <Parameter Name="GERENCIA" Type="nvarchar" Mode="In" />
+    <Parameter Name="FECHA" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_RA_DETALLE_RESULTADOS_AUDITORIA_2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NEGOCIO" Type="nvarchar" Mode="In" />
+    <Parameter Name="GERENCIA" Type="nvarchar" Mode="In" />
+    <Parameter Name="FECHA" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_RA_DETALLE_SEGUIMIENTO_OBSERVACIONES_1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NEGOCIO" Type="nvarchar" Mode="In" />
+    <Parameter Name="GERENCIA" Type="nvarchar" Mode="In" />
+    <Parameter Name="FECHA" Type="date" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_RA_DETALLE_SEGUIMIENTO_OBSERVACIONES_2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NEGOCIO" Type="nvarchar" Mode="In" />
+    <Parameter Name="GERENCIA" Type="nvarchar" Mode="In" />
+    <Parameter Name="FECHA" Type="date" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_RA_DETALLE_SEGUIMIENTO_OBSERVACIONES_DISTRIBUCION_EMISOR_2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NEGOCIO" Type="nvarchar" Mode="In" />
+    <Parameter Name="GERENCIA" Type="nvarchar" Mode="In" />
+    <Parameter Name="FECHA" Type="date" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_RA_DETALLE_SEGUIMIENTO_OBSERVACIONES_DISTRIBUCION_ESTADO_RIESGO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NEGOCIO" Type="nvarchar" Mode="In" />
+    <Parameter Name="GERENCIA" Type="nvarchar" Mode="In" />
+    <Parameter Name="FECHA" Type="date" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_RA_DETALLE_SEGUIMIENTO_OBSERVACIONES_STOCK_ANTIGUEDAD_CRITICIDAD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NEGOCIO" Type="nvarchar" Mode="In" />
+    <Parameter Name="GERENCIA" Type="nvarchar" Mode="In" />
+    <Parameter Name="FECHA" Type="date" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_RA_DETALLE_SEGUIMIENTO_OBSERVACIONES_STOCK_ANTIGUEDAD_EMISION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NEGOCIO" Type="nvarchar" Mode="In" />
+    <Parameter Name="GERENCIA" Type="nvarchar" Mode="In" />
+    <Parameter Name="FECHA" Type="date" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_RA_DETALLE_SEGUIMIENTO_OBSERVACIONES_STOCK_ANTIGUEDAD_EMISOR_2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NEGOCIO" Type="nvarchar" Mode="In" />
+    <Parameter Name="GERENCIA" Type="nvarchar" Mode="In" />
+    <Parameter Name="FECHA" Type="date" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_RA_RESULTADO_AUDITORIA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NEGOCIO" Type="nvarchar" Mode="In" />
+    <Parameter Name="GERENCIA" Type="nvarchar" Mode="In" />
+    <Parameter Name="FECHA" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_RA_SEGUIMIENTO_OBSERVACIONES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NEGOCIO" Type="nvarchar" Mode="In" />
+    <Parameter Name="GERENCIA" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_RA_SEGUIMIENTO_OBSERVACIONES_2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NEGOCIO" Type="nvarchar" Mode="In" />
+    <Parameter Name="GERENCIA" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_REPORTE_CLAVE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_WT_REPORTE_GENERAL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Emision_Inicio" Type="nvarchar" Mode="In" />
+    <Parameter Name="Emision_Fin" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_REPORTES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_WT_ROLES_MODULO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_USUARIOS_ID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_VACACIONES_CONSOLIDADO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FECHA" Type="date" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_VACACIONES_CONSOLIDADO_DETALLE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FECHA" Type="date" Mode="In" />
+    <Parameter Name="ID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_WT_WAC_SELECT_SCRIPTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="tabla" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="TG_AU_CRUD_URC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Operacion" Type="int" Mode="In" />
+    <Parameter Name="Id_Unidad_Ant" Type="int" Mode="In" />
+    <Parameter Name="Id_Rol_Ant" Type="int" Mode="In" />
+    <Parameter Name="Id_Contacto_Ant" Type="varchar" Mode="In" />
+    <Parameter Name="Id_Nuevo_Rol" Type="int" Mode="In" />
+    <Parameter Name="Id_Nuevo_Contacto" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="TG_AU_Drop_ContactosTM" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Rol_Id" Type="int" Mode="In" />
+    <Parameter Name="Entidad" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="TG_DD_Proyecto_Lis" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdPlanAnual" Type="int" Mode="In" />
+  </Function>
+  <Function Name="TG_Update_Proyecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idProyecto" Type="int" Mode="In" />
+    <Parameter Name="idplanAnual" Type="int" Mode="In" />
+    <Parameter Name="Compania" Type="varchar" Mode="In" />
+    <Parameter Name="IdProcesoEvaluado" Type="int" Mode="In" />
+    <Parameter Name="FechaBloqueo" Type="varchar" Mode="In" />
+    <Parameter Name="cantidad_pruebas_analiticas_real" Type="int" Mode="In" />
+    <Parameter Name="PAC" Type="int" Mode="In" />
+    <Parameter Name="Anexo30" Type="int" Mode="In" />
+    <Parameter Name="FechaReemplazo" Type="varchar" Mode="In" />
+    <Parameter Name="IdProyectoReemplazo" Type="int" Mode="In" />
+    <Parameter Name="FechaEnvio" Type="varchar" Mode="In" />
+    <Parameter Name="Enviadopor" Type="varchar" Mode="In" />
+    <Parameter Name="CAI" Type="varchar" Mode="In" />
+    <Parameter Name="Cuatrimestral" Type="varchar" Mode="In" />
+    <Parameter Name="CantidadSprint" Type="int" Mode="In" />
+    <Parameter Name="IdRiesgoDelTrabajo" Type="int" Mode="In" />
+    <Parameter Name="IdRiesgoInherente" Type="int" Mode="In" />
+    <Parameter Name="IdRiesgoBCP" Type="int" Mode="In" />
+    <Parameter Name="IdAdminstracioinDelRiesgo" Type="int" Mode="In" />
+    <Parameter Name="Observaciones" Type="varchar(max)" Mode="In" />
+    <Parameter Name="ProjectOwner" Type="varchar(max)" Mode="In" />
+    <Parameter Name="ScrumMaster" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Auditor1" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Auditor2" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Auditor3" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Auditor4" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Auditor5" Type="varchar(max)" Mode="In" />
+    <Parameter Name="FechaInicioEjecucion" Type="varchar" Mode="In" />
+    <Parameter Name="FechaFinEjecucion" Type="varchar" Mode="In" />
+    <Parameter Name="DiasEjecucion" Type="int" Mode="In" />
+    <Parameter Name="FechaEmision" Type="varchar" Mode="In" />
+    <Parameter Name="UserLog" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="TG_Update_Proyecto_v3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idProyecto" Type="int" Mode="In" />
+    <Parameter Name="idplanAnual" Type="int" Mode="In" />
+    <Parameter Name="Compania" Type="varchar" Mode="In" />
+    <Parameter Name="IdProcesoEvaluado" Type="int" Mode="In" />
+    <Parameter Name="FechaBloqueo" Type="varchar" Mode="In" />
+    <Parameter Name="cantidad_pruebas_analiticas_real" Type="int" Mode="In" />
+    <Parameter Name="PAC" Type="int" Mode="In" />
+    <Parameter Name="MapaAseguramiento" Type="int" Mode="In" />
+    <Parameter Name="Anexo30" Type="int" Mode="In" />
+    <Parameter Name="FechaReemplazo" Type="varchar" Mode="In" />
+    <Parameter Name="IdProyectoReemplazo" Type="int" Mode="In" />
+    <Parameter Name="FechaEnvio" Type="varchar" Mode="In" />
+    <Parameter Name="Enviadopor" Type="varchar" Mode="In" />
+    <Parameter Name="CAI" Type="varchar" Mode="In" />
+    <Parameter Name="Cuatrimestral" Type="varchar" Mode="In" />
+    <Parameter Name="CantidadSprint" Type="int" Mode="In" />
+    <Parameter Name="IdRiesgoDelTrabajo" Type="int" Mode="In" />
+    <Parameter Name="IdRiesgoInherente" Type="int" Mode="In" />
+    <Parameter Name="IdRiesgoBCP" Type="int" Mode="In" />
+    <Parameter Name="IdAdminstracioinDelRiesgo" Type="int" Mode="In" />
+    <Parameter Name="Observaciones" Type="varchar(max)" Mode="In" />
+    <Parameter Name="ProjectOwner" Type="varchar(max)" Mode="In" />
+    <Parameter Name="ScrumMaster" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Auditor1" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Auditor2" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Auditor3" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Auditor4" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Auditor5" Type="varchar(max)" Mode="In" />
+    <Parameter Name="FechaInicioEjecucion" Type="varchar" Mode="In" />
+    <Parameter Name="FechaFinEjecucion" Type="varchar" Mode="In" />
+    <Parameter Name="DiasEjecucion" Type="int" Mode="In" />
+    <Parameter Name="FechaEmision" Type="varchar" Mode="In" />
+    <Parameter Name="UserLog" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="TG_Update_Proyecto_v5" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idProyecto" Type="int" Mode="In" />
+    <Parameter Name="idplanAnual" Type="int" Mode="In" />
+    <Parameter Name="Compania" Type="varchar" Mode="In" />
+    <Parameter Name="IdProcesoEvaluado" Type="int" Mode="In" />
+    <Parameter Name="FechaBloqueo" Type="varchar" Mode="In" />
+    <Parameter Name="cantidad_pruebas_analiticas_real" Type="int" Mode="In" />
+    <Parameter Name="PAC" Type="int" Mode="In" />
+    <Parameter Name="mapa_aseg" Type="int" Mode="In" />
+    <Parameter Name="Anexo30" Type="int" Mode="In" />
+    <Parameter Name="FechaReemplazo" Type="varchar" Mode="In" />
+    <Parameter Name="IdProyectoReemplazo" Type="int" Mode="In" />
+    <Parameter Name="FechaEnvio" Type="varchar" Mode="In" />
+    <Parameter Name="Enviadopor" Type="varchar" Mode="In" />
+    <Parameter Name="CAI" Type="varchar" Mode="In" />
+    <Parameter Name="Cuatrimestral" Type="varchar" Mode="In" />
+    <Parameter Name="CantidadSprint" Type="int" Mode="In" />
+    <Parameter Name="IdRiesgoDelTrabajo" Type="int" Mode="In" />
+    <Parameter Name="IdRiesgoInherente" Type="int" Mode="In" />
+    <Parameter Name="IdRiesgoBCP" Type="int" Mode="In" />
+    <Parameter Name="IdAdminstracioinDelRiesgo" Type="int" Mode="In" />
+    <Parameter Name="Observaciones" Type="varchar(max)" Mode="In" />
+    <Parameter Name="ProjectOwner" Type="varchar(max)" Mode="In" />
+    <Parameter Name="ScrumMaster" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Auditor1" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Auditor2" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Auditor3" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Auditor4" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Auditor5" Type="varchar(max)" Mode="In" />
+    <Parameter Name="FechaInicioEjecucion" Type="varchar" Mode="In" />
+    <Parameter Name="FechaFinEjecucion" Type="varchar" Mode="In" />
+    <Parameter Name="DiasEjecucion" Type="int" Mode="In" />
+    <Parameter Name="FechaEmision" Type="varchar" Mode="In" />
+    <Parameter Name="UserLog" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="TS_Observacion_Cambio_Ins" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID_Observacion" Type="int" Mode="In" />
+    <Parameter Name="Unidad_Responsable" Type="varchar" Mode="In" />
+    <Parameter Name="Negocio" Type="varchar" Mode="In" />
+    <Parameter Name="Informe" Type="varchar" Mode="In" />
+    <Parameter Name="Emisor" Type="varchar" Mode="In" />
+    <Parameter Name="Año" Type="int" Mode="In" />
+    <Parameter Name="Usuario" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="PROYECTOSIAV2ModelStoreContainer">
+    <EntitySet Name="basesBC" EntityType="Self.basesBC" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="basesBCHojaTrabajo" EntityType="Self.basesBCHojaTrabajo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BC_Cuentas_Proyectos" EntityType="Self.BC_Cuentas_Proyectos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Compañia" EntityType="Self.Compañia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DAC_Ejecucion_Script" EntityType="Self.DAC_Ejecucion_Script" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DAC_Estado" EntityType="Self.DAC_Estado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DAC_HistorialCambios" EntityType="Self.DAC_HistorialCambios" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DAC_Peridiocidad_Ejecucion" EntityType="Self.DAC_Peridiocidad_Ejecucion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DAC_Periodo_Analisis" EntityType="Self.DAC_Periodo_Analisis" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DAC_Scripts" EntityType="Self.DAC_Scripts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DAC_ScriptsContinua" EntityType="Self.DAC_ScriptsContinua" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DAC_Tipologia_Script" EntityType="Self.DAC_Tipologia_Script" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DD_Cambios_Universo" EntityType="Self.DD_Cambios_Universo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DD_Informe" EntityType="Self.DD_Informe" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DD_PlanAnual" EntityType="Self.DD_PlanAnual" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DD_ProcesoEvaluado" EntityType="Self.DD_ProcesoEvaluado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DD_Proyecto" EntityType="Self.DD_Proyecto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DD_Universo" EntityType="Self.DD_Universo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DPA_Auditor_Evaluacion" EntityType="Self.DPA_Auditor_Evaluacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DPA_Auditor_Tiempo_Extra" EntityType="Self.DPA_Auditor_Tiempo_Extra" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DPA_Criterio_Scoring" EntityType="Self.DPA_Criterio_Scoring" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DPA_Criterio_Votacion" EntityType="Self.DPA_Criterio_Votacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DPA_Equipo" EntityType="Self.DPA_Equipo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DPA_Evaluacion" EntityType="Self.DPA_Evaluacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DPA_Evaluacion_Plan" EntityType="Self.DPA_Evaluacion_Plan" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DPA_Log_Evaluacion" EntityType="Self.DPA_Log_Evaluacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DPA_Log_Evaluacion_Plan" EntityType="Self.DPA_Log_Evaluacion_Plan" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DPA_Negocio" EntityType="Self.DPA_Negocio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DPA_Opcion_Votacion" EntityType="Self.DPA_Opcion_Votacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DPA_Plan_Anual" EntityType="Self.DPA_Plan_Anual" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DPA_Riesgo_Asociado" EntityType="Self.DPA_Riesgo_Asociado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DPA_Scoring_Evaluacion" EntityType="Self.DPA_Scoring_Evaluacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DPA_Tipo_Tiempo_Extra" EntityType="Self.DPA_Tipo_Tiempo_Extra" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DPA_Votacion" EntityType="Self.DPA_Votacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Modulo" EntityType="Self.Modulo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ModuloRol" EntityType="Self.ModuloRol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="R1_DupNAB$" EntityType="Self.R1_DupNAB$" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rotacion" EntityType="Self.Rotacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TD_VacacionesRegistro" EntityType="Self.TD_VacacionesRegistro" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TG_Actividad_Justificacion" EntityType="Self.TG_Actividad_Justificacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TG_AdministraciónDelRiesgo" EntityType="Self.TG_AdministraciónDelRiesgo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TG_Ampliación" EntityType="Self.TG_Ampliación" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TG_Aprobador" EntityType="Self.TG_Aprobador" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TG_Contacto" EntityType="Self.TG_Contacto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TG_Estados_Proyecto" EntityType="Self.TG_Estados_Proyecto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TG_Estructura_Seguimiento_Historial" EntityType="Self.TG_Estructura_Seguimiento_Historial" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TG_Informe" EntityType="Self.TG_Informe" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TG_Observacion_Cambio" EntityType="Self.TG_Observacion_Cambio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TG_Persona" EntityType="Self.TG_Persona" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TG_Proceso_Evaluado" EntityType="Self.TG_Proceso_Evaluado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TG_ProcesoEvaluado" EntityType="Self.TG_ProcesoEvaluado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TG_Proyecto" EntityType="Self.TG_Proyecto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TG_Proyecto_Riesgo_Control" EntityType="Self.TG_Proyecto_Riesgo_Control" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TG_Riesgo_Del_Trabajo" EntityType="Self.TG_Riesgo_Del_Trabajo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TG_RiesgoBCP" EntityType="Self.TG_RiesgoBCP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TG_RiesgoInherente" EntityType="Self.TG_RiesgoInherente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TG_Rol" EntityType="Self.TG_Rol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TG_Unidad_Responsable" EntityType="Self.TG_Unidad_Responsable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TG_Unidad_Responsable_Referencia" EntityType="Self.TG_Unidad_Responsable_Referencia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TS_Contacto" EntityType="Self.TS_Contacto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TS_Observacion_Cambio" EntityType="Self.TS_Observacion_Cambio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TS_Rol" EntityType="Self.TS_Rol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TS_Unidad_Responsable" EntityType="Self.TS_Unidad_Responsable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TS_Unidad_Responsable_Referencia" EntityType="Self.TS_Unidad_Responsable_Referencia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario_Log" EntityType="Self.Usuario_Log" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UsuarioModuloRol" EntityType="Self.UsuarioModuloRol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DAC_HistorialReportesScript" EntityType="Self.DAC_HistorialReportesScript" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [DAC_HistorialReportesScript].[idHistorialReporte] AS [idHistorialReporte], 
+    [DAC_HistorialReportesScript].[idScript] AS [idScript], 
+    [DAC_HistorialReportesScript].[idUsuario] AS [idUsuario], 
+    [DAC_HistorialReportesScript].[estado] AS [estado], 
+    [DAC_HistorialReportesScript].[nombreArchivo] AS [nombreArchivo], 
+    [DAC_HistorialReportesScript].[fechaModificacion] AS [fechaModificacion], 
+    [DAC_HistorialReportesScript].[contentType] AS [contentType], 
+    [DAC_HistorialReportesScript].[data] AS [data]
+    FROM [dbo].[DAC_HistorialReportesScript] AS [DAC_HistorialReportesScript]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="TG_Unidad_Responsable_Contacto" EntityType="Self.TG_Unidad_Responsable_Contacto" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [TG_Unidad_Responsable_Contacto].[ID_Unidad_Responsable] AS [ID_Unidad_Responsable], 
+    [TG_Unidad_Responsable_Contacto].[ID_Contacto] AS [ID_Contacto], 
+    [TG_Unidad_Responsable_Contacto].[ID_Rol] AS [ID_Rol]
+    FROM [dbo].[TG_Unidad_Responsable_Contacto] AS [TG_Unidad_Responsable_Contacto]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="TS_Unidad_Responsable_Contacto" EntityType="Self.TS_Unidad_Responsable_Contacto" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [TS_Unidad_Responsable_Contacto].[ID_Unidad_Responsable] AS [ID_Unidad_Responsable], 
+    [TS_Unidad_Responsable_Contacto].[ID_Contacto] AS [ID_Contacto], 
+    [TS_Unidad_Responsable_Contacto].[ID_Rol] AS [ID_Rol]
+    FROM [dbo].[TS_Unidad_Responsable_Contacto] AS [TS_Unidad_Responsable_Contacto]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="TS_Estructura" EntityType="Self.TS_Estructura" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [TS_Estructura].[ID] AS [ID], 
+    [TS_Estructura].[Nombre] AS [Nombre], 
+    [TS_Estructura].[ID_Padre] AS [ID_Padre], 
+    [TS_Estructura].[GERENCIA NIVEL 0] AS [GERENCIA NIVEL 0], 
+    [TS_Estructura].[GERENCIA NIVEL 1] AS [GERENCIA NIVEL 1], 
+    [TS_Estructura].[GERENCIA NIVEL 2] AS [GERENCIA NIVEL 2], 
+    [TS_Estructura].[GERENCIA NIVEL 3] AS [GERENCIA NIVEL 3], 
+    [TS_Estructura].[GERENCIA NIVEL 4] AS [GERENCIA NIVEL 4], 
+    [TS_Estructura].[GERENCIA NIVEL 5] AS [GERENCIA NIVEL 5]
+    FROM [dbo].[TS_Estructura] AS [TS_Estructura]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VIEW_ADMINISTRACION_USUARIOS" EntityType="Self.VIEW_ADMINISTRACION_USUARIOS" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VIEW_ADMINISTRACION_USUARIOS].[IdUsuario] AS [IdUsuario], 
+    [VIEW_ADMINISTRACION_USUARIOS].[Persona] AS [Persona], 
+    [VIEW_ADMINISTRACION_USUARIOS].[IdModulo] AS [IdModulo], 
+    [VIEW_ADMINISTRACION_USUARIOS].[IdRol] AS [IdRol]
+    FROM [dbo].[VIEW_ADMINISTRACION_USUARIOS] AS [VIEW_ADMINISTRACION_USUARIOS]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_AU_Administrador_Usuarios" EntityType="Self.View_AU_Administrador_Usuarios" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_AU_Administrador_Usuarios].[IdPersona] AS [IdPersona], 
+    [View_AU_Administrador_Usuarios].[IdUsuario] AS [IdUsuario], 
+    [View_AU_Administrador_Usuarios].[Nombre] AS [Nombre], 
+    [View_AU_Administrador_Usuarios].[Usuario] AS [Usuario], 
+    [View_AU_Administrador_Usuarios].[Email] AS [Email], 
+    [View_AU_Administrador_Usuarios].[Estado] AS [Estado]
+    FROM [dbo].[View_AU_Administrador_Usuarios] AS [View_AU_Administrador_Usuarios]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_AU_Drop_JefeDirecto" EntityType="Self.View_AU_Drop_JefeDirecto" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_AU_Drop_JefeDirecto].[IdPersona] AS [IdPersona], 
+    [View_AU_Drop_JefeDirecto].[NombreJefe] AS [NombreJefe]
+    FROM [dbo].[View_AU_Drop_JefeDirecto] AS [View_AU_Drop_JefeDirecto]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_AU_Drop_UsuariosTM" EntityType="Self.View_AU_Drop_UsuariosTM" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_AU_Drop_UsuariosTM].[ID] AS [ID], 
+    [View_AU_Drop_UsuariosTM].[Nombre] AS [Nombre]
+    FROM [dbo].[View_AU_Drop_UsuariosTM] AS [View_AU_Drop_UsuariosTM]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_AU_Persona_Usuario_Rotacion" EntityType="Self.View_AU_Persona_Usuario_Rotacion" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_AU_Persona_Usuario_Rotacion].[IdPersona] AS [IdPersona], 
+    [View_AU_Persona_Usuario_Rotacion].[IdCompañia] AS [IdCompañia], 
+    [View_AU_Persona_Usuario_Rotacion].[IdUsuario] AS [IdUsuario], 
+    [View_AU_Persona_Usuario_Rotacion].[IdRotacion] AS [IdRotacion], 
+    [View_AU_Persona_Usuario_Rotacion].[IdJefeDirecto] AS [IdJefeDirecto], 
+    [View_AU_Persona_Usuario_Rotacion].[Nombres] AS [Nombres], 
+    [View_AU_Persona_Usuario_Rotacion].[Apellidos] AS [Apellidos], 
+    [View_AU_Persona_Usuario_Rotacion].[Email] AS [Email], 
+    [View_AU_Persona_Usuario_Rotacion].[Dni] AS [Dni], 
+    [View_AU_Persona_Usuario_Rotacion].[Función] AS [Función], 
+    [View_AU_Persona_Usuario_Rotacion].[Matrícula] AS [Matrícula], 
+    [View_AU_Persona_Usuario_Rotacion].[SubGerencia] AS [SubGerencia], 
+    [View_AU_Persona_Usuario_Rotacion].[Equipo] AS [Equipo], 
+    [View_AU_Persona_Usuario_Rotacion].[NombreSharepoint] AS [NombreSharepoint], 
+    [View_AU_Persona_Usuario_Rotacion].[Usuario] AS [Usuario], 
+    [View_AU_Persona_Usuario_Rotacion].[Contraseña] AS [Contraseña], 
+    [View_AU_Persona_Usuario_Rotacion].[FechaIngreso] AS [FechaIngreso], 
+    [View_AU_Persona_Usuario_Rotacion].[FechaSalida] AS [FechaSalida], 
+    [View_AU_Persona_Usuario_Rotacion].[Cargo] AS [Cargo], 
+    [View_AU_Persona_Usuario_Rotacion].[Planilla] AS [Planilla], 
+    [View_AU_Persona_Usuario_Rotacion].[Activo] AS [Activo]
+    FROM [dbo].[View_AU_Persona_Usuario_Rotacion] AS [View_AU_Persona_Usuario_Rotacion]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_BC_Cuentas_Proyectos" EntityType="Self.View_BC_Cuentas_Proyectos" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_BC_Cuentas_Proyectos].[ID] AS [ID], 
+    [View_BC_Cuentas_Proyectos].[Cuenta_Contable] AS [Cuenta_Contable], 
+    [View_BC_Cuentas_Proyectos].[DESCRIPCION] AS [DESCRIPCION], 
+    [View_BC_Cuentas_Proyectos].[Plan_Anual] AS [Plan_Anual], 
+    [View_BC_Cuentas_Proyectos].[Macroproceso] AS [Macroproceso], 
+    [View_BC_Cuentas_Proyectos].[Evaluación] AS [Evaluación], 
+    [View_BC_Cuentas_Proyectos].[Cod_Proyecto] AS [Cod_Proyecto]
+    FROM [dbo].[View_BC_Cuentas_Proyectos] AS [View_BC_Cuentas_Proyectos]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_BC_Hojas_Cargadas" EntityType="Self.View_BC_Hojas_Cargadas" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_BC_Hojas_Cargadas].[ID] AS [ID], 
+    [View_BC_Hojas_Cargadas].[AÑO] AS [AÑO], 
+    [View_BC_Hojas_Cargadas].[PERIODO] AS [PERIODO], 
+    [View_BC_Hojas_Cargadas].[FECHA_CARGA] AS [FECHA_CARGA]
+    FROM [dbo].[View_BC_Hojas_Cargadas] AS [View_BC_Hojas_Cargadas]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_DAC_Vista_List_Scripts" EntityType="Self.View_DAC_Vista_List_Scripts" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_DAC_Vista_List_Scripts].[ID] AS [ID], 
+    [View_DAC_Vista_List_Scripts].[Código Script] AS [Código Script], 
+    [View_DAC_Vista_List_Scripts].[Año] AS [Año], 
+    [View_DAC_Vista_List_Scripts].[Nombre Script] AS [Nombre Script], 
+    [View_DAC_Vista_List_Scripts].[Descripción de Script] AS [Descripción de Script], 
+    [View_DAC_Vista_List_Scripts].[Gestor] AS [Gestor], 
+    [View_DAC_Vista_List_Scripts].[IdGA] AS [IdGA], 
+    [View_DAC_Vista_List_Scripts].[Gerente Adjunto] AS [Gerente Adjunto], 
+    [View_DAC_Vista_List_Scripts].[IdAud] AS [IdAud], 
+    [View_DAC_Vista_List_Scripts].[Auditor] AS [Auditor], 
+    [View_DAC_Vista_List_Scripts].[Monitoreo] AS [Monitoreo], 
+    [View_DAC_Vista_List_Scripts].[Fase 1] AS [Fase 1], 
+    [View_DAC_Vista_List_Scripts].[Fase 2] AS [Fase 2], 
+    [View_DAC_Vista_List_Scripts].[Fase 3] AS [Fase 3], 
+    [View_DAC_Vista_List_Scripts].[Fase 4] AS [Fase 4], 
+    [View_DAC_Vista_List_Scripts].[Estado] AS [Estado], 
+    [View_DAC_Vista_List_Scripts].[Ruta] AS [Ruta], 
+    [View_DAC_Vista_List_Scripts].[graficaPowerBI] AS [graficaPowerBI]
+    FROM [dbo].[View_DAC_Vista_List_Scripts] AS [View_DAC_Vista_List_Scripts]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VIEW_NEGOCIOS" EntityType="Self.VIEW_NEGOCIOS" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VIEW_NEGOCIOS].[Neg] AS [Neg]
+    FROM [dbo].[VIEW_NEGOCIOS] AS [VIEW_NEGOCIOS]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VIEW_USUARIOS_FORGOT_PASSWORD" EntityType="Self.VIEW_USUARIOS_FORGOT_PASSWORD" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VIEW_USUARIOS_FORGOT_PASSWORD].[IdUsuario] AS [IdUsuario], 
+    [VIEW_USUARIOS_FORGOT_PASSWORD].[IdPersona] AS [IdPersona], 
+    [VIEW_USUARIOS_FORGOT_PASSWORD].[Usuario] AS [Usuario], 
+    [VIEW_USUARIOS_FORGOT_PASSWORD].[Contraseña] AS [Contraseña], 
+    [VIEW_USUARIOS_FORGOT_PASSWORD].[token_recovery] AS [token_recovery], 
+    [VIEW_USUARIOS_FORGOT_PASSWORD].[Email] AS [Email]
+    FROM [dbo].[VIEW_USUARIOS_FORGOT_PASSWORD] AS [VIEW_USUARIOS_FORGOT_PASSWORD]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VIEW_USUARIOS_LOGIN" EntityType="Self.VIEW_USUARIOS_LOGIN" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VIEW_USUARIOS_LOGIN].[IdUsuario] AS [IdUsuario], 
+    [VIEW_USUARIOS_LOGIN].[IdPersona] AS [IdPersona], 
+    [VIEW_USUARIOS_LOGIN].[Usuario] AS [Usuario], 
+    [VIEW_USUARIOS_LOGIN].[Contraseña] AS [Contraseña], 
+    [VIEW_USUARIOS_LOGIN].[Email] AS [Email]
+    FROM [dbo].[VIEW_USUARIOS_LOGIN] AS [VIEW_USUARIOS_LOGIN]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VIEW_WT_USUARIOS" EntityType="Self.VIEW_WT_USUARIOS" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VIEW_WT_USUARIOS].[Id] AS [Id], 
+    [VIEW_WT_USUARIOS].[Usuario] AS [Usuario]
+    FROM [dbo].[VIEW_WT_USUARIOS] AS [VIEW_WT_USUARIOS]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__Usuario__IdPerso__0EF836A4" Association="Self.FK__Usuario__IdPerso__0EF836A4">
+      <End Role="Persona" EntitySet="Persona" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DAC_DAC_HistorialCambios_DAC_Scripts" Association="Self.FK_DAC_DAC_HistorialCambios_DAC_Scripts">
+      <End Role="DAC_Scripts" EntitySet="DAC_Scripts" />
+      <End Role="DAC_HistorialCambios" EntitySet="DAC_HistorialCambios" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DAC_HistorialCambios_DAC_HistorialCambios" Association="Self.FK_DAC_HistorialCambios_DAC_HistorialCambios">
+      <End Role="DAC_HistorialCambios" EntitySet="DAC_HistorialCambios" />
+      <End Role="DAC_HistorialCambios1" EntitySet="DAC_HistorialCambios" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DAC_HistorialCambios_Persona" Association="Self.FK_DAC_HistorialCambios_Persona">
+      <End Role="Persona" EntitySet="Persona" />
+      <End Role="DAC_HistorialCambios" EntitySet="DAC_HistorialCambios" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DAC_Scripts_DAC_Ejecucion_Script" Association="Self.FK_DAC_Scripts_DAC_Ejecucion_Script">
+      <End Role="DAC_Ejecucion_Script" EntitySet="DAC_Ejecucion_Script" />
+      <End Role="DAC_Scripts" EntitySet="DAC_Scripts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DAC_Scripts_DAC_Peridiocidad_Ejecucion" Association="Self.FK_DAC_Scripts_DAC_Peridiocidad_Ejecucion">
+      <End Role="DAC_Peridiocidad_Ejecucion" EntitySet="DAC_Peridiocidad_Ejecucion" />
+      <End Role="DAC_Scripts" EntitySet="DAC_Scripts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DAC_Scripts_DAC_Periodo_Analisis" Association="Self.FK_DAC_Scripts_DAC_Periodo_Analisis">
+      <End Role="DAC_Periodo_Analisis" EntitySet="DAC_Periodo_Analisis" />
+      <End Role="DAC_Scripts" EntitySet="DAC_Scripts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DAC_Scripts_DAC_Tipologia_Script" Association="Self.FK_DAC_Scripts_DAC_Tipologia_Script">
+      <End Role="DAC_Tipologia_Script" EntitySet="DAC_Tipologia_Script" />
+      <End Role="DAC_Scripts" EntitySet="DAC_Scripts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DAC_Scripts_DD_Proyecto" Association="Self.FK_DAC_Scripts_DD_Proyecto">
+      <End Role="DD_Proyecto" EntitySet="DD_Proyecto" />
+      <End Role="DAC_Scripts" EntitySet="DAC_Scripts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DAC_Scripts_Persona" Association="Self.FK_DAC_Scripts_Persona">
+      <End Role="Persona" EntitySet="Persona" />
+      <End Role="DAC_Scripts" EntitySet="DAC_Scripts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DD_Cambios_Universo_DD_Universo" Association="Self.FK_DD_Cambios_Universo_DD_Universo">
+      <End Role="DD_Universo" EntitySet="DD_Universo" />
+      <End Role="DD_Cambios_Universo" EntitySet="DD_Cambios_Universo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DD_Cambios_Universo_Usuario" Association="Self.FK_DD_Cambios_Universo_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="DD_Cambios_Universo" EntitySet="DD_Cambios_Universo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DD_Proyecto_DD_Proyecto" Association="Self.FK_DD_Proyecto_DD_Proyecto">
+      <End Role="DD_Proyecto" EntitySet="DD_Proyecto" />
+      <End Role="DD_Proyecto1" EntitySet="DD_Proyecto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DD_Proyecto_DPA_Evaluacion_Plan" Association="Self.FK_DD_Proyecto_DPA_Evaluacion_Plan">
+      <End Role="DPA_Evaluacion_Plan" EntitySet="DPA_Evaluacion_Plan" />
+      <End Role="DD_Proyecto" EntitySet="DD_Proyecto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DD_Proyecto_IdInforme" Association="Self.FK_DD_Proyecto_IdInforme">
+      <End Role="DD_Informe" EntitySet="DD_Informe" />
+      <End Role="DD_Proyecto" EntitySet="DD_Proyecto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DD_Proyecto_IdProcesoEvaluado" Association="Self.FK_DD_Proyecto_IdProcesoEvaluado">
+      <End Role="DD_ProcesoEvaluado" EntitySet="DD_ProcesoEvaluado" />
+      <End Role="DD_Proyecto" EntitySet="DD_Proyecto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DD_Universo_DD_Informe" Association="Self.FK_DD_Universo_DD_Informe">
+      <End Role="DD_Informe" EntitySet="DD_Informe" />
+      <End Role="DD_Universo" EntitySet="DD_Universo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DPA_Auditor_Evaluacion_DPA_Evaluacion_Plan" Association="Self.FK_DPA_Auditor_Evaluacion_DPA_Evaluacion_Plan">
+      <End Role="DPA_Evaluacion_Plan" EntitySet="DPA_Evaluacion_Plan" />
+      <End Role="DPA_Auditor_Evaluacion" EntitySet="DPA_Auditor_Evaluacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DPA_Auditor_Evaluacion_Usuario" Association="Self.FK_DPA_Auditor_Evaluacion_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="DPA_Auditor_Evaluacion" EntitySet="DPA_Auditor_Evaluacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DPA_Auditor_Tiempo_Extra_DPA_Tipo_Tiempo_Extra" Association="Self.FK_DPA_Auditor_Tiempo_Extra_DPA_Tipo_Tiempo_Extra">
+      <End Role="DPA_Tipo_Tiempo_Extra" EntitySet="DPA_Tipo_Tiempo_Extra" />
+      <End Role="DPA_Auditor_Tiempo_Extra" EntitySet="DPA_Auditor_Tiempo_Extra" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DPA_Auditor_Tiempo_Extra_Usuario" Association="Self.FK_DPA_Auditor_Tiempo_Extra_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="DPA_Auditor_Tiempo_Extra" EntitySet="DPA_Auditor_Tiempo_Extra" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DPA_Evaluacion_DPA_Equipo" Association="Self.FK_DPA_Evaluacion_DPA_Equipo">
+      <End Role="DPA_Equipo" EntitySet="DPA_Equipo" />
+      <End Role="DPA_Evaluacion" EntitySet="DPA_Evaluacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DPA_Evaluacion_DPA_Negocio" Association="Self.FK_DPA_Evaluacion_DPA_Negocio">
+      <End Role="DPA_Negocio" EntitySet="DPA_Negocio" />
+      <End Role="DPA_Evaluacion" EntitySet="DPA_Evaluacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DPA_Evaluacion_Plan_DPA_Evaluacion" Association="Self.FK_DPA_Evaluacion_Plan_DPA_Evaluacion">
+      <End Role="DPA_Evaluacion" EntitySet="DPA_Evaluacion" />
+      <End Role="DPA_Evaluacion_Plan" EntitySet="DPA_Evaluacion_Plan" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DPA_Evaluacion_Plan_DPA_Plan_Anual" Association="Self.FK_DPA_Evaluacion_Plan_DPA_Plan_Anual">
+      <End Role="DPA_Plan_Anual" EntitySet="DPA_Plan_Anual" />
+      <End Role="DPA_Evaluacion_Plan" EntitySet="DPA_Evaluacion_Plan" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DPA_Log_Evaluacion_Plan_DPA_Evaluacion_Plan" Association="Self.FK_DPA_Log_Evaluacion_Plan_DPA_Evaluacion_Plan">
+      <End Role="DPA_Evaluacion_Plan" EntitySet="DPA_Evaluacion_Plan" />
+      <End Role="DPA_Log_Evaluacion_Plan" EntitySet="DPA_Log_Evaluacion_Plan" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DPA_Log_Evaluacion_Plan_Usuario" Association="Self.FK_DPA_Log_Evaluacion_Plan_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="DPA_Log_Evaluacion_Plan" EntitySet="DPA_Log_Evaluacion_Plan" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DPA_Opcion_DPA_Criterio" Association="Self.FK_DPA_Opcion_DPA_Criterio">
+      <End Role="DPA_Criterio_Votacion" EntitySet="DPA_Criterio_Votacion" />
+      <End Role="DPA_Opcion_Votacion" EntitySet="DPA_Opcion_Votacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DPA_Scoring_Evaluacion_DPA_Criterio_Scoring" Association="Self.FK_DPA_Scoring_Evaluacion_DPA_Criterio_Scoring">
+      <End Role="DPA_Criterio_Scoring" EntitySet="DPA_Criterio_Scoring" />
+      <End Role="DPA_Scoring_Evaluacion" EntitySet="DPA_Scoring_Evaluacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DPA_Scoring_Evaluacion_DPA_Evaluacion_Plan" Association="Self.FK_DPA_Scoring_Evaluacion_DPA_Evaluacion_Plan">
+      <End Role="DPA_Evaluacion_Plan" EntitySet="DPA_Evaluacion_Plan" />
+      <End Role="DPA_Scoring_Evaluacion" EntitySet="DPA_Scoring_Evaluacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DPA_Votacion_DPA_Evaluacion_Plan" Association="Self.FK_DPA_Votacion_DPA_Evaluacion_Plan">
+      <End Role="DPA_Evaluacion_Plan" EntitySet="DPA_Evaluacion_Plan" />
+      <End Role="DPA_Votacion" EntitySet="DPA_Votacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DPA_Votacion_DPA_Opcion_Votacion" Association="Self.FK_DPA_Votacion_DPA_Opcion_Votacion">
+      <End Role="DPA_Opcion_Votacion" EntitySet="DPA_Opcion_Votacion" />
+      <End Role="DPA_Votacion" EntitySet="DPA_Votacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DPA_Votacion_Usuario" Association="Self.FK_DPA_Votacion_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="DPA_Votacion" EntitySet="DPA_Votacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HistorialReportesScript_Persona" Association="Self.FK_HistorialReportesScript_Persona">
+      <End Role="Persona" EntitySet="Persona" />
+      <End Role="DAC_HistorialReportesScript" EntitySet="DAC_HistorialReportesScript" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HistorialReportesScript_scripts" Association="Self.FK_HistorialReportesScript_scripts">
+      <End Role="DAC_Scripts" EntitySet="DAC_Scripts" />
+      <End Role="DAC_HistorialReportesScript" EntitySet="DAC_HistorialReportesScript" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ModuloRol_IdModulo" Association="Self.FK_ModuloRol_IdModulo">
+      <End Role="Modulo" EntitySet="Modulo" />
+      <End Role="ModuloRol" EntitySet="ModuloRol" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ModuloRol_IdRol" Association="Self.FK_ModuloRol_IdRol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="ModuloRol" EntitySet="ModuloRol" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Persona_IdCompañia" Association="Self.FK_Persona_IdCompañia">
+      <End Role="Compañia" EntitySet="Compañia" />
+      <End Role="Persona" EntitySet="Persona" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PlanAnual_IdCompañia" Association="Self.FK_PlanAnual_IdCompañia">
+      <End Role="Compañia" EntitySet="Compañia" />
+      <End Role="DD_PlanAnual" EntitySet="DD_PlanAnual" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rotacion_IdPersona" Association="Self.FK_Rotacion_IdPersona">
+      <End Role="Persona" EntitySet="Persona" />
+      <End Role="Rotacion" EntitySet="Rotacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScriptsContinua_Contacto" Association="Self.FK_ScriptsContinua_Contacto">
+      <End Role="TS_Contacto" EntitySet="TS_Contacto" />
+      <End Role="DAC_ScriptsContinua" EntitySet="DAC_ScriptsContinua" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScriptsContinua_Fase1_Estado" Association="Self.FK_ScriptsContinua_Fase1_Estado">
+      <End Role="DAC_Estado" EntitySet="DAC_Estado" />
+      <End Role="DAC_ScriptsContinua" EntitySet="DAC_ScriptsContinua" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScriptsContinua_Fase2_Estado" Association="Self.FK_ScriptsContinua_Fase2_Estado">
+      <End Role="DAC_Estado" EntitySet="DAC_Estado" />
+      <End Role="DAC_ScriptsContinua" EntitySet="DAC_ScriptsContinua" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScriptsContinua_Fase3_Estado" Association="Self.FK_ScriptsContinua_Fase3_Estado">
+      <End Role="DAC_Estado" EntitySet="DAC_Estado" />
+      <End Role="DAC_ScriptsContinua" EntitySet="DAC_ScriptsContinua" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScriptsContinua_Fase4_Estado" Association="Self.FK_ScriptsContinua_Fase4_Estado">
+      <End Role="DAC_Estado" EntitySet="DAC_Estado" />
+      <End Role="DAC_ScriptsContinua" EntitySet="DAC_ScriptsContinua" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScriptsContinua_Persona_Auditor" Association="Self.FK_ScriptsContinua_Persona_Auditor">
+      <End Role="Persona" EntitySet="Persona" />
+      <End Role="DAC_ScriptsContinua" EntitySet="DAC_ScriptsContinua" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScriptsContinua_Persona_Gerente" Association="Self.FK_ScriptsContinua_Persona_Gerente">
+      <End Role="Persona" EntitySet="Persona" />
+      <End Role="DAC_ScriptsContinua" EntitySet="DAC_ScriptsContinua" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScriptsContinua_TipScript" Association="Self.FK_ScriptsContinua_TipScript">
+      <End Role="DAC_Tipologia_Script" EntitySet="DAC_Tipologia_Script" />
+      <End Role="DAC_ScriptsContinua" EntitySet="DAC_ScriptsContinua" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TS_Unidad_Responsable_Contacto_TS_Contacto" Association="Self.FK_TS_Unidad_Responsable_Contacto_TS_Contacto">
+      <End Role="TS_Contacto" EntitySet="TS_Contacto" />
+      <End Role="TS_Unidad_Responsable_Contacto" EntitySet="TS_Unidad_Responsable_Contacto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TS_Unidad_Responsable_Contacto_TS_Rol" Association="Self.FK_TS_Unidad_Responsable_Contacto_TS_Rol">
+      <End Role="TS_Rol" EntitySet="TS_Rol" />
+      <End Role="TS_Unidad_Responsable_Contacto" EntitySet="TS_Unidad_Responsable_Contacto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TS_Unidad_Responsable_Contacto_TS_Unidad_Responsable" Association="Self.FK_TS_Unidad_Responsable_Contacto_TS_Unidad_Responsable">
+      <End Role="TS_Unidad_Responsable" EntitySet="TS_Unidad_Responsable" />
+      <End Role="TS_Unidad_Responsable_Contacto" EntitySet="TS_Unidad_Responsable_Contacto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TS_Unidad_Responsable_Referencia_TS_Unidad_Responsable" Association="Self.FK_TS_Unidad_Responsable_Referencia_TS_Unidad_Responsable">
+      <End Role="TS_Unidad_Responsable" EntitySet="TS_Unidad_Responsable" />
+      <End Role="TS_Unidad_Responsable_Referencia" EntitySet="TS_Unidad_Responsable_Referencia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuario_Log_Usuario_Log" Association="Self.FK_Usuario_Log_Usuario_Log">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Usuario_Log" EntitySet="Usuario_Log" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsuarioModuloRol_IdUsuario" Association="Self.FK_UsuarioModuloRol_IdUsuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="UsuarioModuloRol" EntitySet="UsuarioModuloRol" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

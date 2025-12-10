@@ -1,0 +1,155 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+@{
+    ViewBag.Title = "Carga Plan Anual";
+    Layout = "~/Views/Shared/_Layout_Plan_Anual.cshtml";
+}
+
+<div class="card shadow">
+    <div class="card-header py-3">
+        <h5 class="m-0 font-weight-bold text-dark text-center">Carga del Universo</h5>
+    </div>
+
+    <div class="card-body mb-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-3">
+                Plan Anual: <br />
+                <select class="form-control" id="selectIdPlan" name="idPlanAnual" onchange="cambioSeleccion()">
+                    @foreach (var Item in Model.DPA_Plan_Anual)
+                    {
+                        <option value="@Item.ID_Plan_Anual" @(Item.ID_Plan_Anual == ViewBag.PlanAnualSeleccionado.ID_Plan_Anual ? "selected" : "")>@Item.Anio_Plan</option>
+                    }
+                </select>
+            </div>
+            <div class="col-lg-3">
+                Negocio: <br />
+                <select class="form-control" id="selectIdNegocio" name="idNegocio" onchange="cambioSeleccion()">
+                    @foreach (var Item in Model.DPA_Negocio)
+                    {
+                        <option value="@Item.ID_Negocio" @(Item.ID_Negocio == ViewBag.IdNegocioSeleccionado ? "selected" : "")>@Item.Negocio</option>
+                    }
+                </select>
+            </div>
+            <div class="col-lg-3 text-center">
+                <br />
+                <button type="button" class="btn btn-outline-secondary btn-filter" onclick="llamarCrearPlan();" data-toggle="modal" data-target="#modalCrearPlan">
+                    <i class="fas fa-plus"></i> Nuevo
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-filter">
+                    <i class="fas fa-undo"></i> Restablecer
+                </button>
+                <button type="button" class="btn btn-outline-danger btn-filter" data-toggle="modal" data-target="#modalEliminarPlan">
+                    <i class="fas fa-trash"></i> Eliminar
+                </button>
+            </div>
+        </div>
+
+        <div class="table-responsive mt-4">
+            <table class="table table-sm table-hover display" id="carga-plan-anual" width="100%">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="text-center align-middle"> Evaluación </th>
+                        <th class="text-center align-middle"> Último Calificativo </th>
+                        <th class="text-center align-middle"> Programado? </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.SP_DPA_Carga_Plan)
+                    {
+                        <tr>
+                            <td class="text-nowrap"> <span>@item.Evaluacion</span> </td>
+                            <td class="text-nowrap text-center"> <span>@item.Ultimo_Calificativo</span> </td>
+                            <td class="text-nowrap text-center"> <span>@item.Programado</span> </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@*MODAL CREAR NUEVO PLAN ANUAL*@
+<div class="modal fade" id="modalCrearPlan" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Crear Plan Anual</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="resultado-crear-plan"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL ELIMINAR PLAN ANUAL*@
+<div class="modal fade" id="modalEliminarPlan" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar Plan Anual</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            @using (Html.BeginForm("EliminarPlanAnual", "WebPlanAnual", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    ¿Estás seguro que deseas eliminar el plan anual del año @ViewBag.PlanAnualSeleccionado.Anio_Plan? Esta operación no se puede revertir.
+                    <input name="idPlanAnual" type="text" value="@ViewBag.PlanAnualSeleccionado.ID_Plan_Anual" hidden />
+
+                    <div class="form-group text-center pt-3">
+                        <button type="button" class="btn font-weight-normal btn-outline-secondary btn-group-toggle mr-2" data-dismiss="modal">
+                            <i class="fas fa-times-circle"></i> Cancelar
+                        </button>
+                        <button type="submit" class="btn font-weight-normal btn-danger btn-group-toggle">
+                            <i class="fas fa-trash-alt"></i> Eliminar Plan
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" class="init">
+    $(document).ready(function () {                
+        $('#carga-plan-anual').dataTable({
+            "dom": "<'row pb-1'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-12 col-md-5'><'col-sm-12 col-md-7'p>>",
+            "ordering": true,
+            "searching": true,
+            "paging": false,
+            "scrollY": "52vh",
+            "language": {
+                "zeroRecords": "No hay datos disponibles para los filtros seleccionados",
+                "info": "Mostrandose _TOTAL_ registros",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros)",
+                "search": "Buscar:"
+            }
+        });        
+    });
+
+    function cambioSeleccion() {
+        var idPlan = document.getElementById("selectIdPlan").value;
+        var idNegocio = document.getElementById("selectIdNegocio").value;
+        window.location.href = "../WebPlanAnual/CargaPlanAnual?pa=" + idPlan + "&ne=" + idNegocio;
+    }
+    function llamarCrearPlan() {
+        var laURLDeLaVista = '@Url.Action("PV_CrearPlan", "WebPlanAnual")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                success: function (response) {
+                    $('#resultado-crear-plan').html('');
+                    $('#resultado-crear-plan').html(response);
+                }
+            });
+    }
+</script>
+
+

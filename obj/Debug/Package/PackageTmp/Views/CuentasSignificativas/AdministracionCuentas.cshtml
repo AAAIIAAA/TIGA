@@ -1,0 +1,134 @@
+﻿@using WebTIGA;
+
+@model WebTIGA.Models.ContenedorModelos
+@{
+    ViewBag.Title = "AdministracionCuentas";
+    Layout = "~/Views/Shared/_Layout_CuentasSIG.cshtml";
+
+}
+
+
+<div class="card shadow">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-dark text-center">Administración de Cuentas Contables</h6>
+    </div>  
+
+    <div class="card-body">
+        <div class="text-center">
+            <a class="btn btn-info" href="@Url.Action("CrearCuentaProyecto", "CuentasSignificativas")">
+                <i class="fas fa-plus"></i> Agregar
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-sm" id="cuentas-contables" width="100%" style="font-size: 0.85rem;">
+                <thead class="table-active">
+                    <tr>
+                        <th class="text-center align-middle" style="width: 8%"> Cuenta Contable </th>
+                        <th class="text-center align-middle" style="width: 23%"> Descripción </th>
+                        <th class="text-center align-middle" style="width: 6%"> Plan Anual </th>
+                        <th class="text-center align-middle" style="width: 23%"> Macroproceso </th>
+                        <th class="text-center align-middle" style="width: 23%"> Evaluación </th>
+                        <th class="text-center align-middle" style="width: 10%"> Código del Proyecto </th>
+                        <th class="text-center align-middle" style="width: 6%">  </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.VIEW_BC_CUENTAS_PROYECTOS)
+                    {
+                        <tr>
+                            <td class="text-center align-middle">@item.Cuenta_Contable</td>
+                            <td class="text-left align-middle">@item.DESCRIPCION</td>
+                            <td class="text-center align-middle">@item.Plan_Anual</td>
+                            <td class="text-left align-middle">@item.Macroproceso</td>
+                            <td class="text-left align-middle">@item.Evaluación </td>
+                            <td class="text-center align-middle">@item.Cod_Proyecto</td>
+                            <td class="text-center align-middle">
+
+                                <div class="btn-group">
+                                    <button class="btn-icon pr-3" onclick="window.location.href='../CuentasSignificativas/EditarCuentaProyecto?id='+@item.ID" title="Editar">
+                                        <i class="fas fa-edit text-warning"></i>
+                                    </button>
+
+                                    @using (Html.BeginForm("EliminarCuentaProyecto", "CuentasSignificativas", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <input id="id" name="id" type="text" value="@item.ID" hidden />
+                                        <button class="btn-icon" type="submit" title="Eliminar">
+                                            <i class="fas fa-trash-alt text-danger"></i>
+                                        </button>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" class="init">
+    $(document).ready(function () {
+        $('#cuentas-contables').DataTable({
+            "dom": "<'row pb-2'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row pt-2'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+            "ordering": true,
+            "searching": true,
+            "paging": true,
+            "scrollY": "52vh",
+            "lengthMenu": [[25, 50, 75, 100, -1], [25, 50, 75, 100, "Todos"] ],
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros",
+                "zeroRecords": "No hay datos disponibles para los filtros seleccionados",
+                "info": "Mostrandose _TOTAL_ registros",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros)",
+                "search": "Buscar:"
+            }
+        });
+
+        if ('@ViewBag.Alerta' == "creado") {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Creación Exitosa',
+                text: 'Se ha realizado la creación del registro satisfactoriamente',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }
+        else if ('@ViewBag.Alerta' == "editado") {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Registro Modificado',
+                text: 'Se ha realizado la edición del registro satisfactoriamente',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }
+        else if ('@ViewBag.Alerta' == "eliminado") {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Registro Eliminado',
+                text: 'Se ha elimnado el registro satisfactoriamente',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }
+        else if ('@ViewBag.Alerta' == "error-eliminar") {
+            Swal.fire({
+                title: 'Error',
+                text: 'Ocurrió un error al eliminar el registro, inténtelo nuevamente.',
+                icon: 'error',
+                confirmButtonColor: 'lightseagreen'
+            });
+        }
+    });
+
+
+</script>

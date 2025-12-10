@@ -1,0 +1,156 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
+
+
+body, h1, h2, h3, h4, h5, h6, p {
+    font-family: 'Poppins', Arial, Helvetica, sans-serif !important;
+}
+
+.sticky-footer {
+    border-top: 1px solid #e7eaec !important;
+    position: absolute !important;
+    padding: 1.5rem 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+header {
+    margin: 3rem auto 2rem auto;
+    max-width: 600px;
+    text-align: center;
+}
+
+h1 {
+    font-weight: 500;
+    margin: 0;
+}
+
+p {
+    color: hsl(229, 6%, 66%)
+}
+
+.container-inicio {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    margin-bottom: 5rem !important;
+    max-width: 1140px;
+    justify-content: center;
+}
+
+.card {
+    margin-bottom: 5rem !important;
+}
+
+.box:hover {
+    cursor: pointer;
+    background: hsl(229 2% 92%);
+}
+
+.box {
+    background-color: #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    border-radius: 5px;
+    padding: 30px;
+    margin: 15px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+}
+
+.box h3 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.box p {
+    font-size: 0.9rem;
+    margin: 15px 0 30px;
+}
+
+.box img {
+    align-self: flex-end;
+}
+
+.box:nth-child(1), .box:nth-child(7) {
+    border-top: 5px solid hsl(180, 62%, 55%);
+}
+
+.box:nth-child(2), .box:nth-child(8) {
+    border-top: 5px solid hsl(0, 78%, 62%);
+}
+
+.box:nth-child(3), .box:nth-child(9) {
+    border-top: 5px solid hsl(212, 86%, 64%);
+}
+
+.box:nth-child(4) {
+    border-top: 5px solid hsl(34, 97%, 64%);
+}
+
+.box:nth-child(5) {
+    border-top: 5px solid hsl(106, 47%, 55%);
+}
+
+.box:nth-child(6) {
+    border-top: 5px solid hsl(274, 27%, 55%);
+}
+
+
+
+
+
+table {
+    width: 100% !important;
+}
+
+thead {
+    font-size: 0.7rem;
+}
+
+tbody {
+    font-size: 0.8rem;
+}
+
+.btn-reporte {
+    font-size: 0.85rem !important;
+    font-weight: normal !important;
+}
+
+
+
+.ellipsis {
+    position: relative;
+}
+
+.ellipsis:before {
+    content: '&nbsp;';
+    visibility: hidden;
+}
+
+.ellipsis span {
+    position: absolute;
+    left: 0;
+    right: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+@media only screen and (max-width: 1400px) {
+    html {
+        font-size: 78%;
+    }
+    .box > img {
+        height: 50px;
+    }
+    .dataTables_scrollBody {
+        max-height: 42.5vh !important;
+    }
+}
+
+

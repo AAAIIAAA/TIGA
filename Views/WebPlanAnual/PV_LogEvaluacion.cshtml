@@ -1,0 +1,73 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+
+
+<div class="mb-3">
+    <table id="log-evaluacion" class="table table-sm table-hover display" width="100%" style="font-size: 0.80rem;">
+        <thead class="thead-dark">
+            <tr>
+                <th class="text-center align-middle"> ID </th>
+                <th class="text-center align-middle"> Nombre </th>
+                <th class="text-center align-middle"> Negocio </th>
+                <th class="text-center align-middle"> ID Ev. </th>
+                <th class="text-center align-middle"> Evaluación </th>
+                <th class="text-center align-middle"> Nuevo Nombre </th>
+                <th class="text-center align-middle"> Operación </th>
+                <th class="text-center align-middle"> Fecha </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.SP_DPA_Log_Evaluacion)
+            {
+                <tr>
+                    <td class="text-nowrap text-center"> <span>@item.ID</span> </td>
+                    <td class="text-nowrap"> <span>@item.Nombre</span> </td>
+                    <td class="text-nowrap text-center"> <span>@item.Abreviacion</span> </td>
+                    <td class="text-nowrap text-center"> <span>@item.ID_Evaluacion</span> </td>
+                    <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item.Evaluacion" style="min-width: 20vh;"> <span>@item.Evaluacion</span> </td>
+
+                    @if (item.Nuevo_Nombre != null)
+                    {
+                        <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item.Nuevo_Nombre" style="min-width: 20vh;">
+                            <span>@item.Nuevo_Nombre</span>
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="text-center" style="min-width: 20vh;">
+                            <span>-</span>
+                        </td>
+                    }
+                    <td class="text-nowrap text-center"> <span>@item.Operacion</span> </td>
+                    <td class="text-nowrap text-center"> <span>@item.Fecha</span> </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript" class="init">
+    $(document).ready(function () {
+        $('#log-evaluacion').dataTable({            
+            "ordering": false,
+            "searching": true,
+            "paging": false,
+            //"scrollX": true,
+            "scrollY": "30vh",
+            "info": false,
+            "language": {
+                "zeroRecords": "No hay datos disponibles para los filtros seleccionados",
+                "search": "Buscar:"
+            }
+
+        });
+    });
+</script>
+
+
+
+
+
+
+
+

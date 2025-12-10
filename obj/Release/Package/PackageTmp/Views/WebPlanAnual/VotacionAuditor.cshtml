@@ -1,0 +1,193 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+@{
+    ViewBag.Title = "Votación de Evaluaciones";
+    Layout = "~/Views/Shared/_Layout_Plan_Anual.cshtml";
+}
+
+
+<div class="card shadow">
+
+    <div class="row card-header py-3">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <h5 class="m-0 font-weight-bold text-dark text-center">Votación de evaluaciones</h5>
+        </div>
+        <div class="col-lg-2 text-center">
+            <span class="badge badge-pill badge-danger text-wrap font-weight-normal" @(ViewBag.FlagEdicionPlan == 0 ? "" : "hidden")>
+                <i class="fas fa-info-circle"></i> Edición deshabilitada
+            </span>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="row justify-content-between">
+            <div class="col-lg-3 text-center">
+                <small>Leyenda:</small><br />
+                <span class="badge text-wrap font-weight-normal text-danger">
+                    <i class="fas fa-exclamation-circle"></i> Pendiente
+                </span>
+                <span class="badge text-wrap font-weight-normal text-info">
+                    <i class="fas fa-check-circle"></i> Realizado
+                </span>
+                <span class="badge text-wrap font-weight-normal text-success">
+                    <i class="fas fa-dot-circle"></i> Sólo lectura
+                </span>
+            </div>
+            <div class="col-lg-6 row">
+                <div class="col-6">
+                    Plan Anual: <br />
+                    <select class="form-control" id="selectIdPlan" name="idPlanAnual" onchange="cambioSeleccion()">
+                        @foreach (var Item in Model.DPA_Plan_Anual)
+                        {
+                            <option value="@Item.ID_Plan_Anual" @(Item.ID_Plan_Anual == ViewBag.PlanAnualSeleccionado.ID_Plan_Anual ? "selected" : "")>@Item.Anio_Plan</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-6">
+                    Negocio: <br />
+                    <select class="form-control" id="selectIdNegocio" name="idNegocio" onchange="cambioSeleccion()">
+                        @foreach (var Item in Model.DPA_Negocio)
+                        {
+                            <option value="@Item.ID_Negocio" @(Item.ID_Negocio == ViewBag.NegocioSeleccionado.ID_Negocio ? "selected" : "")>@Item.Negocio</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-3 row">
+                @if (ViewBag.FlagEdicionPlan == 1)
+                {
+                    <div class="col-6">
+                        <div class="card my-0">
+                            <div class="card-body p-2 text-center">
+                                <p class="card-subtitle" style="line-height: 1"><small>Votos Pendientes</small></p>
+                                <p class="card-subtitle pt-2">@ViewBag.VotosPendientes</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card my-0">
+                            <div class="card-body p-2 text-center">
+                                <p class="card-subtitle" style="line-height: 1"><small>Votos Realizados</small></p>
+                                <p class="card-subtitle pt-2">@ViewBag.VotosRealizados</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+
+        <div class="mt-4">
+            <table class="table table-sm table-hover display" id="votacion-auditor" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center align-middle table-active"> ID </th>
+                        <th class="text-center align-middle table-active"> Evaluación </th>
+                        <th class="text-center align-middle table-active"> Equipo Responsable </th>
+                        <th class="text-center align-middle table-active"> Votación </th>
+                        <th class="text-center align-middle table-active"> Cantidad de Votos </th>
+                        <th class="text-center align-middle table-success"> Riesgo Primario </th>
+                        <th class="text-center align-middle table-success"> Puntaje Primario </th>
+                        <th class="text-center align-middle table-warning"> Riesgo Secundario </th>
+                        <th class="text-center align-middle table-warning"> Puntaje Secundario </th>
+                        <th class="text-center align-middle table-active"> Diferencia de Puntaje </th>
+                        <th class="text-center align-middle table-active"> Priorización </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.SP_DPA_Votacion_Auditor_v2)
+                    {
+                    <tr>
+                        <td class="text-nowrap text-center"> <span>@item.ID_Evaluacion</span> </td>
+                        <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item.Evaluacion" style="min-width: 35vw;"> <span>@item.Evaluacion</span> </td>
+                        <td class="text-nowrap text-center"> <span>@item.Equipo_Responsable</span> </td>
+                        <td class="text-center">
+                            @if (item.flag_Votacion_Obligatoria == 0)
+                            {
+                                <button class="btn-icon pr-3" title="Ver Votaciones" onclick="llamarVotacionEvaluacion('@item.ID_Evaluacion_Plan', '@Request.Url.AbsolutePath');" data-toggle="modal" data-target="#modal-votacion-evaluacion">
+                                    <i class="fas fa-dot-circle text-success"></i>
+                                </button>
+                            }
+                            else if (item.flag_UsuarioHaVotado == 1)
+                            {
+                                <button class="btn-icon pr-3" title="Ver Votaciones" onclick="llamarVotacionEvaluacion('@item.ID_Evaluacion_Plan', '@Request.Url.AbsolutePath');" data-toggle="modal" data-target="#modal-votacion-evaluacion">
+                                    <i class="fas fa-check-circle text-info"></i>
+                                </button>
+                            }
+                            else if (item.flag_UsuarioHaVotado == 0)
+                            {
+                                <button class="btn-icon pr-3" title="Ver Votaciones" onclick="llamarVotacionEvaluacion('@item.ID_Evaluacion_Plan', '@Request.Url.AbsolutePath');" data-toggle="modal" data-target="#modal-votacion-evaluacion">
+                                    <i class="fas fa-exclamation-circle text-danger"></i>
+                                </button>
+                            }
+                        </td>
+                        <td class="text-nowrap text-center"> <span>@item.Cantidad_Votos</span> </td>
+                        <td class="text-nowrap text-center"> <span>@(item.Riesgo_Primario == null ? "-" : item.Riesgo_Primario)</span> </td>
+                        <td class="text-nowrap text-center"> <span>@(item.Puntaje_Primario == null ? 0 : item.Puntaje_Primario)</span> </td>
+                        <td class="text-nowrap text-center"> <span>@(item.Riesgo_Secundario == null ? "-" : item.Riesgo_Secundario)</span> </td>
+                        <td class="text-nowrap text-center"> <span>@(item.Puntaje_Secundario == null ? 0 : item.Puntaje_Secundario)</span> </td>
+                        <td class="text-nowrap text-center"> <span>@((item.Puntaje_Primario == null ? 0 : item.Puntaje_Primario) - (item.Puntaje_Secundario == null ? 0 : item.Puntaje_Secundario))</span> </td>
+                        <td class="text-nowrap text-center"> <span>@(item.Priorización == null ? 0 : item.Priorización)</span> </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script type="text/javascript" class="init">
+    $(document).ready(function () {
+        var table = $('#votacion-auditor').dataTable({
+            "dom": "<'row pb-1'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4 text-center'i><'col-sm-12 col-md-4'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-12 col-md-5'><'col-sm-12 col-md-7'p>>",
+            "order": [[1, 'asc']],
+            "searching": true,
+            "paging": false,
+            "scrollY": "52vh", // Habilita el scroll vertical
+            "scrollX": true,  // Habilita el scroll horizontal
+            "fixedHeader": true, // Fija los encabezados al hacer scroll
+            "buttons": [
+                {
+                    extend: 'copyHtml5',
+                    text: '<span class="font-weight-normal"><i class="fas fa-copy"></i> Copiar</span>',
+                    titleAttr: 'Copiar'
+                },
+                {
+                    extend: 'excelHtml5',
+                    text: '<span class="font-weight-normal"><i class="fas fa-file-excel"></i> Excel</span>',
+                    titleAttr: 'Excel'
+                }
+            ],
+            "language": {
+                "zeroRecords": "No hay datos disponibles para los filtros seleccionados",
+                "info": "Mostrándose TOTAL registros",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtrado de MAX registros)",
+                "search": "Buscar:"
+            }
+        });
+
+        // Inicializa el plugin de encabezados fijos
+        new $.fn.dataTable.FixedHeader(table);
+    });
+
+    function cambioSeleccion() {
+        var idPlan = document.getElementById("selectIdPlan").value;
+        var idNegocio = document.getElementById("selectIdNegocio").value;
+        window.location.href = "../WebPlanAnual/VotacionAuditor?pa=" + idPlan + "&ne=" + idNegocio;
+    }
+   
+
+</script>
+
+

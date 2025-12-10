@@ -1,0 +1,709 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+
+@{
+    Layout = "~/Views/Shared/_Layout_Resultados_Auditoria.cshtml";
+    ViewBag.Title = "Detalle_Seguimiento_Observaciones";
+
+
+    decimal? totAI = 0;
+    decimal? totAE = 0;
+    decimal? totSBS = 0;
+    decimal? totSALUD = 0;
+    decimal? totTOTAL = 0;
+
+    decimal? totAlto = 0;
+    decimal? totRel = 0;
+    decimal? totMod = 0;
+    decimal? totBajo = 0;
+    decimal? totOtros = 0;
+    decimal? totTotal = 0;
+}
+
+
+<html>
+<head>
+
+    @*<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">*@
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstr apcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+
+</head>
+<body>
+    <div class="row">
+
+        <div class="col-lg-12">
+            <div class="card text-white bg-secondary mb-3">
+                <div class="card-header"><strong>SEGUIMIENTO DE OBSERVACIONES</strong>@Html.ActionLink("Regresar", "Dashboard_WRA", new { }, new { @class = "btn btn-info ", @style = "float: right;" })</div>
+                <div class="card-body">
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="row row-cols-1 row-cols-md-2">
+        <div class="col mb-4">
+            <div class="card shadow">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-dark">Evolución de Resultados de Auditoria</h6>
+
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+
+                    <div class="text-center">
+
+                        @foreach (var item in Model.SP_WT_DETALLE_SEGUIMIENTO_OBSERVACIONES_1)
+                        {
+
+
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <h6>Pendiente</h6>
+                                    <button class="btn-circle btn-primary btn-responsive btninter right" style='width:120px; height:120px'>@item.Pendiente</button>
+                                </div>
+
+                                <div class="col-lg">
+                                    <br />
+                                    <br /><br />
+                                    <button class="btn btn-light btn-responsive btninter">+</button>
+                                </div>
+                                <div class="col-lg-2">
+                                    <h6>En proceso</h6>
+                                    <button class="btn-circle btn-danger btn-responsive btninter" style='width:120px; height:120px'>@item.En_Proceso</button>
+                                </div>
+                                <div class="col-lg">
+                                    <br /><br />
+                                    <br />
+                                    <button class="btn btn-light btn-responsive btninter">+</button>
+                                </div>
+
+                                <div class="col-lg-2">
+                                    <h6>Implementado</h6>
+                                    <button class="btn-circle btn-success btn-responsive btninter right" style='width:120px; height:120px'>@item.Implementado_por_Verificar</button>
+                                </div>
+                                <div class="col-lg">
+                                    <br /><br />
+                                    <br />
+                                    <button class="btn btn-light btn-responsive btninter">=</button>
+                                </div>
+                                <div class="col-lg-3">
+                                    <h6>Total</h6>
+                                    <button class="btn btn-info btn-responsive btninter right" style='width:120px; height:120px'>@item.TOTAL</button>
+                                </div>
+
+                            </div>
+
+                        }
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col mb-4">
+            <div class="card shadow ">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-dark">Distribución por Emisor</h6>
+
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <div class="row">
+                                <div class="col-lg-3">
+
+                                </div>
+
+                                <div class="col-lg-5">
+                                    <div id="piechart" style="width: 500px; height: 350px;"></div>
+                                </div>
+                                <div class="col-lg-4">
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="card shadow ">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-dark">Stock por Antiguedad y Emisor</h6>
+
+        </div>
+
+        <div class="col-sm-12">
+
+
+            <div class="card-body">
+                <div class="col-sm-12">
+                    <div id="chart_div3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</br>
+    <!--nuevos graficos-->
+    <div class="row row-cols-1 row-cols-md-2">
+        <div class="col mb-4">
+            <div class="card shadow ">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-dark">Distribución por Emisor</h6>
+
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <div class="row">
+
+                                <div class="col-sm-12">
+                                    <div id="chart_div" style=" height: 250px;"></div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col mb-4">
+            <div class="card shadow ">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-dark">Distribución por Estado y Riesgo</h6>
+
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <div class="row">
+
+
+                                <div class="col-sm-12">
+                                    <div id="chart_div2" style=" height: 250px;" @*style="width: 600px; height: 300px;"*@></div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+    <!--nuevos graficos 2-->
+    <div class="row row-cols-1 row-cols-md-2">
+        <div class="col mb-4">
+            <div class="card shadow ">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-dark">Stock por Antiguedad y Emisor</h6>
+
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <div class="row">
+                                <div class="table-responsive">
+
+                                    <table class="table table-hover alert-light" name="f" id="userList" style="width:100%">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th style="text-align:center">FECHA</th>
+                                                <th style="text-align:center">Auditoría Interna</th>
+                                                <th style="text-align:center">Auditoría Externa</th>
+                                                <th style="text-align:center">SBS</th>
+                                                <th style="text-align:center">SUSALUD</th>
+                                                <th style="text-align:center">Total</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var file in Model.SP_WT_DETALLE_SEGUIMIENTO_OBSERVACIONES_STOCK_ANTIGUEDAD_EMISION)
+                                            {
+                                                totAI = totAI + file.Auditoría_Interna;
+                                                totAE = totAE + file.Auditoría_Externa;
+                                                totSBS = totSBS + file.SBS;
+                                                totSALUD = totSALUD + file.SUSALUD;
+                                                totTOTAL = totTOTAL + file.Total;
+
+
+                                                <tr>
+                                                    <td style="text-align:center">
+                                                        @file.FECHA
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        @file.Auditoría_Interna
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        @file.Auditoría_Externa
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        @file.SBS
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        @file.SUSALUD
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        @file.Total
+                                                    </td>
+
+
+                                                </tr>
+                                            }
+                                            <tr>
+                                                <td style="text-align:center">TOTAL</td>
+                                                <td style="text-align:center">@totAI</td>
+                                                <td style="text-align:center">@totAE</td>
+                                                <td style="text-align:center">@totSBS</td>
+                                                <td style="text-align:center">@totSALUD</td>
+                                                <td style="text-align:center">@totTOTAL</td>
+
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+
+
+
+                                </div>
+
+                        
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col mb-4">
+            <div class="card shadow ">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-dark">Stock por Antiguedad y Criticidad</h6>
+
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <div class="row">
+                                <div class="table-responsive">
+
+                                    <table class="table table-hover alert-light" name="f" id="userList" style="width:100%">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th style="text-align:center">FECHA</th>
+                                                <th style="text-align:center">Alto</th>
+                                                <th style="text-align:center">Relevante</th>
+                                                <th style="text-align:center">Moderado</th>
+                                                <th style="text-align:center">Bajo</th>
+                                                <th style="text-align:center">Otros</th>
+                                                <th style="text-align:center">Total</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var file in Model.SP_WT_DETALLE_SEGUIMIENTO_OBSERVACIONES_STOCK_ANTIGUEDAD_CRITICIDAD)
+                                            {
+                                                totAlto = totAlto + file.Alto;
+                                                totRel = totRel + file.Relevante;
+                                                totMod = totMod + file.Moderado;
+                                                totBajo = totBajo + file.Bajo;
+                                                totOtros = totOtros + file.Otros;
+                                                totTotal = totTotal + file.Total;
+
+
+                                                <tr>
+                                                    <td style="text-align:center">
+                                                        @file.Fecha
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        @file.Alto
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        @file.Relevante
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        @file.Moderado
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        @file.Bajo
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        @file.Otros
+                                                    </td>
+
+                                                    <td style="text-align:center">
+                                                        @file.Total
+                                                    </td>
+
+
+                                                </tr>
+                                            }
+                                            <tr>
+                                                <td style="text-align:center">TOTAL</td>
+                                                <td style="text-align:center">@totAlto</td>
+                                                <td style="text-align:center">@totRel</td>
+                                                <td style="text-align:center">@totMod</td>
+                                                <td style="text-align:center">@totBajo</td>
+                                                <td style="text-align:center">@totOtros</td>
+                                                <td style="text-align:center">@totTotal</td>
+
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+
+
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+</body>
+</html>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var dataJson;
+        $.ajax({
+            url: '@Url.Action("JsonGRAFDetalle_Seguimiento_Observaciones_2")', // to get the right path to controller from TableRoutes of Asp.Net MVC
+            dataType: "json", //to work with json format
+            type: "POST", //to do a post request
+            contentType: 'application/json; charset=utf-8', //define a contentType of your request
+            cache: false, //avoid caching results
+            data: {}, // here you can pass arguments to your request if you need
+            success: function (dataJson) {
+                var arrOutside = new Array();
+                var heading = ["EMISOR", "Cantidad"];
+                arrOutside[0] = heading;
+                if (dataJson.length > 0) {
+                for (var i = 0; i < dataJson.length; i++) {
+                    var arr = [dataJson[i].EMISOR, dataJson[i].Cantidad];
+                    arrOutside[i + 1] = arr;
+                }
+                    var gdata = new google.visualization.arrayToDataTable(arrOutside);
+
+                    var options = {
+                        title: '2020',
+                        //legend: 'right',
+                        width: '100%', height: '340',
+                        chartArea: { rigth: 4,  width: '100%', height: '250', },
+                        //pieHole: 0.10,
+                        //colors: ['#0174DF','#e74a3b'],
+                         //is3D: true,
+
+                    };
+
+                    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                    chart.draw(gdata, options);
+                $(window).resize(function () {
+                    drawChart();
+                });
+                }
+            },
+            error: function (xhr) {
+                //alert('error' + xhr[0]);
+            }
+        });
+    };
+</script>
+
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawVisualization);
+
+
+    function drawVisualization() {
+          var dataJson;
+        $.ajax({
+            url: '@Url.Action("JsonGRAFDetalle_Seguimiento_Observaciones_Distribucion_emisor_2")', // to get the right path to controller from TableRoutes of Asp.Net MVC
+            dataType: "json", //to work with json format
+            type: "POST", //to do a post request
+            contentType: 'application/json; charset=utf-8', //define a contentType of your request
+            cache: false, //avoid caching results
+            data: {}, // here you can pass arguments to your request if you need
+            success: function (dataJson) {
+               var arrOutside = new Array();
+                var heading = ["EstadoTM", "Auditoría_Externa","Auditoría_Interna","Banmedica","SBS","SUSALUD"];
+                arrOutside[0] = heading;
+
+                if (dataJson.length > 0) {
+                    for (var i = 0; i <dataJson.length; i++) {
+                        var arr = [dataJson[i].EstadoTM, dataJson[i].Auditoría_Externa, dataJson[i].Auditoría_Interna, dataJson[i].Banmedica, dataJson[i].SBS, dataJson[i].SUSALUD];
+
+                        arrOutside[i + 1] = arr;
+                    }
+                    var gdata = new google.visualization.arrayToDataTable(arrOutside);
+
+
+                    var classicOptions = {
+
+
+                      seriesType: 'bars',
+                      series: {
+                        0: {targetAxisIndex: 0},
+                          //1: { targetAxisIndex: 1 },
+
+
+                         5: { type: 'line' }
+                        },
+
+                      legend: { display: true, position: 'top' , align: 'center'},
+
+                      vAxes: {
+                        // Adds titles to each axis.
+                        0: {title: 'Cantidad'}
+                       // 1: {title: 'Cantidad'}
+                        },
+
+                       animation: {
+                            "startup": true,
+
+                            duration: 2000,
+                            easing: 'out'
+                        }
+                    };
+
+
+                    var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+                    chart.draw(gdata, classicOptions);
+
+                    $(window).resize(function () {
+
+
+                        drawVisualization();
+                    });
+                }
+
+
+            },
+            error: function (xhr) {
+                //alert('error' + xhr[0]);
+            }
+
+            });
+
+    }
+</script>
+
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawVisualization2);
+
+
+    function drawVisualization2() {
+          var dataJson;
+        $.ajax({
+            url: '@Url.Action("JsonGRAFDetalle_Seguimiento_Observaciones_Distribucion_Estado_Riesgo")', // to get the right path to controller from TableRoutes of Asp.Net MVC
+            dataType: "json", //to work with json format
+            type: "POST", //to do a post request
+            contentType: 'application/json; charset=utf-8', //define a contentType of your request
+            cache: false, //avoid caching results
+            data: {}, // here you can pass arguments to your request if you need
+            success: function (dataJson) {
+               var arrOutside = new Array();
+                var heading = ["RIESGO", "En_Fecha","Vencido"];
+                arrOutside[0] = heading;
+
+                if (dataJson.length > 0) {
+                    for (var i = 0; i <dataJson.length; i++) {
+                        var arr = [dataJson[i].RIESGO, dataJson[i].En_Fecha, dataJson[i].Vencido];
+
+                        arrOutside[i + 1] = arr;
+                    }
+                    var gdata = new google.visualization.arrayToDataTable(arrOutside);
+
+
+
+                    var classicOptions = {
+
+
+                         seriesType: 'bars',
+                      series: {
+                        0: {targetAxisIndex: 0},
+                          //1: { targetAxisIndex: 1 },
+                         5: { type: 'line' }
+                        },
+
+                      legend: { display: true, position: 'top' , align: 'center'},
+
+                      vAxes: {
+                        // Adds titles to each axis.
+                        0: {title: 'Cantidad'}
+                       // 1: {title: 'Cantidad'}
+                        },
+
+                       animation: {
+                            "startup": true,
+
+                            duration: 2000,
+                            easing: 'out'
+                        }
+                    };
+
+                    var options = {
+                        title: 'Monthly Coffee Production by Country',
+
+                        vAxis: { title: 'Cups' },
+                        hAxis: { title: 'Month' },
+                        seriesType: 'bars',
+                        series: { 5: { type: 'line' } }
+                    };
+
+                    var chart = new google.visualization.ComboChart(document.getElementById('chart_div2'));
+                    chart.draw(gdata, classicOptions);
+
+                    $(window).resize(function () {
+
+
+                        drawVisualization2();
+                    });
+                }
+
+
+            },
+            error: function (xhr) {
+                //alert('error' + xhr[0]);
+            }
+
+            });
+
+    }
+</script>
+
+
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+            google.charts.load('current', { packages: ['corechart', 'bar'] });
+            google.charts.setOnLoadCallback(drawStacked);
+            function drawStacked(){
+        var dataJson;
+        $.ajax({
+            url: '@Url.Action("JsonGRAFSeguimiento_Observaciones_Detalle_s_a_e_2")', // to get the right path to controller from TableRoutes of Asp.Net MVC
+            dataType: "json", //to work with json format
+            type: "POST", //to do a post request
+            contentType: 'application/json; charset=utf-8', //define a contentType of your request
+            cache: false, //avoid caching results
+            data: {}, // here you can pass arguments to your request if you need
+            success: function (dataJson) {
+                var arrOutside = new Array();
+                var heading = ["GERENCIA_1", "En_Fecha","Vencido_SBS","Vencido_Auditoría_Externa","Vencido_Auditoría_Interna","Vencido_SUSALUD"];
+                arrOutside[0] = heading;
+                if (dataJson.length > 0) {
+                for (var i = 0; i < dataJson.length; i++) {
+                    var arr = [dataJson[i].GERENCIA_1, dataJson[i].En_Fecha, dataJson[i].Vencido_SBS, dataJson[i].Vencido_Auditoría_Externa, dataJson[i].Vencido_Auditoría_Interna, dataJson[i].Vencido_SUSALUD];
+
+                    arrOutside[i + 1] = arr;
+                }
+                    var gdata = new google.visualization.arrayToDataTable(arrOutside);
+
+
+
+
+                    var options = {
+                        title: 'Stock por Antiguedad y Emisor',
+                        chartArea: { width: '40%', height: '60%' },
+                       animation: {
+                            "startup": true,
+                            duration: 2000,
+                            easing: 'out'
+                        },
+                       scales: { yAxes: [{ ticks: { fontSize: 10 } }] },
+                        width: 1600,
+                        height:600,
+                        bar: { groupWidth: '75%' },
+                        isStacked: true,
+                        hAxis: {
+                            title: 'Porcentaje',
+                            minValue: 0,
+                        },
+
+                    };
+                    var chart = new google.visualization.BarChart(document.getElementById('chart_div3'));
+                    chart.draw(gdata, options);
+                $(window).resize(function () {
+                    drawStacked();
+                });
+                }
+            },
+            error: function (xhr) {
+                //alert('error' + xhr[0]);
+            }
+        });
+    };
+</script>

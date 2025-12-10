@@ -1,0 +1,51 @@
+﻿@model WebTIGA.Models.ContenedorModelos
+
+@{
+    ViewBag.Title = "Agregar_Universo_Plan_Anual";
+    Layout = "~/Views/Shared/_Layout_Plan_Anual.cshtml";
+}
+
+<h1>prueba</h1>
+
+<div class="form-group row">
+    <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Nombre: </label>
+    <div class="col-md-10">
+
+
+        @Html.TextArea("Nombre", null, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.DD_Universo, "", new { @class = "text-danger" })
+
+    </div>
+</div>
+<br>
+<div class="form-group row">
+    <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Negocio: </label>
+    <div class="col-md-10">
+        @Html.DropDownList("negocio", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.DD_Universo, "", new { @class = "text-danger" })
+
+    </div>
+</div>
+<br>
+<div class="form-group row">
+    <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Equipo: </label>
+    <div class="col-md-10">
+
+
+        @Html.TextArea("Equipo", null, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.DD_Universo, "", new { @class = "text-danger" })
+
+    </div>
+</div>
+<br>
+<div class="form-group row">
+    <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Riesgo: </label>
+    <div class="col-md-10">
+
+
+        @Html.TextArea("Riesgo", null, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.DD_Universo, "", new { @class = "text-danger" })
+
+    </div>
+</div>
+<br>

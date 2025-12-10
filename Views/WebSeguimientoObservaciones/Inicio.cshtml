@@ -1,0 +1,515 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+
+@{
+    ViewBag.Title = "Inicio";
+    Layout = "~/Views/Shared/_Layout_Seguimiento_Observaciones.cshtml";
+
+
+
+}
+
+
+
+
+
+<div class="row card-header py-2">
+    <div class="col-2 col-md-1">
+        <button class="btn btn-light" onclick="window.location.href='../Home/Index'">
+            <i class="fas fa-home text-black"></i>
+        </button>
+    </div>
+    <div class="col-8 col-md-9">
+        <h5 class="m-0 font-weight-bold text-dark text-center">Stock de Observaciones</h5>
+    </div>
+    <div class="col-2 col-md-2">
+        <span style="font-size: smaller; color: black; margin-right: 5px; vertical-align: middle; font-weight: bold;">Estructura de Seguimiento</span>
+
+        <button class="btn btn-light" onclick="window.location.href='../WebSeguimientoObservaciones/EstructuraSeguimiento'">
+            <i class="fas fa-building"></i>
+        </button>
+    </div>
+</div>
+
+
+
+
+<div style="width: 100%; height: 10px; ">
+
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-lg-2">
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    
+                    <div class="form-group">
+
+                        <label for="fechaCorte" style="font-size: 11px; margin-bottom: 5px;">Fecha de Corte</label>
+                        <input type="date" class="form-control" id="fechaCorte" name="fechaCorte" style="margin-bottom: 10px;">
+                    
+                    </div>
+
+                    <div class="form-group">
+                        <label for="filtroAnio" style="font-size: 11px; margin-bottom: 5px;">Obs. desde: </label>
+                        <select class="form-control" id="filtroAnio">
+                            @foreach (var año in ViewBag.AñosObservaciones)
+                            {
+                                if (año != null)
+                                {
+                                    <option value="@año">@año</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="prima_check">
+                        <label class="form-check-label" for="tipo1Checkbox1">
+                            PRIMA
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="seguros_check">
+                        <label class="form-check-label" for="tipo1Checkbox2">
+                            SEGUROS
+                        </label>
+                    </div>
+
+                    <hr>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="o_check">
+                        <label class="form-check-label" for="tipo1Checkbox1">
+                            Observación
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="o_m_check">
+                        <label class="form-check-label" for="tipo1Checkbox2">
+                            O. de mejora
+                        </label>
+                    </div>
+
+                    <hr>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="en_f_check">
+                        <label class="form-check-label" for="tipo2Checkbox1">
+                            En fecha
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="v_check">
+                        <label class="form-check-label" for="tipo2Checkbox2">
+                            Vencido
+                        </label>
+                    </div>
+                    <hr>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="p_check">
+                        <label class="form-check-label" for="tipo3Checkbox1">
+                            Pendientes
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="c_check">
+                        <label class="form-check-label" for="tipo3Checkbox2">
+                            Cerrados
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="i_check">
+                        <label class="form-check-label" for="tipo3Checkbox3">
+                            Implementadas
+                        </label>
+                    </div>
+                    <hr>
+                    <button type="button" class="btn btn-info btn-filter" id="aplicarFiltros" onclick=" cambioSeleccion(); progressAlert();">Aplicar Filtros</button>
+
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="col-lg-10">
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                   
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered table-hover display" id="seguimiento-observaciones">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th class="text-center align-middle"> Edición </th>
+                                    <th class="text-center align-middle"> Fuente </th>
+                                    <th class="text-center align-middle"> ID </th>
+                                    <th class="text-center align-middle"> Proyecto </th>
+                                    <th class="text-center align-middle"> Título Observacion </th>
+                                    <th class="text-center align-middle"> Unidad Responsable </th>
+                                    <th class="text-center align-middle"> Fecha de Vencimiento </th>
+                                    <th class="text-center align-middle"> Coordinador </th>
+                                    <th class="text-center align-middle"> Estado </th>
+                                    <th class="text-center align-middle"> Año </th>
+                                    <th class="text-center align-middle"> Situación </th>
+                                    <th class="text-center align-middle"> Retirado </th>
+
+
+
+                                </tr>
+                            </thead>
+
+                           
+                            <tbody>
+
+                                
+                                @foreach (var item in Model.fn_Stock_Observaciones_Integrado_v7)
+                                {
+
+
+                                <tr>
+                                    <td class="text-center">
+                                        <button class="btn-icon pr-3"
+                                                title="Editar"
+                                                onclick="editarObservacion('@item.Identificador');"
+                                                data-toggle="modal"
+                                                data-target="#modal-editar-observacion">
+                                            <i class="fas fa-edit text-warning"></i>
+                                        </button>
+
+                                    </td>
+                                    <td class="text-nowrap text-center">
+                                        <span>@item.Identificador.Substring(0, item.Identificador.IndexOf('-'))</span>
+                                    </td>
+
+
+                                    <td class="text-nowrap text-center">
+                                        <span>@item.Identificador.Substring(item.Identificador.IndexOf('-') + 1)</span>
+                                    </td>
+                                    <td class="text-nowrap text-center"> <span>@item.PROYECTO</span> </td>
+                                    <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item.TITULO_OBSERVACION" style="min-width: 35vw;"> <span>@item.TITULO_OBSERVACION</span> </td>
+                                    <td class="text-nowrap text-center"> <span> @((item.UNIDAD_RESPONSABLE == null) ? "-" : item.UNIDAD_RESPONSABLE) </span> </td>
+
+                                    <td class="text-nowrap text-center"> <span> @(item.FECHA_DE_VENCIMIENTO) </span> </td>
+                                    <td class="text-nowrap text-center"> <span> @((item.COORDINADOR == null) ? "-" : item.COORDINADOR) </span> </td>
+                                    <td class="text-nowrap text-center"> <span> @((item.ESTADO == null) ? "-" : item.ESTADO) </span> </td>
+                                    <td class="text-nowrap text-center"> <span> @((item.AÑO == null) ? "-" : item.AÑO) </span> </td>
+                                    <td class="text-nowrap text-center"> <span> @((item.SITUACION == null) ? "-" : item.SITUACION) </span> </td>
+                                    <td class="text-nowrap text-center"> <span> @((item.Retirado == null) ? "-" : item.Retirado) </span> </td>
+
+
+
+                                </tr>
+                                }
+
+
+
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal-editar-observacion" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Editar Observación</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="resultado-editar-detalle-formulario"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" class="init">
+
+
+
+    $(document).ready(function () {
+
+
+
+        $('#seguimiento-observaciones').dataTable({
+            "dom": "<'row pb-1'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4 text-center'i><'col-sm-12 col-md-4'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-12 col-md-5'><'col-sm-12 col-md-7'p>>",
+            "order": [[1, 'asc']],
+            "searching": true,
+            "paging": true,
+            "scrollX": true,
+            "scrollY": "52vh",
+            "buttons": [
+                {
+                    extend: 'copyHtml5',
+                    text: '<span class="font-weight-normal"><i class="fas fa-copy"></i> Copiar</span>',
+                    titleAttr: 'Copy'
+                }
+            ],
+
+            "language": {
+                "zeroRecords": "No hay datos disponibles para los filtros seleccionados",
+                "info": "Mostrandose _TOTAL_ registros",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros)",
+                "search": "Buscar:"
+            },
+            "initComplete": function () {
+                var customButton = $('<button type="button" style="background-color: #8FBC8F; color: white; border-color: #8FBC8F;" class="btn btn-custom" onclick="exportarReporteExcel(); progressAlert();" ><i class="fas fa-file-excel"></i> Reporte</button>');
+                $('#seguimiento-observaciones_wrapper .dt-buttons').append(customButton);
+
+                customButton.hover(function () {
+                    $(this).css({
+                        'background-color': '#556B2F',
+                        'border-color': '#556B2F'
+                    });
+                }, function () {
+                    $(this).css({
+                        'background-color': '#8FBC8F',
+                        'border-color': '#8FBC8F'
+                    });
+                });
+            }
+        });
+
+
+    });
+
+    function exportarReporteExcel() {
+        var prima = $('#prima_check').is(':checked') ? 1 : 0;
+        var seguros = $('#seguros_check').is(':checked') ? 1 : 0;
+        var obs = $('#o_check').is(':checked') ? 1 : 0;
+        var o_mejora = $('#o_m_check').is(':checked') ? 1 : 0;
+        var en_fecha = $('#en_f_check').is(':checked') ? 1 : 0;
+        var vencido = $('#v_check').is(':checked') ? 1 : 0;
+        var implementadas = $('#i_check').is(':checked') ? 1 : 0;
+        var pendientes = $('#p_check').is(':checked') ? 1 : 0;
+        var cerrados = $('#c_check').is(':checked') ? 1 : 0;
+        var fechaCorteISO = $('#fechaCorte').val();
+        var fechaCorte = formatDateToDDMMYYYY(fechaCorteISO);
+        var anio = $('#filtroAnio').val();
+
+        var laURLDeLaVista = '@Url.Action("DescargarReporteObservaciones", "WebSeguimientoObservaciones")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: {
+                    prima: prima,
+                    seguros: seguros,
+                    
+                    o_check: obs,
+                    o_m_check: o_mejora,
+                    en_f_check: en_fecha,
+                    v_check: vencido,
+                    i_check: implementadas,
+                    p_check: pendientes,
+                    c_check: cerrados,
+                    fechaCorte: fechaCorte,
+                    filtroAnio: anio
+
+                },
+                xhrFields: {
+                    responseType: 'blob' 
+                },
+                success: function (response, status, xhr) {
+                    
+                    if (xhr.status === 200) {
+                        
+                        var blob = new Blob([response], { type: xhr.getResponseHeader('Content-Type') });
+                        var link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = 'ReporteObservaciones.xlsx'; 
+                        link.click();
+                        Swal.close();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log("Error en la petición AJAX:");
+                    console.log(xhr);
+                    console.log("Estado: " + status);
+                    console.log("Error: " + error);
+                    Swal.close();
+                }
+            });
+
+    }
+
+    function editarObservacion(id) {
+
+        var prima = $('#prima_check').is(':checked') ? 1 : 0;
+        var seguros = $('#seguros_check').is(':checked') ? 1 : 0;
+        var obs = $('#o_check').is(':checked') ? 1 : 0;
+        var o_mejora = $('#o_m_check').is(':checked') ? 1 : 0;
+        var en_fecha = $('#en_f_check').is(':checked') ? 1 : 0;
+        var vencido = $('#v_check').is(':checked') ? 1 : 0;
+        var implementadas = $('#i_check').is(':checked') ? 1 : 0;
+        var pendientes = $('#p_check').is(':checked') ? 1 : 0;
+        var cerrados = $('#c_check').is(':checked') ? 1 : 0;
+        var fechaCorteISO = $('#fechaCorte').val();
+        var fechaCorte = formatDateToDDMMYYYY(fechaCorteISO);
+        var anio = $('#filtroAnio').val();
+        console.log(id);
+
+        var laURLDeLaVista = '@Url.Action("PV_DetalleFormulario", "WebSeguimientoObservaciones")';
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: laURLDeLaVista,
+                data: {
+                    id: id,
+                    prima: prima,
+                    seguros:seguros,
+                    o_check: obs,
+                    o_m_check: o_mejora,
+                    en_f_check: en_fecha,
+                    v_check: vencido,
+                    i_check: implementadas,
+                    p_check: pendientes,
+                    c_check: cerrados,
+                    fechaCorte: fechaCorte,
+                    filtroAnio: anio
+
+                },
+                success: function (response) {
+                    $('#resultado-editar-detalle-formulario').html('');
+                    $('#resultado-editar-detalle-formulario').html(response);
+
+
+                },
+                error: function (xhr, status, error) {
+                   
+                    console.error("Error en la petición AJAX:");
+                    console.log(xhr);
+                    console.log("Estado: " + status);
+                    console.log("Error: " + error);
+                    console.log(xhr.responseText);
+
+
+                }
+            });
+    }
+
+
+    function cambioSeleccion() {
+        var prima = $('#prima_check').is(':checked') ? 1 : 0;
+        var seguros = $('#seguros_check').is(':checked') ? 1 : 0;
+        var obs = $('#o_check').is(':checked') ? 1 : 0;
+        var o_mejora = $('#o_m_check').is(':checked') ? 1 : 0;
+        var en_fecha = $('#en_f_check').is(':checked') ? 1 : 0;
+        var vencido = $('#v_check').is(':checked') ? 1 : 0;
+        var implementadas = $('#i_check').is(':checked') ? 1 : 0;
+        var pendientes = $('#p_check').is(':checked') ? 1 : 0;
+        var cerrados = $('#c_check').is(':checked') ? 1 : 0;
+        var fechaCorteISO = $('#fechaCorte').val();
+        var fechaCorte = formatDateToDDMMYYYY(fechaCorteISO);
+        var anio = $('#filtroAnio').val();
+
+
+        window.location.href = "../WebSeguimientoObservaciones/Inicio" + "?fechaCorte=" + fechaCorte + "&prima_check=" + prima + "&seguros_check=" + seguros +  "&o_check=" + obs + "&o_m_check=" + o_mejora + "&en_f_check=" + en_fecha + "&v_check=" + vencido + "&p_check=" + pendientes + "&c_check=" + cerrados + "&i_check=" + implementadas + "&filtroAnio=" + anio ;
+
+    }
+
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const params = new URLSearchParams(window.location.search);
+
+
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('fechaCorte').value = today;
+
+        $('#prima_check').prop('checked', false);
+        $('#seguros_check').prop('checked', true);
+        $('#o_check').prop('checked', true);
+        $('#o_m_check').prop('checked', false);
+        $('#en_f_check').prop('checked', true);
+        $('#v_check').prop('checked', true);
+        $('#i_check').prop('checked', true);
+        $('#p_check').prop('checked', true);
+        $('#c_check').prop('checked', false);
+        $('#filtroAnio').val('2017');
+
+
+
+        const campoFecha = 'fechaCorte';
+        const campoAnio = 'filtroAnio';
+
+
+        const valorFecha = params.get(campoFecha);
+        if (valorFecha) {
+            const parts = valorFecha.split('/');
+            const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+
+            const date = new Date(formattedDate);
+            date.setDate(date.getDate() + 1);
+
+            const adjustedDate = date.toISOString().split('T')[0];
+            document.getElementById('fechaCorte').value = adjustedDate;
+        }
+
+
+        const valorAnio = params.get(campoAnio);
+        if (valorAnio) {
+            $('#filtroAnio').val(valorAnio);
+        }
+
+        const filtroIDs = ['prima_check','seguros_check','o_check', 'o_m_check', 'en_f_check', 'v_check', 'p_check', 'c_check', 'i_check'];
+
+
+        filtroIDs.forEach(id => {
+            const valorParametro = params.get(id);
+            if (valorParametro !== null) {
+                $('#' + id).prop('checked', valorParametro === '1');
+            }
+        });
+    });
+
+
+
+    function formatDateToDDMMYYYY(dateString) {
+        var date = new Date(dateString);
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+
+        if (day < 10) {
+            day = '0' + day;
+        }
+        if (month < 10) {
+            month = '0' + month;
+        }
+
+        return day + '/' + month + '/' + year;
+    }
+
+
+    function progressAlert() {
+        Swal.fire({
+            title: 'Por favor, espere',
+            text: 'Procesando la información ...',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            willOpen: () => {
+                Swal.showLoading()
+            },
+        });
+    }
+
+
+</script>

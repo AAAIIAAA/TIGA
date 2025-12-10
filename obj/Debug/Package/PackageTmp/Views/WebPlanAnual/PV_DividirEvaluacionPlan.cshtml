@@ -1,0 +1,250 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+
+<div style="font-size: 0.8rem !important">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <p class="m-0 font-weight-bold text-dark font-italic">1. Evaluación a dividir</p>
+        <hr class="mt-0 font-weight-bold" />
+
+        <div class="form-row">
+            <div class="form-group col-12">
+                <input type="text" class="form-control form-control-sm" name="idEvaluacionPlanAnterior" value="@ViewBag.EvalPlanSel.ID_Evaluacion_Plan" hidden>
+                <input type="text" class="form-control form-control-sm" value="@ViewBag.EvalPlanSel.DPA_Evaluacion.Evaluacion" readonly>
+
+                
+                <span class="pt-2 badge text-wrap font-weight-normal text-danger" style="font-size: 0.8rem !important">
+                    <i class="fas fa-info-circle"></i> Las evaluaciones resultantes heredarán los datos de la evaluación a dividir.
+                </span>
+                
+            </div>
+            
+        </div>
+
+        
+
+        <p class="m-0 font-weight-bold text-dark font-italic">2. Ingrese las evaluaciones resultantes de la división</p>
+        <hr class="mt-0 font-weight-bold" />         
+
+
+        <div id="listaEvaluacionesDividir" class="accordion">
+
+            <div id="selectEvaluacionOculto" style="display:none;">
+                <div class="card bg-light mb-0">
+                    <div class="accordion-card-header card-header row">
+                        <div class="col-md-4">
+                            <a class="accordion-header-link" data-toggle="collapse" aria-expanded="false"><p class="accordion-header-text text-dark mb-0"></p></a>
+                        </div>
+                        <div class="col-md-4 offset-md-4 text-right">
+                            <span class="badge badge-danger text-wrap font-weight-normal" onclick="eliminarEvaluacionLista(this)" style="cursor: pointer;"><i class="fas fa-minus"></i></span>
+                        </div>
+                    </div>
+                    <div class="collapse collapse-card-body" data-parent="#listaEvaluacionesDividir">
+                        <div class="card-body">
+                            <input type="text" class="form-control form-control-sm input-negocio" value="@ViewBag.EvalPlanSel.DPA_Evaluacion.ID_Negocio" hidden>
+                            <input type="text" class="form-control form-control-sm input-id-plan-anual" value="@ViewBag.EvalPlanSel.ID_Plan_Anual" hidden>
+                            <div class="form-row">
+                                <div class="form-group col-12">
+                                    <label>Nombre de la Evaluación *</label>
+                                    <input type="text" class="form-control form-control-sm input-nombre-evaluacion">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-6">
+                                    <label>Último Calificativo *</label>
+                                    <select class="form-control form-control-sm select-ultimo-calificativo">
+                                        <option value="" selected disabled>-</option>
+                                        @foreach (var Item in ViewBag.listaUltimoCalificativo)
+                                        {
+                                            <option>@Item</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label>Riesgo Asociado *</label>
+                                    <select class="form-control form-control-sm select-riesgo-asociado">
+                                        <option value="" selected disabled>-</option>
+                                        @foreach (var Item in ViewBag.listaRiesgos)
+                                        {
+                                            <option value="@Item.ID_Riesgo_Asociado">@Item.Nombre_Riesgo</option>
+                                        }
+                                    </select>
+                                </div>                               
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card bg-light mb-0">
+                <div class="card-header" id="heading-0">
+                    <a data-toggle="collapse" href="#collapse-0" aria-expanded="false" aria-controls="collapse-0"><p class="text-dark mb-0">Evaluación #1 <i class="fas fa-angle-down rotate-icon"></i></p></a>
+                </div>
+                <div id="collapse-0" class="collapse" aria-labelledby="heading-0" data-parent="#listaEvaluacionesDividir">
+                    <div class="card-body">
+                        <input type="text" class="form-control form-control-sm" name="listaEvalPlan[0].DPA_Evaluacion.ID_Negocio" value="@ViewBag.EvalPlanSel.DPA_Evaluacion.ID_Negocio" hidden>
+                        <input type="text" class="form-control form-control-sm" name="listaEvalPlan[0].ID_Plan_Anual" value="@ViewBag.EvalPlanSel.ID_Plan_Anual" hidden>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label>Nombre de la Evaluación *</label>
+                                <input type="text" class="form-control form-control-sm" name="listaEvalPlan[0].DPA_Evaluacion.Evaluacion" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-6">
+                                <label>Último Calificativo *</label>
+                                <select class="form-control form-control-sm" name="listaEvalPlan[0].Ultimo_Calificativo" required>
+                                    <option value="" selected disabled> - </option>
+                                    @foreach (var Item in ViewBag.listaUltimoCalificativo)
+                                    {
+                                        <option>@Item</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group col-6">
+                                <label>Riesgo Asociado *</label>
+                                <select class="form-control form-control-sm" name="listaEvalPlan[0].ID_Riesgo_Asociado" required>
+                                    <option value="" selected disabled> - </option>
+                                    @foreach (var Item in ViewBag.listaRiesgos)
+                                    {
+                                        <option value="@Item.ID_Riesgo_Asociado">@Item.Nombre_Riesgo</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-light mb-0">
+                <div class="card-header" id="heading-1">
+                    <a data-toggle="collapse" href="#collapse-1" aria-expanded="false" aria-controls="collapse-1"><p class="text-dark mb-0">Evaluación #2 <i class="fas fa-angle-down rotate-icon"></i></p></a>
+                </div>
+                <div id="collapse-1" class="collapse" aria-labelledby="heading-1" data-parent="#listaEvaluacionesDividir">
+                    <div class="card-body">
+                        <input type="text" class="form-control form-control-sm" name="listaEvalPlan[1].DPA_Evaluacion.ID_Negocio" value="@ViewBag.EvalPlanSel.DPA_Evaluacion.ID_Negocio" hidden>
+                        <input type="text" class="form-control form-control-sm" name="listaEvalPlan[1].ID_Plan_Anual" value="@ViewBag.EvalPlanSel.ID_Plan_Anual" hidden>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label>Nombre de la Evaluación *</label>
+                                <input type="text" class="form-control form-control-sm" name="listaEvalPlan[1].DPA_Evaluacion.Evaluacion" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-6">
+                                <label>Último Calificativo *</label>
+                                <select class="form-control form-control-sm" name="listaEvalPlan[1].Ultimo_Calificativo" required>
+                                    <option value="" selected disabled>-</option>
+                                    @foreach (var Item in ViewBag.listaUltimoCalificativo)
+                                    {
+                                        <option>@Item</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group col-6">
+                                <label>Riesgo Asociado *</label>
+                                <select class="form-control form-control-sm" name="listaEvalPlan[1].ID_Riesgo_Asociado" required>
+                                    <option value="" selected disabled> - </option>
+                                    @foreach (var Item in ViewBag.listaRiesgos)
+                                    {
+                                        <option value="@Item.ID_Riesgo_Asociado">@Item.Nombre_Riesgo</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="form-group text-center pt-2">
+            <button type="button" id="btnAgregarEvalPlan-dividir" class="btn btn-sm btn-info btn-group-toggle font-weight-normal">
+                Agregar Evaluación Resultante <i class="fas fa-plus"></i>
+            </button>
+        </div>
+
+
+        <div class="form-group text-center pt-3">
+            <button type="button" class="btn btn-sm  btn-outline-secondary btn-group-toggle font-weight-normal mr-2" data-dismiss="modal">
+                <i class="fas fa-times-circle"></i> Cancelar
+            </button>
+            <button type="submit" class="btn btn-sm btn-info btn-group-toggle font-weight-normal">
+                <i class="fas fa-save"></i> Dividir Evaluaciones
+            </button>
+        </div>
+
+    }
+</div>
+
+<script type="text/javascript" class="init">  
+    $("#btnAgregarEvalPlan-dividir").click(function () {
+        $('#listaEvaluacionesDividir').append($('#selectEvaluacionOculto').html());
+        
+        var accordionCardHeader = document.querySelectorAll('.accordion-card-header');
+        var accordionHeaderLink = document.querySelectorAll('.accordion-header-link');
+        var accordionHeaderText = document.querySelectorAll('.accordion-header-text');
+        var collapseCardBody = document.querySelectorAll('.collapse-card-body');
+
+        var inputNegocios = document.querySelectorAll('.input-negocio');
+        var inputIdPlanAnual = document.querySelectorAll('.input-id-plan-anual');
+        var inputNombreEvaluacion = document.querySelectorAll('.input-nombre-evaluacion');
+        var selectUltimoCalificativo = document.querySelectorAll('.select-ultimo-calificativo');
+        var selectRiesgoAsociado = document.querySelectorAll('.select-riesgo-asociado'); 
+
+        for (var i = 1; i < accordionCardHeader.length; i++) {
+            accordionCardHeader[i].id = 'heading-' + (i + 1);
+            accordionHeaderLink[i].setAttribute('href', '#collapse-' + (i + 1));
+            accordionHeaderLink[i].setAttribute('aria-controls', 'collapse-' + (i + 1));
+            accordionHeaderText[i].innerHTML = 'Evaluación #' + (i + 2) + ' <i class="fas fa-angle-down rotate-icon"></i>';
+            collapseCardBody[i].id = 'collapse-' + (i + 1);
+            collapseCardBody[i].setAttribute('aria-labelledby', 'heading-' + (i + 1));
+
+            inputNegocios[i].setAttribute('name', 'listaEvalPlan[' + (i + 1) + '].DPA_Evaluacion.ID_Negocio');
+            inputIdPlanAnual[i].setAttribute('name', 'listaEvalPlan[' + (i + 1) + '].ID_Plan_Anual');
+            inputNombreEvaluacion[i].setAttribute('name', 'listaEvalPlan[' + (i + 1) + '].DPA_Evaluacion.Evaluacion');
+            inputNombreEvaluacion[i].required = true;
+            selectUltimoCalificativo[i].setAttribute('name', 'listaEvalPlan[' + (i + 1) + '].Ultimo_Calificativo');
+            selectUltimoCalificativo[i].required = true;
+            selectRiesgoAsociado[i].setAttribute('name', 'listaEvalPlan[' + (i + 1) + '].ID_Riesgo_Asociado');
+            selectRiesgoAsociado[i].required = true;
+        }
+    });
+
+    function eliminarEvaluacionLista(e) {
+        e.parentElement.parentElement.parentElement.remove();
+
+        var accordionCardHeader = document.querySelectorAll('.accordion-card-header');
+        var accordionHeaderLink = document.querySelectorAll('.accordion-header-link');
+        var accordionHeaderText = document.querySelectorAll('.accordion-header-text');
+        var collapseCardBody = document.querySelectorAll('.collapse-card-body');
+
+        var inputNegocios = document.querySelectorAll('.input-negocio');
+        var inputIdPlanAnual = document.querySelectorAll('.input-id-plan-anual');
+        var inputNombreEvaluacion = document.querySelectorAll('.input-nombre-evaluacion');
+        var selectUltimoCalificativo = document.querySelectorAll('.select-ultimo-calificativo');
+        var selectRiesgoAsociado = document.querySelectorAll('.select-riesgo-asociado');
+
+        for (var i = 1; i < accordionCardHeader.length; i++) {
+            accordionCardHeader[i].id = 'heading-' + (i+1);
+            accordionHeaderLink[i].setAttribute('href', '#collapse-' + (i + 1));
+            accordionHeaderLink[i].setAttribute('aria-controls', 'collapse-' + (i + 1));
+            accordionHeaderText[i].innerHTML = 'Evaluación #' + (i + 2) + ' <i class="fas fa-angle-down rotate-icon"></i>';
+            collapseCardBody[i].id = 'collapse-' + (i+1);
+            collapseCardBody[i].setAttribute('aria-labelledby', 'heading-' + (i+1));
+
+            inputNegocios[i].setAttribute('name', 'listaEvalPlan[' + (i+1) + '].DPA_Evaluacion.ID_Negocio');
+            inputIdPlanAnual[i].setAttribute('name', 'listaEvalPlan[' + (i+1) + '].ID_Plan_Anual');
+            inputNombreEvaluacion[i].setAttribute('name', 'listaEvalPlan[' + (i+1) + '].DPA_Evaluacion.Evaluacion');
+            selectUltimoCalificativo[i].setAttribute('name', 'listaEvalPlan[' + (i+1) + '].Ultimo_Calificativo');
+            selectRiesgoAsociado[i].setAttribute('name', 'listaEvalPlan[' + (i + 1) + '].ID_Riesgo_Asociado');
+        }
+    }   
+</script>
+
+
+
+
+
+
+

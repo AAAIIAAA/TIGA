@@ -1,0 +1,147 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+
+@{ 
+    var listaEstructuraContactos = Model.TG_Estructura_Contactos.ToList();
+}
+
+<div class="estructura-form">
+    <div class="container">
+        <div style="font-size: .800rem;">
+            <form>
+                <div class="form-group mb-2">
+                    <label for="exampleFormControlInput1">Gerencia Nivel 0: </label>
+                    <input type="text" class="form-control form-control-sm" value="@ViewBag.Gerencia0.Nombre" readonly>
+                </div>
+                <div class="form-group mb-2">
+                    <label for="exampleFormControlInput1">Gerencia Nivel 1: </label>
+                    <input type="text" class="form-control form-control-sm" value="@ViewBag.Gerencia1.Nombre" readonly>
+                </div>
+                <div class="form-group mb-2">
+                    <label for="exampleFormControlInput1">Gerencia Nivel 2: </label>
+                    <input type="text" class="form-control form-control-sm" value="@ViewBag.Gerencia2.Nombre" readonly>
+                </div>
+                <div class="form-group mb-2">
+                    <label for="exampleFormControlInput1">Gerencia Nivel 3: </label>
+                    <input type="text" class="form-control form-control-sm" value="@ViewBag.Gerencia3.Nombre" readonly>
+                </div>
+                <div class="form-group mb-2">
+                    <label for="exampleFormControlInput1">Gerencia Nivel 4: </label>
+                    <input type="text" class="form-control form-control-sm" value="@ViewBag.Gerencia4.Nombre" readonly>
+                </div>
+                <div class="form-group mb-2">
+                    <label for="exampleFormControlInput1">Gerencia Nivel 5: </label>
+                    <input type="text" class="form-control form-control-sm" value="@ViewBag.Gerencia5.Nombre" readonly>
+                </div>
+            </form>
+        </div>
+
+        <div class="text-center pt-2">
+            @if (ViewBag.idRolValidacion == 5 || ViewBag.idRolValidacion == 2)
+            {
+
+                <button class="btn btn-info btn-sm" style="background-color :lightseagreen" onclick="llamarAgregarUnidadContacto(@ViewBag.UnidadResponsable.ID);"
+                        data-toggle="modal" data-target="#modalAgregarUnidadContacto" title="Agregar">
+                    <i class="fas fa-plus"></i> Agregar Responsable
+                </button>
+            }
+
+        </div>
+
+        <div class="pt-1" style="font-size: .875rem;">
+            <table class="table table-sm  table-bordered table-hover" width="100%">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="text-center" style="width:45%;">Contacto</th>
+                        <th class="text-center" style="width:45%;">Rol</th>
+                        <th class="text-center" style="width:10%;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in listaEstructuraContactos.Where(l => l.ID_Rol == 2)) //PROPIETARIO
+                    {
+                        <tr class="table-active">
+                            <td class="text-center">@item.Contacto</td>
+                            <td class="text-center">@item.Rol_Contacto</td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    @if (ViewBag.idRolValidacion == 5 || ViewBag.idRolValidacion == 2)
+                                    {
+                                        <button id="btn-icon" class="pr-3" onclick="llamarEditarUnidadContacto(@item.ID_Unidad_Responsable, '@item.ID_Contacto', @item.ID_Rol);"
+                                                data-toggle="modal" data-target="#modalEditarUnidadContacto" title="Editar">
+                                            <i class="fas fa-edit text-warning"></i>
+                                        </button>
+                                        <button id="btn-icon" onclick="llamarEliminarUnidadContacto(@item.ID_Unidad_Responsable, @item.ID_Rol, '@item.ID_Contacto');" data-toggle="modal" data-target="#modalEliminarUnidadContacto" title="Eliminar">
+                                            <i class="fas fa-trash-alt text-danger"></i>
+                                        </button>
+
+                                    }
+
+
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    @foreach (var item in listaEstructuraContactos.Where(l => l.ID_Rol == 5)) // COORDINADOR
+                    {
+                        <tr class="table-active">
+                            <td class="text-center">@item.Contacto</td>
+                            <td class="text-center">@item.Rol_Contacto</td>
+                            <td class="text-center">
+                                <div class="btn-group">
+
+                                    @if (ViewBag.idRolValidacion == 5 || ViewBag.idRolValidacion == 2)
+                                    {
+                                        <button id="btn-icon" class="pr-3" onclick="llamarEditarUnidadContacto(@item.ID_Unidad_Responsable, '@item.ID_Contacto', @item.ID_Rol);"
+                                                data-toggle="modal" data-target="#modalEditarUnidadContacto" title="Editar">
+                                            <i class="fas fa-edit text-warning"></i>
+                                        </button>
+                                        <button id="btn-icon" onclick="llamarEliminarUnidadContacto(@item.ID_Unidad_Responsable, @item.ID_Rol, '@item.ID_Contacto');"
+                                                data-toggle="modal" data-target="#modalEliminarUnidadContacto" title="Eliminar">
+                                            <i class="fas fa-trash-alt text-danger"></i>
+                                        </button>
+
+                                    }
+
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    @foreach (var item in listaEstructuraContactos.Where(l => l.ID_Rol != 5 && l.ID_Rol != 2).OrderBy(l => l.Rol_Contacto)) // LOS DEMÁS ROLES
+                    {
+                        <tr>
+                            <td class="text-center">@item.Contacto</td>
+                            <td class="text-center">@item.Rol_Contacto</td>
+                            <td class="text-center">
+                                <div class="btn-group">
+
+                                    @if (ViewBag.idRolValidacion == 5 || ViewBag.idRolValidacion == 2)
+
+                                    {
+                                        <button id="btn-icon" class="pr-3" onclick="llamarEditarUnidadContacto(@item.ID_Unidad_Responsable, '@item.ID_Contacto', @item.ID_Rol);"
+                                                data-toggle="modal" data-target="#modalEditarUnidadContacto" title="Editar">
+                                            <i class="fas fa-edit text-warning"></i>
+                                        </button>
+                                        <button id="btn-icon" onclick="llamarEliminarUnidadContacto(@item.ID_Unidad_Responsable, @item.ID_Rol, '@item.ID_Contacto');"
+                                                data-toggle="modal" data-target="#modalEliminarUnidadContacto" title="Eliminar">
+                                            <i class="fas fa-trash-alt text-danger"></i>
+                                        </button>
+
+                                    }
+
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+

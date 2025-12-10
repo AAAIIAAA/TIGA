@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MultiserviciosModelStoreContainer" CdmEntityContainer="MultiserviciosEntities">
+    <FunctionImportMapping FunctionImportName="SP_GRAF_TABLA_HORAS2" FunctionName="MultiserviciosModel.Store.SP_GRAF_TABLA_HORAS2">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MultiserviciosModel.SP_GRAF_TABLA_HORAS2_Result">
+          <ScalarProperty Name="Equipo" ColumnName="Equipo" />
+          <ScalarProperty Name="Horas_Planificadas" ColumnName="Horas Planificadas" />
+          <ScalarProperty Name="Horas_Registradas" ColumnName="Horas Registradas" />
+          <ScalarProperty Name="Cumplimiento" ColumnName="Cumplimiento" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_GRAF_MEDIDA_DE_TIEMPO2" FunctionName="MultiserviciosModel.Store.SP_GRAF_MEDIDA_DE_TIEMPO2">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MultiserviciosModel.SP_GRAF_MEDIDA_DE_TIEMPO2_Result">
+          <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_GRAF_HORAS_TOTAL" FunctionName="MultiserviciosModel.Store.SP_GRAF_HORAS_TOTAL">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MultiserviciosModel.SP_GRAF_HORAS_TOTAL_Result">
+          <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_TBL_DETALLE_GENERAL_TEC" FunctionName="MultiserviciosModel.Store.SP_TBL_DETALLE_GENERAL_TEC">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MultiserviciosModel.SP_TBL_DETALLE_GENERAL_TEC_Result">
+          <ScalarProperty Name="Equipo" ColumnName="Equipo" />
+          <ScalarProperty Name="Nombre_Ape" ColumnName="Nombre_Ape" />
+          <ScalarProperty Name="Horas_Aprobadas" ColumnName="Horas Aprobadas" />
+          <ScalarProperty Name="Semanas_Aprobadas" ColumnName="Semanas Aprobadas" />
+          <ScalarProperty Name="Hojas_Aprobadas" ColumnName="Hojas Aprobadas" />
+          <ScalarProperty Name="Hojas_Pendientes" ColumnName="Hojas Pendientes" />
+          <ScalarProperty Name="Hojas_Rechazadas" ColumnName="Hojas Rechazadas" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_TT_DISTR_DIAS_AUDITOR_POR_FASE" FunctionName="MultiserviciosModel.Store.SP_TT_DISTR_DIAS_AUDITOR_POR_FASE">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MultiserviciosModel.SP_TT_DISTR_DIAS_AUDITOR_POR_FASE_Result">
+          <ScalarProperty Name="Equipo" ColumnName="Equipo" />
+          <ScalarProperty Name="Otros" ColumnName="Otros" />
+          <ScalarProperty Name="PLANIFICACIÓN" ColumnName="PLANIFICACIÓN" />
+          <ScalarProperty Name="EJECUCIÓN" ColumnName="EJECUCIÓN" />
+          <ScalarProperty Name="INFORME" ColumnName="INFORME" />
+          <ScalarProperty Name="PLAN_ANUAL" ColumnName="PLAN ANUAL" />
+          <ScalarProperty Name="PAMC" ColumnName="PAMC" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_TT_DISTR_DIAS_AUDITOR_POR_CONTROL_EQUIPO" FunctionName="MultiserviciosModel.Store.SP_TT_DISTR_DIAS_AUDITOR_POR_CONTROL_EQUIPO">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MultiserviciosModel.SP_TT_DISTR_DIAS_AUDITOR_POR_CONTROL_EQUIPO_Result">
+          <ScalarProperty Name="Equipo" ColumnName="Equipo" />
+          <ScalarProperty Name="Dias_Auditor" ColumnName="Dias Auditor" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_TT_DETALLE_PROYECTO_ACTIVIDAD" FunctionName="MultiserviciosModel.Store.SP_TT_DETALLE_PROYECTO_ACTIVIDAD">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MultiserviciosModel.SP_TT_DETALLE_PROYECTO_ACTIVIDAD_Result">
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Fase" ColumnName="Fase" />
+          <ScalarProperty Name="Actividades" ColumnName="Actividades" />
+          <ScalarProperty Name="Horas" ColumnName="Horas" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_TT_DETALLE_ETAPAS_FASES_ACTIVIDADES" FunctionName="MultiserviciosModel.Store.SP_TT_DETALLE_ETAPAS_FASES_ACTIVIDADES">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MultiserviciosModel.SP_TT_DETALLE_ETAPAS_FASES_ACTIVIDADES_Result">
+          <ScalarProperty Name="Fase" ColumnName="Fase" />
+          <ScalarProperty Name="Actividades" ColumnName="Actividades" />
+          <ScalarProperty Name="Total_Horas" ColumnName="Total Horas" />
+          <ScalarProperty Name="Días_Auditor" ColumnName="Días Auditor" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_TT_EQUIPO_ETAPAS" FunctionName="MultiserviciosModel.Store.SP_TT_EQUIPO_ETAPAS">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MultiserviciosModel.SP_TT_EQUIPO_ETAPAS_Result">
+          <ScalarProperty Name="Equipo" ColumnName="Equipo" />
+          <ScalarProperty Name="Fase" ColumnName="Fase" />
+          <ScalarProperty Name="Total_Horas" ColumnName="Total Horas" />
+          <ScalarProperty Name="Días_Auditor" ColumnName="Días Auditor" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_TT_DETALLE_FILTRAR_PROYECTO" FunctionName="MultiserviciosModel.Store.SP_TT_DETALLE_FILTRAR_PROYECTO">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MultiserviciosModel.SP_TT_DETALLE_FILTRAR_PROYECTO_Result">
+          <ScalarProperty Name="Equipo" ColumnName="Equipo" />
+          <ScalarProperty Name="Código" ColumnName="Código" />
+          <ScalarProperty Name="Evaluación" ColumnName="Evaluación" />
+          <ScalarProperty Name="Estado_Proyecto" ColumnName="Estado Proyecto" />
+          <ScalarProperty Name="Horas_Planificación" ColumnName="Horas Planificación" />
+          <ScalarProperty Name="Porcentaje_HP" ColumnName="Porcentaje HP" />
+          <ScalarProperty Name="Horas_Ejecución" ColumnName="Horas Ejecución" />
+          <ScalarProperty Name="Porcentaje_HE" ColumnName="Porcentaje HE" />
+          <ScalarProperty Name="Horas_Informe" ColumnName="Horas Informe" />
+          <ScalarProperty Name="Porcentaje_HI" ColumnName="Porcentaje HI" />
+          <ScalarProperty Name="Horas_Otros" ColumnName="Horas Otros" />
+          <ScalarProperty Name="Porcentaje_HO" ColumnName="Porcentaje HO" />
+          <ScalarProperty Name="Total_Controles" ColumnName="Total Controles" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_TT_DIAS_CONTROL" FunctionName="MultiserviciosModel.Store.SP_TT_DIAS_CONTROL">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MultiserviciosModel.SP_TT_DIAS_CONTROL_Result">
+          <ScalarProperty Name="Equipo" ColumnName="Equipo" />
+          <ScalarProperty Name="TOT_HORAS" ColumnName="TOT_HORAS" />
+          <ScalarProperty Name="DIAS_AUDITOR" ColumnName="DIAS_AUDITOR" />
+          <ScalarProperty Name="TOT_CONTROLES" ColumnName="TOT_CONTROLES" />
+          <ScalarProperty Name="DIAS_X_CONTROL" ColumnName="DIAS_X_CONTROL" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_TT_ERROR_FASES_DISTRIBUCION" FunctionName="MultiserviciosModel.Store.SP_TT_ERROR_FASES_DISTRIBUCION">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MultiserviciosModel.SP_TT_ERROR_FASES_DISTRIBUCION_Result">
+          <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+          <ScalarProperty Name="Fecha_Inicio" ColumnName="Fecha Inicio" />
+          <ScalarProperty Name="Fecha_Fin" ColumnName="Fecha Fin" />
+          <ScalarProperty Name="Fase" ColumnName="Fase" />
+          <ScalarProperty Name="Actividad" ColumnName="Actividad" />
+          <ScalarProperty Name="Total_de_Horas" ColumnName="Total de Horas" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Hoja_Estado" ColumnName="Hoja Estado" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

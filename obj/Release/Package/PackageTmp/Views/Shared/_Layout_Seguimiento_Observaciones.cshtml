@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewBag.Title = "_Layout_Seguimineto_Observaciones";
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title> WEB-TIGA - Seguimiento Observaciones</title>
+
+    <link href="~/Content/css/seguimiento_observaciones.css" rel="stylesheet" type="text/css" />
+
+
+    @Styles.Render("~/bundles/css")
+    @Scripts.Render("~/bundles/js")
+
+    
+    <link rel="stylesheet" type="text/css" href="../Content/css/cdn.datatables.net.min.css" />
+    <link rel="stylesheet" type="text/css" href="../Content/css/bootstrap-datepicker.min.css" />
+
+   
+    
+    <script type="text/javascript" src="../Content/js/cdn.datatables.net.min.js"></script>
+    <script type="text/javascript" src="../Content/js/cdn.datatables.net_ellipsis.js"></script>
+    <script type="text/javascript" src="../Content/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+  <body id="page-top">
+    <div id="wrapper">
+        
+
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- Barra de navegación superior -->
+                
+
+                <nav class="navbar navbar-expand topbar mb-4 static-top navbar-light bg-dark shadow">
+
+
+                     
+
+                    <a class="sidebar-brand d-flex align-items-center justify-content-center text-info" href="@Url.Action("Inicio", "WebSeguimientoObservaciones")">
+                        <br />
+                        <div class="sidebar-brand-icon ">
+                            <i class="fas fa-tasks" style="font-size: 24px;"></i>
+                        </div>
+                        <div class="sidebar-brand-text mx-3" style="font-weight: bold; text-decoration: none !important;">SEGUIMIENTO DE OBSERVACIONES</div>
+
+
+
+                    </a>
+
+                    
+
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Contenido de la barra superior -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-white-50 small">@ViewBag.nombre</span>
+                                <div class="topbar-divider"></div>
+                                <i class="fas fa-user rounded-circle"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="container-fluid">
+                    <div class="content mt-3">
+                        @RenderBody()
+                    </div>
+                </div>
+
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; PACIFICO @DateTime.Today.Year </span>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+    </div>
+</body>
+</html>
+
+<script type="text/javascript" class="init">
+    $(document).ready(function () {
+        if ('@TempData["Icon"]' == "success") {
+            Swal.fire({
+                title: '@TempData["Title"]',
+                text: '@TempData["Text"]',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }
+        else if ('@TempData["Icon"]' == "error") {
+            Swal.fire({
+                title: '@TempData["Title"]',
+                text: '@TempData["Text"]',
+                icon: 'error',
+                confirmButtonColor: 'lightseagreen'
+            });
+        }
+
+        $('#fecha-inicio').datepicker({
+            format: 'dd/mm/yyyy'
+        });
+    });
+
+
+
+</script>
+

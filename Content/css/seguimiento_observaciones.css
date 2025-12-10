@@ -1,0 +1,335 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
+
+
+
+body, h1, h2, h3, h4, h5, h6, p {
+    font-family: 'Poppins', Arial, Helvetica, sans-serif !important;
+}
+
+
+.sticky-footer {
+    border-top: 1px solid #e7eaec !important;
+    position: absolute !important;
+    padding: 1.5rem 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+header {
+    margin: 3rem auto 2rem auto;
+    max-width: 600px;
+    text-align: center;
+}
+
+h1 {
+    font-weight: 500;
+    margin: 0;
+}
+
+p {
+    color: hsl(229, 6%, 66%)
+}
+
+.container-plan-anual {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    margin-bottom: 5rem !important;
+    max-width: 1140px;
+    justify-content: center;
+}
+
+.card {
+    margin-bottom: 5rem !important;
+}
+
+.box:hover {
+    cursor: pointer;
+    /*box-shadow: 0 0 25px 0 rgba(20, 27, 201, .05);*/
+    /*box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23) !important;*/
+    background: hsl(229 2% 92%);
+}
+
+.box {
+    background-color: #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    border-radius: 5px;
+    padding: 30px;
+    margin: 15px;
+    width: 18vw;
+    /*height: 25vh;*/
+    display: flex;
+    flex-direction: column;
+}
+
+    .box h3 {
+        margin: 0;
+        font-size: 1.25rem;
+    }
+
+    .box p {
+        font-size: 0.9rem;
+        margin: 15px 0 30px;
+    }
+
+    /*.box img {
+    height: 6.5vh;
+    align-self: flex-end;
+}*/
+
+    .box:nth-child(1) {
+        border-top: 5px solid hsl(180, 62%, 55%);
+    }
+
+    .box:nth-child(2) {
+        border-top: 5px solid hsl(0, 78%, 62%);
+    }
+
+    .box:nth-child(3) {
+        border-top: 5px solid hsl(212, 86%, 64%);
+    }
+
+    .box:nth-child(4) {
+        border-top: 5px solid hsl(34, 97%, 64%);
+    }
+
+    .box:nth-child(5) {
+        border-top: 5px solid hsl(106, 47%, 55%);
+    }
+
+    .box:nth-child(6) {
+        border-top: 5px solid hsl(274, 27%, 55%);
+    }
+
+    .box:nth-child(7) {
+        border-top: 5px solid hsl(24 100% 50%);
+    }
+
+td.disabled {
+    box-shadow: rgb(255, 74, 50) 0px -4px 0px 0px inset !important;
+}
+
+.ellipsis {
+    position: relative;
+}
+
+    .ellipsis:before {
+        content: '&nbsp;';
+        visibility: hidden;
+    }
+
+    .ellipsis span {
+        position: absolute;
+        left: 0;
+        right: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+table {
+    font-size: 0.9rem;
+}
+
+#programacion-final td:hover {
+    background-color: rgba(0,0,0,.075) !important;
+}
+
+
+.btn-filter {
+    font-size: 0.85rem !important;
+    font-weight: normal !important;
+}
+
+.btn-icon {
+    background: none !important;
+    color: inherit !important;
+    border: none !important;
+    padding: 0 !important;
+    font: inherit !important;
+    cursor: pointer !important;
+    outline: inherit !important;
+}
+
+
+
+
+
+@media only screen and (max-width: 1400px) {
+    html {
+        font-size: 81%;
+    }
+    /*  .box > img{
+        height: 10vh;
+    }*/
+
+
+
+    .dataTables_scrollBody {
+        max-height: 38vh !important;
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    html {
+        font-size: 78%;
+    }
+    /*  .box > img{
+        height: 10vh;
+    }*/
+    .dataTables_scrollBody {
+        max-height: 38vh !important;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.tree {
+    /*font-size: 14px;*/
+    font-size: 0.85rem !important;
+    padding: 19px;
+    background-color: #fbfbfb;
+    border: 1px solid #999;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    overflow-y: scroll
+}
+
+.estructura-form {
+    min-height: 70vh;
+    padding: 19px;
+    background-color: #fbfbfb;
+    border: 1px solid #999;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05)
+}
+
+.tree li {
+    list-style-type: none;
+    margin: 0;
+    padding: 10px 5px 0 5px;
+    position: relative
+}
+
+    .tree li::before, .tree li::after {
+        content: '';
+        left: -20px;
+        position: absolute;
+        right: auto
+    }
+
+    .tree li::before {
+        border-left: 1px solid #999;
+        bottom: 50px;
+        height: 100%;
+        top: 0;
+        width: 1px
+    }
+
+    .tree li::after {
+        border-top: 1px solid #999;
+        height: 20px;
+        top: 25px;
+        width: 25px
+    }
+
+    .tree li span {
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border: 1px solid #999;
+        border-radius: 5px;
+        display: inline-block;
+        padding: 3px 8px;
+        text-decoration: none
+    }
+
+span {
+    cursor: pointer
+}
+
+.tree > ul > li::before, .tree > ul > li::after {
+    border: 0
+}
+
+.tree li:last-child::before {
+    height: 30px
+}
+
+/*span:hover {
+    background: #eee;
+    border: 1px solid #94a0b4;
+    color: #000
+}*/
+
+.nested {
+    display: none;
+}
+
+.active {
+    display: block;
+}
+
+#btn-icon {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
+
+.dropdown-menu {
+    font-size: 14px;
+}
+
+
+@media only screen and (max-width: 1400px) {
+    html {
+        font-size: 81%;
+    }
+    /*  .box > img{
+        height: 10vh;
+    }*/
+
+
+
+    .dataTables_scrollBody {
+        max-height: 38vh !important;
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    html {
+        font-size: 78%;
+    }
+    /*  .box > img{
+        height: 10vh;
+    }*/
+    .dataTables_scrollBody {
+        max-height: 38vh !important;
+    }
+}

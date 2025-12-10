@@ -1,0 +1,57 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <input type="text" name="ID_Usuario" value="@ViewBag.AuditorSeleccionado.IdUsuario" hidden>
+
+    <div class="form-group">
+        <label>Auditor: </label>
+        <input type="text" class="form-control form-control-sm" value="@(ViewBag.AuditorSeleccionado.Persona.Nombres.Trim() + " " + ViewBag.AuditorSeleccionado.Persona.Apellidos.Trim())" disabled>
+    </div>
+
+    @*<div class="form-group">
+        <label>Negocio: </label>
+        <select class="form-control form-control-sm">
+            <option value="" selected disabled> -- Seleccionar -- </option>
+            @foreach (var Item in Model.DPA_Negocio)
+            {
+                <option value="@Item.ID_Negocio">@Item.Negocio </option>
+            }
+        </select>
+    </div>*@
+
+    <div class="form-group">
+        <label>Evaluación: </label>
+        <select class="form-control form-control-sm" name="ID_Evaluacion_Plan" required>
+            <option value="" selected disabled> -- Seleccionar -- </option>
+            @foreach (var Item in Model.SP_DPA_View_Asignar_Proyecto)
+            {
+                <option value="@Item.ID_Evaluacion_Plan" data-negocio="@Item.Negocio">@(Item.Texto_Lista)</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group text-center pt-3">
+        <button type="submit" class="btn font-weight-normal btn-info btn-group-toggle">
+            <i class="fas fa-check-circle"></i> Asignar Evaluación
+        </button>
+    </div>
+}
+
+<script type="text/javascript" class="init">
+
+
+</script>
+
+
+
+
+
+
+
+
+

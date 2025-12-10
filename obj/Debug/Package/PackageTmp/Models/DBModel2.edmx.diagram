@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="262e6b65b3754bc3a30f55a5364143e5" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.Modulo" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.ModuloRol" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.Persona" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.Rol" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.Usuario" Width="1.5" PointX="3" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.UsuarioModuloRol" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.VIEW_ADMINISTRACION_USUARIOS" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.VIEW_USUARIOS_FORGOT_PASSWORD" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.VIEW_USUARIOS_LOGIN" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.VIEW_WT_USUARIOS" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_ModuloRol_IdModulo" ManuallyRouted="false" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_ModuloRol_IdRol" ManuallyRouted="false" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_UsuarioModuloRol_ModuloRol" ManuallyRouted="false" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK__Usuario__IdPerso__2704CA5F" ManuallyRouted="false" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_UsuarioModuloRol_IdUsuario" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DAC_Ejecucion_Script" Width="1.5" PointX="3.75" PointY="15.25" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DAC_Estado" Width="1.5" PointX="3.75" PointY="12.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DAC_Peridiocidad_Ejecucion" Width="1.5" PointX="3.75" PointY="21.375" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DAC_Periodo_Analisis" Width="1.5" PointX="3.75" PointY="17.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DAC_Scripts" Width="1.5" PointX="6" PointY="11.375" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DAC_Tipologia_Script" Width="1.5" PointX="3.75" PointY="23.875" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DD_Informe" Width="1.5" PointX="1.5" PointY="31" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DD_Proyecto" Width="1.5" PointX="3.75" PointY="26.375" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DAC_Scripts_DAC_Ejecucion_Script" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DAC_Scripts_DAC_Estado" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DAC_Scripts_DAC_Peridiocidad_Ejecucion" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DAC_Scripts_DAC_Periodo_Analisis" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DAC_Scripts_DAC_Tipologia_Script" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DAC_Scripts_DD_Proyecto" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DAC_Scripts_Persona" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DD_Proyecto_IdInforme" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TD_VacacionesRegistro" Width="1.5" PointX="5.375" PointY="7.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.R1_DupNAB_" Width="1.5" PointX="8.25" PointY="10.25" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DD_PlanAnual" Width="1.5" PointX="10" PointY="31.5" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DD_Proyecto_IdPlanAnual" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DD_Universo" Width="1.5" PointX="3.75" PointY="39.125" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DD_Universo_DD_Informe" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DD_Cambios_Universo" Width="1.5" PointX="6" PointY="24.375" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DD_Cambios_Universo_DD_Universo" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DD_Cambios_Universo_Usuario" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DAC_HistorialCambios" Width="1.5" PointX="11.25" PointY="10.375" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DAC_DAC_HistorialCambios_DAC_Scripts" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DAC_HistorialCambios_DAC_HistorialCambios" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DAC_HistorialCambios_Persona" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DAC_HistorialReportesScript" Width="1.5" PointX="11.25" PointY="14.875" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_HistorialReportesScript_scripts" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_HistorialReportesScript_Persona" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.View_DAC_Vista_List_Scripts" Width="1.5" PointX="10.375" PointY="1.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TS_Contacto" Width="1.5" PointX="6.625" PointY="21.125" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TS_Unidad_Responsable_Contacto" Width="1.5" PointX="7.375" PointY="7.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DAC_ScriptsContinua" Width="1.5" PointX="14.625" PointY="10" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_ScriptsContinua_Fase1_Estado" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_ScriptsContinua_Fase2_Estado" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_ScriptsContinua_Fase3_Estado" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_ScriptsContinua_Fase4_Estado" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_ScriptsContinua_Contacto" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_ScriptsContinua_Persona_Auditor" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_ScriptsContinua_Persona_Gerente" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_ScriptsContinua_TipScript" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TS_Estructura" Width="1.5" PointX="12.375" PointY="3.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.basesBC" Width="1.5" PointX="14.375" PointY="0.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.VIEW_NEGOCIOS" Width="1.5" PointX="9.375" PointY="7.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.basesBCHojaTrabajo" Width="1.5" PointX="0.75" PointY="14.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.BC_Cuentas_Proyectos" Width="1.5" PointX="11.375" PointY="7.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.View_BC_Cuentas_Proyectos" Width="1.5" PointX="16.375" PointY="0.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.View_BC_Hojas_Cargadas" Width="1.5" PointX="16.375" PointY="4.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.View_AU_Administrador_Usuarios" Width="1.5" PointX="17.375" PointY="7.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.View_AU_Drop_UsuariosTM" Width="1.5" PointX="13.375" PointY="7.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.Compañia" Width="1.5" PointX="0.75" PointY="20.375" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_Persona_IdCompañia" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_PlanAnual_IdCompañia" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.View_AU_Persona_Usuario_Rotacion" Width="1.5" PointX="17.375" PointY="10.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.Rotacion" Width="1.5" PointX="3" PointY="42.625" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_Rotacion_IdPersona" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.View_AU_Drop_JefeDirecto" Width="1.5" PointX="13.375" PointY="17.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TS_Rol" Width="1.5" PointX="15.375" PointY="17.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TS_Unidad_Responsable_Referencia" Width="1.5" PointX="14.625" PointY="20.25" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_TS_Unidad_Responsable_Contacto_TS_Contacto" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_TS_Unidad_Responsable_Contacto_TS_Rol" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.Usuario_Log" Width="1.5" PointX="5.625" PointY="42.875" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_Usuario_Log_Usuario_Log" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DPA_Negocio" Width="1.5" PointX="17.375" PointY="16.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DPA_Plan_Anual" Width="1.5" PointX="18.375" PointY="0.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DD_ProcesoEvaluado" Width="1.5" PointX="19.375" PointY="6" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DD_Proyecto_IdProcesoEvaluado" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DPA_Opcion_Votacion" Width="1.5" PointX="24.625" PointY="9.875" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DPA_Votacion" Width="1.5" PointX="26.875" PointY="5.875" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DPA_Votacion_DPA_Opcion_Votacion" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DPA_Votacion_Usuario" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DPA_Scoring_Evaluacion" Width="1.5" PointX="23.875" PointY="2.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DPA_Auditor_Evaluacion" Width="1.5" PointX="26.875" PointY="9.25" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DPA_Auditor_Tiempo_Extra" Width="1.5" PointX="5.25" PointY="45.75" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DPA_Auditor_Evaluacion_Usuario" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DPA_Auditor_Tiempo_Extra_Usuario" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DPA_Tipo_Tiempo_Extra" Width="1.5" PointX="19.375" PointY="9.875" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DPA_Auditor_Tiempo_Extra_DPA_Tipo_Tiempo_Extra" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DPA_Equipo" Width="1.5" PointX="17.375" PointY="20.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DPA_Riesgo_Asociado" Width="1.5" PointX="20.375" PointY="0.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DPA_Log_Evaluacion" Width="1.5" PointX="10.375" PointY="18.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DPA_Log_Evaluacion_Plan" Width="1.5" PointX="26.125" PointY="13.125" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DPA_Log_Evaluacion_Plan_Usuario" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DPA_Evaluacion" Width="1.5" PointX="20" PointY="16.5" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DPA_Evaluacion_DPA_Equipo" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DPA_Evaluacion_DPA_Negocio" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DPA_Criterio_Scoring" Width="1.5" PointX="19.375" PointY="12.875" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DPA_Scoring_Evaluacion_DPA_Criterio_Scoring" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DPA_Evaluacion_Plan" Width="1.5" PointX="22.25" PointY="13.5" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DPA_Auditor_Evaluacion_DPA_Evaluacion_Plan" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DPA_Evaluacion_Plan_DPA_Evaluacion" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DPA_Evaluacion_Plan_DPA_Plan_Anual" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DPA_Log_Evaluacion_Plan_DPA_Evaluacion_Plan" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DPA_Scoring_Evaluacion_DPA_Evaluacion_Plan" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DPA_Votacion_DPA_Evaluacion_Plan" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DD_Proyecto_DD_Proyecto" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DD_Proyecto_DPA_Evaluacion_Plan" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TS_Unidad_Responsable" Width="1.5" PointX="0.75" PointY="13.75" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_TS_Unidad_Responsable_Contacto_TS_Unidad_Responsable" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_TS_Unidad_Responsable_Referencia_TS_Unidad_Responsable" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TG_Unidad_Responsable" Width="1.5" PointX="21.375" PointY="5.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TG_Unidad_Responsable_Referencia" Width="1.5" PointX="9.375" PointY="22.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TG_Rol" Width="1.5" PointX="18.375" PointY="3.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TG_Unidad_Responsable_Contacto" Width="1.5" PointX="11.375" PointY="22.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TG_Contacto" Width="1.5" PointX="22.375" PointY="19.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TG_Estructura_Seguimiento_Historial" Width="1.5" PointX="22.375" PointY="22.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TS_Observacion_Cambio" Width="1.5" PointX="0.75" PointY="23.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TG_Observacion_Cambio" Width="1.5" PointX="15.375" PointY="23.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TG_Aprobador" Width="1.5" PointX="23.375" PointY="5.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TG_Ampliación" Width="1.5" PointX="24.375" PointY="16.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TG_Proyecto" Width="1.5" PointX="24.375" PointY="20.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TG_Persona" Width="1.5" PointX="8.75" PointY="25.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TG_ProcesoEvaluado" Width="1.5" PointX="10.75" PointY="25.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TG_Riesgo_Del_Trabajo" Width="1.5" PointX="12.75" PointY="25.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TG_RiesgoBCP" Width="1.5" PointX="17.75" PointY="25.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TG_RiesgoInherente" Width="1.5" PointX="19.75" PointY="25.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TG_Actividad_Justificacion" Width="1.5" PointX="26.375" PointY="0.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TG_AdministraciónDelRiesgo" Width="1.5" PointX="26.375" PointY="16.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TG_Informe" Width="1.5" PointX="26.375" PointY="19.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TG_Estados_Proyecto" Width="1.5" PointX="26.375" PointY="22.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TG_Proceso_Evaluado" Width="1.5" PointX="26.375" PointY="25.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.TG_Proyecto_Riesgo_Control" Width="1.5" PointX="28.375" PointY="0.75" />
+        <EntityTypeShape EntityType="PROYECTOSIAV2Model.DPA_Criterio_Votacion" Width="1.5" PointX="22.375" PointY="10.25" />
+        <AssociationConnector Association="PROYECTOSIAV2Model.FK_DPA_Opcion_DPA_Criterio" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

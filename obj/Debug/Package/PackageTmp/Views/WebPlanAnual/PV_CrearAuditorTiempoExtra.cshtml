@@ -1,0 +1,77 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <input type="text" name="ID_Usuario" value="@ViewBag.AuditorSeleccionado.IdUsuario" hidden>
+    <input type="text" name="idPlanAnual" value="@ViewBag.IdPlanAnual" hidden>
+
+    <div class="form-group">
+        <label>Auditor: </label>
+        <input type="text" class="form-control form-control-sm" value="@(ViewBag.AuditorSeleccionado.Persona.Nombres.Trim() + " " + ViewBag.AuditorSeleccionado.Persona.Apellidos.Trim())" disabled>
+    </div>
+
+    <div class="form-group">
+        <label>Actividad: </label>
+        <select class="form-control form-control-sm" name="ID_Tipo_Tiempo_Extra" required>
+            <option value="" selected disabled> -- Seleccionar -- </option>
+            @foreach (var Item in Model.DPA_Tipo_Tiempo_Extra)
+            {
+                <option value="@Item.ID_Tipo_Tiempo_Extra">@Item.Tipo</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Fecha Inicio: </label>
+        <div class="input-group date" id="fecha-inicio">
+            <input class="form-control form-control-sm" id="inputFechaInicio" name="Fecha_Inicio" type="text" required/>
+            <span class="input-group-append">
+                <span class="input-group-text bg-white">
+                    <i class="fa fa-calendar"></i>
+                </span>
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Fecha Fin: </label>
+        <div class="input-group date" id="fecha-fin">
+            <input class="form-control form-control-sm" id="inputFechaFin" name="Fecha_Fin" type="text" required/>
+            <span class="input-group-append">
+                <span class="input-group-text bg-white">
+                    <i class="fa fa-calendar"></i>
+                </span>
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group text-center pt-3">
+        <button type="submit" class="btn font-weight-normal btn-info btn-group-toggle">
+            <i class="fas fa-check-circle"></i> Registrar
+        </button>
+    </div>
+}
+
+<script type="text/javascript" class="init">
+    $('#fecha-inicio').datepicker({
+        format: 'dd/mm/yyyy'
+    });
+    $('#fecha-fin').datepicker({
+        format: 'dd/mm/yyyy'
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+

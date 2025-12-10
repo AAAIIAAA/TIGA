@@ -1,0 +1,1367 @@
+﻿
+
+@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+
+
+
+
+
+@foreach (var item in Model.fn_Stock_Observaciones_Integrado_v7)
+{
+
+    <div style="font-size: 0.8rem !important">
+
+        @*<div class="form-row">
+                <div class="col-md-8">
+                    <h3>Edición de la Observación</h3>
+                </div>
+                <div class="col-md-4 text-right">
+
+                    <button class="btn btn-danger mr-2" onclick="window.history.back();">Cancelar</button>
+                    <button class="btn btn-success" id="btnGuardar">Guardar</button>
+                </div>
+            </div>
+            <div style="height: 7px;"></div>*@
+
+
+
+        <div class="form-row">
+
+            <div class="form-group col-md-1">
+                <label>ID</label>
+                <input type="text" class="form-control form-control-sm tu_clase_observacion" name="id_observacion" value="@item.Identificador" disabled>
+
+
+            </div>
+
+            <div class="form-group col-md-2">
+                <label>Código del Proyecto</label>
+                <input type="text" class="form-control form-control-sm" name="codigo_proyecto" value="@item.PROYECTO" disabled>
+            </div>
+
+            <div class="form-group col-md-2">
+                <label>Situación</label>
+                <input type="text" class="form-control form-control-sm" name="situacion" value="@item.SITUACION" disabled>
+            </div>
+
+
+
+
+            <div class="form-group col-md-2">
+                <label>Riesgo</label>
+                <input type="text" class="form-control form-control-sm" name="riesgo" value="@item.RIESGO" disabled>
+            </div>
+
+            <div class="form-group col-md-2">
+                <label>Fecha de Vencimiento</label>
+                @{
+                    var fechaVencimiento = Convert.ToDateTime(item.FECHA_DE_VENCIMIENTO);
+                    var fechaVencimientoFormateada = (fechaVencimiento != DateTime.MinValue) ? fechaVencimiento.ToString("dd/MM/yyyy") : string.Empty;
+                }
+                <input type="text" class="form-control form-control-sm" name="fecha_vencimiento" value="@fechaVencimientoFormateada" disabled>
+            </div>
+
+
+            <div class="form-group col-md-2">
+                <label>Emisor</label>
+                <select class="form-control form-control-sm tu_clase_emisor" name="emisor" >
+
+                <option value="" @(item.EMISOR.ToString() == null ? "selected" : "")>--select--</option>
+                @foreach (var emisores in ViewBag.emisores)
+                {
+                    if (emisores != null) { 
+                <option value="@emisores" @(emisores.ToString() == item.EMISOR.ToString() ? "selected" : "")>@emisores</option>
+                    }
+                    
+
+                }
+                </select>
+            </div>
+
+            <div class="form-group col-md-1">
+
+                <label>Año</label>
+                <select class="form-control form-control-sm tu_clase_año" name="año">
+                    @for (int anio = 2008; anio <= DateTime.Now.Year; anio++)
+                    {
+                        <option value="@anio" @(anio.ToString() == item.AÑO ? "selected" : "")>@anio</option>
+                    }
+                </select>
+
+
+            </div>
+
+        </div>
+
+        <hr class="mt-0 font-weight-bold" />
+
+
+
+        <nav>
+            <div class="nav nav-tabs" role="tablist">
+                <button class="nav-link active" data-toggle="tab" href="#tab-general-editar">Información General</button>
+                <button class="nav-link" data-toggle="tab" href="#tab-adicional-editar">Información Adicional</button>
+                <button class="nav-link" data-toggle="tab" href="#tab-implementacion-editar">Información de la Implementación</button>
+                <button class="nav-link" data-toggle="tab" href="#tab-acciones-editar">Histórico de Acciones</button>
+               @* <button class="nav-link" data-toggle="tab" href="#tab-ampliaciones-editar">Ampliación de Plazos</button>*@
+
+
+            </div>
+        </nav>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="tab-general-editar" role="tabpanel">
+                    <div class="container-fluid py-3">
+
+
+                        <div class="form-row">
+                            <div class="form-group col-md-10">
+                                <label>Nombre del Proyecto</label>
+                                <input type="text" class="form-control form-control-sm" name="nombre_proyecto" value="@item.NOMBRE_PROYECTO">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-10">
+                                <label>Título de Observación</label>
+                                <input type="text" class="form-control form-control-sm" id="titulo_observacion" name="titulo_observacion" value="@item.TITULO_OBSERVACION">
+                            </div>
+
+                            <button class="btn-icon pr-3" title="Ver detalles" onclick="mostrarDetalleTituloObservacion(event)">
+                                <i class="fas fa-eye fa-lg text-black"></i>
+                            </button>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-10">
+                                <label>Observación</label>
+                                <input type="text" class="form-control form-control-sm" id="observacion" name="observacion" value="@item.OBSERVACION">
+                            </div>
+
+                            <button class="btn-icon pr-3" title="Ver detalles" onclick="mostrarDetalleObservacion(event)">
+                                <i class="fas fa-eye fa-lg text-black"></i>
+                            </button>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-10">
+                                <label>Recomendación</label>
+                                <input type="text" class="form-control form-control-sm" id="recomendacion" name="recomendacion" value="@item.RECOMENDACION">
+                            </div>
+
+                            <button class="btn-icon pr-3" title="Ver detalles" onclick="mostrarDetalleRecomendacion(event)">
+                                <i class="fas fa-eye fa-lg text-black"></i>
+                            </button>
+                        </div>
+
+
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-2">
+                                <label>Tipo de Observación</label>
+                                <input type="text" class="form-control form-control-sm" name="tipo_observacion" value="@item.TIPO_OBSERVACIÓN" disabled>
+                            </div>
+
+
+                            <div class="form-group col-md-2">
+                                <label>Fecha Carga</label>
+                                @{
+                                    var fechaCarga = Convert.ToDateTime(item.FECHA_CARGA);
+                                    var fechaCargaFormateada = (fechaCarga != DateTime.MinValue) ? fechaCarga.ToString("dd/MM/yyyy") : string.Empty;
+                                }
+                                <input type="text" class="form-control form-control-sm" name="fecha_carga" value="@fechaCargaFormateada" disabled>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>Fecha Emisión</label>
+                                @{
+                                    var fechaEmision = Convert.ToDateTime(item.FECHA_EMISIÓN);
+                                    var fechaEmisionFormateada = (fechaEmision != DateTime.MinValue) ? fechaEmision.ToString("dd/MM/yyyy") : string.Empty;
+                                }
+                                <input type="text" class="form-control form-control-sm" name="fecha_emision" value="@fechaEmisionFormateada" disabled>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>Fecha Corte</label>
+                                @{
+                                    var fechaCorte = Convert.ToDateTime(item.FECHA_CORTE);
+                                    var fechaCorteFormateada = (fechaCorte != DateTime.MinValue) ? fechaCorte.ToString("dd/MM/yyyy") : string.Empty;
+                                }
+                                <input type="text" class="form-control form-control-sm" name="fecha_corte" value="@fechaCorteFormateada" disabled>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>Fecha Estimada</label>
+                                @{
+                                    var fechaEstimada = Convert.ToDateTime(item.FECHA_ESTIMADA);
+                                    var fechaEstimadaFormateada = (fechaEstimada != DateTime.MinValue) ? fechaEstimada.ToString("dd/MM/yyyy") : string.Empty;
+                                }
+                                <input type="text" class="form-control form-control-sm" name="fecha_estimada" value="@fechaEstimadaFormateada" disabled>
+                            </div>
+
+
+
+
+
+
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-2">
+                                <label>Días para el vencimiento</label>
+                                <input type="text" class="form-control form-control-sm" name="dias_vencimiento" value="" disabled>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>Estado</label>
+                                <input type="text" class="form-control form-control-sm" name="retirado" value="@item.ESTADO" disabled style="background-color: @(item.ESTADO == "Vencido" ? "#F37B62" : "#98FB98");">
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label>Retirado</label>
+                                <input type="text" class="form-control form-control-sm" name="retirado" value="@item.Retirado" disabled style="background-color: @(item.Retirado == "Retirado de TC" ? "#F37B62" : "#98FB98");">
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+                    <div style="height: 70px;"></div>
+
+
+
+                </div>
+
+
+
+                <div class="tab-pane fade" id="tab-adicional-editar" role="tabpanel">
+                    <div class="container-fluid py-3">
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-2">
+                                <label>Fecha Última Respuesta</label>
+                                @{
+                                    var fechaUltimaRespuesta = Convert.ToDateTime(item.FECHA_ÚLTIMA_RESPUESTA);
+                                    var fechaUltimaRespuestaFormateada = (fechaUltimaRespuesta != DateTime.MinValue) ? fechaUltimaRespuesta.ToString("dd/MM/yyyy") : string.Empty;
+                                }
+                                <input type="text" class="form-control form-control-sm" name="fecha_ultima_respuesta" value="@fechaUltimaRespuestaFormateada" disabled>
+                            </div>
+
+
+
+                            <div class="form-group col-md-9">
+                                <label>Última Respuesta</label>
+
+                                <input type="text" class="form-control form-control-sm" id="ultima_respuesta" name="ultima_respuesta" value="@item.ÚLTIMA_RESPUESTA">
+                            </div>
+
+                            <button class="btn-icon pr-3" title="Ver detalles" onclick="mostrarDetalleRespuesta(event)">
+                                <i class="fas fa-eye fa-lg text-black"></i>
+                            </button>
+                        </div>
+
+
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <label>Fecha Última Implementación</label>
+                                @{
+                                    var fechaUltimaImplementacion = Convert.ToDateTime(item.FECHA_ÚLTIMA_IMPLEMENTACIÓN);
+                                    var fechaUltimaImplementacionFormateada = (fechaUltimaImplementacion != DateTime.MinValue) ? fechaUltimaImplementacion.ToString("dd/MM/yyyy") : string.Empty;
+                                }
+                                <input type="text" class="form-control form-control-sm" name="fecha_ultima_implementación" value="@fechaUltimaImplementacionFormateada" disabled>
+                            </div>
+
+
+                            <div class="form-group col-md-9">
+                                <label>Última Implementación</label>
+                                <input type="text" class="form-control form-control-sm" id="ultima_implementacion" name="ultima_implementacion" value="@item.ÚLTIMA_IMPLEMENTACIÓN">
+                            </div>
+
+                            <button class="btn-icon pr-3" title="Ver detalles" onclick="mostrarDetalleImplementacion(event)">
+                                <i class="fas fa-eye fa-lg text-black"></i>
+                            </button>
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-2">
+                                <label>Fecha Cierre</label>
+                                @{
+                                    var fechaCierre = Convert.ToDateTime(item.FECHA_CIERRE);
+                                    var fechaCierreFormateada = (fechaCierre != DateTime.MinValue) ? fechaCierre.ToString("dd/MM/yyyy") : string.Empty;
+                                }
+                                <input type="text" class="form-control form-control-sm" name="fecha_cierre" value="@fechaCierreFormateada" disabled>
+                            </div>
+
+
+                            <div class="form-group col-md-9">
+                                <label>Descripción o Cierre</label>
+                                <input type="text" class="form-control form-control-sm" id="cierre" name="cierre" value="@item.DESCRIPCIÓN_CIERRE">
+                            </div>
+
+                            <button class="btn-icon pr-3" title="Ver detalles" onclick="mostrarDetalleCierre(event)">
+                                <i class="fas fa-eye fa-lg text-black"></i>
+                            </button>
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-11">
+                                <label>Plan de acción del Responsable</label>
+                                <input type="text" class="form-control form-control-sm" id="plan_de_accion" name="plan_de_accion" value="@item.PRIMERA_RESPUESTA">
+                            </div>
+
+                            <button class="btn-icon pr-3" title="Ver detalles" onclick="mostrarDetalleprimera_respuesta(event)">
+                                <i class="fas fa-eye fa-lg text-black"></i>
+                            </button>
+                        </div>
+
+
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="tab-pane fade" id="tab-implementacion-editar" role="tabpanel">
+                    <div class="container-fluid py-3">
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-4">
+                                <label>Gerencia Nivel 0</label>
+                                <select class="form-control form-control-sm gerencia" id="gerencia0" name="gerencia_0">
+                                    @foreach (var unidad in ViewBag.UnidadesResponsables)
+                                    {
+
+                                        <option value="@unidad.ID" @(unidad.Nombre.ToString() == item.GERENCIA_NIVEL_0 ? "selected" : "")>@unidad.Nombre</option>
+
+                                    }
+                                </select>
+                            </div>
+
+
+                            <div class="form-group col-md-4">
+                                <label>Unidad Responsable</label>
+                                <input type="text" class="form-control form-control-sm tu_clase_unidad_responsable" id="unidad_responsable" name="unidad_responsable" value="@item.GERENCIA_NIVEL_5" disabled>
+                            </div>
+
+
+
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-4">
+                                <label>Gerencia Nivel 1</label>
+                                <select class="form-control form-control-sm gerencia" id="gerencia1" name="gerencia_1">
+                                    <option value="@item.GERENCIA_NIVEL_1" selected>@item.GERENCIA_NIVEL_1</option>
+                                </select>
+                            </div>
+
+
+                            <div class="form-group col-md-3">
+                                <label>Propietario</label>
+                                <input type="text" class="form-control form-control-sm" name="propietario" value="@item.PROPIETARIO" disabled>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label>Email Propietario</label>
+                                <input type="text" class="form-control form-control-sm" name="email_propietario" value="@item.EMAIL_PROPIETARIO" disabled>
+                            </div>
+
+
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-4">
+                                <label>Gerencia Nivel 2</label>
+                                <select class="form-control form-control-sm gerencia" id="gerencia2" name="gerencia_2">
+                                    <option value="@item.GERENCIA_NIVEL_2" selected>@item.GERENCIA_NIVEL_2</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label>Observador(es)</label>
+                                <input type="text" class="form-control form-control-sm" name="observadores" value="@item.OBSERVADOR" disabled>
+                            </div>
+
+
+
+
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-4">
+                                <label>Gerencia Nivel 3</label>
+                                <select class="form-control form-control-sm gerencia" id="gerencia3" name="gerencia_3">
+                                    <option value="@item.GERENCIA_NIVEL_3" selected>@item.GERENCIA_NIVEL_3</option>
+                                </select>
+                            </div>
+
+
+                            <div class="form-group col-md-6">
+                                <label>Colaborador(es)</label>
+                                <input type="text" class="form-control form-control-sm" name="colaboradores" value="@item.COLABORADOR" disabled>
+                            </div>
+
+
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-4">
+                                <label>Gerencia Nivel 4</label>
+                                <select class="form-control form-control-sm gerencia" id="gerencia4" name="gerencia_4">
+                                    <option value="@item.GERENCIA_NIVEL_4" selected>@item.GERENCIA_NIVEL_4</option>
+                                </select>
+                            </div>
+
+
+                            <div class="form-group col-md-3">
+                                <label>Tipo Negocios</label>
+                                
+
+                                <select class="form-control form-control-sm tu_clase_tipo_negocios" name="tipo_negocios">
+                                    <option value="" @(item.NEGOCIO.ToString() == null ? "selected" : "")>--select--</option>
+                                    <option value="Negocio de Seguros" @(item.NEGOCIO == "Negocio de Seguros" ? "selected" : "")>Negocio de Seguros</option>
+                                    <option value="Negocio de Prestación" @(item.NEGOCIO == "Negocio de Prestación" ? "selected" : "")>Negocio de Prestación</option>
+                                    <option value="Negocio de Pensiones" @(item.NEGOCIO == "Negocio de Pensiones" ? "selected" : "")>Negocio de Pensiones</option>
+                                </select>
+                            </div>
+
+
+
+                            <div class="form-group col-md-3">
+                                <label>Informe</label>
+                                <select class="form-control form-control-sm tu_clase_informe" name="informe">
+                                    <option value="Pacífico Seguros" @(item.INFORME == "Pacífico Seguros" ? "selected" : "")>Pacífico Seguros</option>
+                                    <option value="Pacífico Seguros - Asistencia Médica" @(item.INFORME == "Pacífico Seguros - Asistencia Médica" ? "selected" : "")>Pacífico Seguros - Asistencia Médica</option>
+                                    <option value="El Pacífico Salud" @(item.INFORME == "El Pacífico Salud" ? "selected" : "")>El Pacífico Salud</option>
+                                    <option value="Subsidiarias Médicas EPS" @(item.INFORME == "Subsidiarias Médicas EPS" ? "selected" : "")>Subsidiarias Médicas EPS</option>
+
+                                    <option value="Prima AFP" @(item.INFORME == "Prima AFP" ? "selected" : "")>Prima AFP</option>
+                                    <option value="Crediseguro S.A." @(item.INFORME == "Crediseguro S.A." ? "selected" : "")>Crediseguro S.A.</option>
+                                </select>
+                            </div>
+
+
+
+
+
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-4">
+                                <label>Gerencia Nivel 5</label>
+                                <select class="form-control form-control-sm gerencia" id="gerencia5" name="gerencia_5">
+                                    <option value="@item.GERENCIA_NIVEL_5" selected>@item.GERENCIA_NIVEL_5</option>
+                                </select>
+                            </div>
+
+
+                            <div class="form-group col-md-4">
+                                <label>Coordinador de Implementación</label>
+                                <input type="text" class="form-control form-control-sm" id="coordinador" name="coordinador" value="@item.COORDINADOR">
+                            </div>
+
+
+
+                        </div>
+
+
+
+
+
+
+                    </div>
+
+                    <div style="height: 70px;"></div>
+
+
+                </div>
+
+                <div class="tab-pane fade" id="tab-acciones-editar" role="tabpanel">
+                    <div class="container-fluid py-3">
+
+
+
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered table-hover display" id="seguimiento-observaciones_acciones">
+                                <thead class="thead-light">
+                                    <tr>
+
+                                        <th class="text-center align-middle"> ID </th>
+
+                                        <th class="text-center align-middle"> Título Observacion </th>
+
+                                        <th class="text-center align-middle"> Gerencia Nivel 0 </th>
+                                        <th class="text-center align-middle"> Gerencia Nivel 1 </th>
+
+                                        <th class="text-center align-middle"> Gerencia Nivel 2 </th>
+                                        <th class="text-center align-middle"> Gerencia Nivel 3 </th>
+                                        <th class="text-center align-middle"> Gerencia Nivel 4 </th>
+                                        <th class="text-center align-middle"> Gerencia Nivel 5 </th>
+                                        <th class="text-center align-middle"> Negocio </th>
+                                        <th class="text-center align-middle"> Emisor </th>
+                                        <th class="text-center align-middle"> Año </th>
+                                        <th class="text-center align-middle"> Informe </th>
+                                        <th class="text-center align-middle"> Usuario </th>
+                                        <th class="text-center align-middle"> Fecha Registro </th>
+
+
+                                    </tr>
+                                </thead>
+
+
+                                <tbody>
+                                    @foreach (var item3 in Model.fn_Detalle_Acciones_Obs)
+                                    {
+
+                                        <tr>
+
+
+                                            <td class="text-nowrap text-center"> <span>@item3.ID</span> </td>
+                                            <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item3.TITULO_OBSERVACION" style="min-width: 23vw;"> <span>@item3.TITULO_OBSERVACION</span> </td>
+                                            <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item3.NOMBRE_0" style="min-width: 23vw;"> <span>@item3.NOMBRE_0</span> </td>
+                                            <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item3.NOMBRE_1" style="min-width: 23vw;"> <span>@item3.NOMBRE_1</span> </td>
+                                            <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item3.NOMBRE_2" style="min-width: 23vw;"> <span>@item3.NOMBRE_2</span> </td>
+                                            <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item3.NOMBRE_3" style="min-width: 23vw;"> <span>@item3.NOMBRE_3</span> </td>
+                                            <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item3.NOMBRE_4" style="min-width: 23vw;"> <span>@item3.NOMBRE_4</span> </td>
+                                            <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item3.NOMBRE_5" style="min-width: 23vw;"> <span>@item3.NOMBRE_5</span> </td>
+                                            <td class="text-nowrap text-center"> <span>@item3.NEGOCIO</span> </td>
+                                            <td class="text-nowrap text-center"> <span>@item3.EMISOR</span> </td>
+                                            <td class="text-nowrap text-center"> <span>@item3.AÑO</span> </td>
+                                            <td class="text-nowrap text-center"> <span>@item3.INFORME</span> </td>
+                                            <td class="text-nowrap text-center"> <span>@item3.USUARIO</span> </td>
+                                            <td class="text-nowrap text-center"> <span>@item3.FECHA_REGISTRO</span> </td>
+
+
+
+
+
+
+                                        </tr>
+
+
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="tab-ampliaciones-editar" role="tabpanel">
+                    <div class="container-fluid py-3">
+
+                        <div class="campos-ocultos">
+                            <div class="form-row">
+
+                                <div class="form-group col-md-3">
+                                    <label for="fechaRegistro" style="font-size: 11px; margin-bottom: 5px;">Fecha de Registro</label>
+                                    <input type="date" class="form-control fecha_registro" id="fechaRegistro" name="fechaRegistro" style="margin-bottom: 10px;">
+
+                                </div>
+
+
+                                <div class="form-group col-md-3">
+                                    <label for="fechaPropuesta" style="font-size: 11px; margin-bottom: 5px;">Fecha Propuesta</label>
+                                    <input type="date" class="form-control fecha_propuesta" id="fechaPropuesta" name="fechaPropuesta" style="margin-bottom: 10px;">
+
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Aprovador</label>
+                                    <select class="form-control aprovador" id="aprovador">
+                                        @foreach (var aprovador in ViewBag.aprovadores)
+                                        {
+                                            if (aprovador != null)
+                                            {
+                                                <option value="@aprovador">@aprovador</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+
+
+
+
+
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Motivo de Incumplimiento</label>
+                                    <textarea class="form-control motivo" id="motivo" name="motivo" value="" rows="3"></textarea>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Nuevo Plan de Acción</label>
+
+                                    <textarea class="form-control plan" id="plan" name="plan" value="" rows="3"></textarea>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group text-center">
+
+                                <button type="button" id="cancelar_ampliacion" class="btn btn-sm  btn-outline-secondary btn-group-toggle font-weight-normal mr-2 cancelar_ampliacion">
+                                    <i class="fas fa-times-circle"></i> Cancelar
+                                </button>
+
+                                <button type="button" id="guardar_ampliacion" class="btn btn-sm btn-info btn-group-toggle font-weight-normal " onclick="guardarAmpliacion()">
+                                    <i class="fas fa-save"></i> Guardar Ampliación
+                                </button>
+
+                            </div>
+
+
+
+
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered table-hover display" id="seguimiento-observaciones_ampliaciones">
+                                <thead class="thead-light">
+                                    <tr>
+
+                                        <th class="text-center align-middle"> Código </th>
+
+                                        <th class="text-center align-middle"> Aprovador </th>
+
+                                        <th class="text-center align-middle"> Usuario </th>
+                                        <th class="text-center align-middle"> Fecha de Registro </th>
+
+                                        <th class="text-center align-middle"> Motivo</th>
+                                        <th class="text-center align-middle"> Nuevo Plan de Acción </th>
+                                        <th class="text-center align-middle"> Fecha Propuesta </th>
+
+
+
+                                    </tr>
+                                </thead>
+
+
+                                <tbody>
+
+                                    @foreach (var item2 in Model.fn_Detalle_Ampliaciones)
+                                    {
+
+                                        <tr>
+
+
+                                            <td class="text-nowrap text-center"> <span>@item2.ID</span> </td>
+                                            <td class="text-nowrap text-center"> <span>@item2.Nombre</span> </td>
+                                            <td class="text-nowrap text-center"> <span>@item2.Usuario</span> </td>
+                                            <td class="text-nowrap text-center"> <span>@item2.Fecha_Registro</span> </td>
+                                            <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item2.Motivo" style="min-width: 23vw;"> <span>@item2.Motivo</span> </td>
+                                            <td class="ellipsis" data-toggle="tooltip" data-placement="bottom" title="@item2.Nuevo_Plan" style="min-width: 23vw;"> <span>@item2.Nuevo_Plan</span> </td>
+                                            <td class="text-nowrap text-center"> <span>@item2.Fecha_Propuesta</span> </td>
+
+
+
+
+                                        </tr>
+
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+
+
+
+
+        }
+
+
+
+
+        <div class="form-group text-center">
+            <button type="button" class="btn btn-sm  btn-outline-secondary btn-group-toggle font-weight-normal mr-2" data-dismiss="modal">
+                <i class="fas fa-times-circle"></i> Cancelar
+            </button>
+            <button type="button" class="btn btn-sm btn-info btn-group-toggle font-weight-normal" id="miBoton">
+                <i class="fas fa-save"></i> Guardar Cambios
+            </button>
+        </div>
+
+
+
+    </div>
+}
+
+@*MODAL DE DETALLE TITULO OBSERVACION*@
+<div class="modal fade" id="modal-detalle-titulo-observacion" tabindex="-1" role="dialog" aria-labelledby="modalDetalleTituloObservacionoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDetalleTituloObservacionoLabel">Título de la Observacion</h5>
+                <button type="button" class="close" onclick="cerrarModalDetalleTituloObservacion()" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="contenido-titulo-observacion" style="word-wrap: break-word; overflow-wrap: break-word; max-width: 100%;"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL DE DETALLE  OBSERVACION*@
+<div class="modal fade" id="modal-detalle-observacion" tabindex="-1" role="dialog" aria-labelledby="modalDetalleObservacionLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDetalleObservacionLabel">Observación</h5>
+                <button type="button" class="close" onclick="cerrarModalDetalleObservacion()" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="contenido-observacion" style="word-wrap: break-word; overflow-wrap: break-word; max-width: 100%;"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL DE DETALLE RECOMENCACION*@
+<div class="modal fade" id="modal-detalle-recomendacion" tabindex="-1" role="dialog" aria-labelledby="modalDetalleRecomendacionLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDetalleRecomendacionLabel">Rcomendación</h5>
+                <button type="button" class="close" onclick="cerrarModalDetalleRecomendacion()" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="contenido-recomendacion" style="word-wrap: break-word; overflow-wrap: break-word; max-width: 100%;"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*MODAL DE DETALLE ULTIMA RESPUESTA*@
+<div class="modal fade" id="modal-detalle-ultima-respuesta" tabindex="-1" role="dialog" aria-labelledby="modalDetalleRespuestaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDetalleRespuestaLabel">Última Respuesta</h5>
+                <button type="button" class="close" onclick="cerrarModalDetalleRespuesta()" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="contenido-respuesta" style="word-wrap: break-word; overflow-wrap: break-word; max-width: 100%;"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL DE DETALLE ULTIMA IMPLEMENTACION*@
+<div class="modal fade" id="modal-detalle-ultima-implementacion" tabindex="-1" role="dialog" aria-labelledby="modalDetalleUltimaImplementacionLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDetalleUltimaImplementacionLabel">Última Implementación</h5>
+                <button type="button" class="close" onclick="cerrarModalDetalleImplementacion()" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="contenido-implementacion" style="word-wrap: break-word; overflow-wrap: break-word; max-width: 100%;"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL DE DETALLE PRIMERA RESPUESTA*@
+<div class="modal fade" id="modal-detalle-plan-de-accion" tabindex="-1" role="dialog" aria-labelledby="modalDetalleplandeaccionLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDetalleplandeaccionLabel">Plan de Acción del Responsable</h5>
+                <button type="button" class="close" onclick="cerrarModalDetalleprimera_respuesta()" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="contenido-plan_de_accion" style="word-wrap: break-word; overflow-wrap: break-word; max-width: 100%;"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL DE DETALLE DESCRIPCION O CIERRE*@
+<div class="modal fade" id="modal-detalle-cierre" tabindex="-1" role="dialog" aria-labelledby="modalDetalleCierreLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDetalleCierreLabel">Descripción o Cierre</h5>
+                <button type="button" class="close" onclick="cerrarModalDetalleCierre()" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="contenido-cierre" style="word-wrap: break-word; overflow-wrap: break-word; max-width: 100%;"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" class="init">
+
+
+    $(document).ready(function () {
+
+
+
+
+            $('#seguimiento-observaciones_acciones').dataTable({
+                "dom": "<'row pb-1'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4 text-center'i><'col-sm-12 col-md-4'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 col-md-5'><'col-sm-12 col-md-7'p>>",
+                "order": [[1, 'asc']],
+                "searching": true,
+                "paging": true,
+                "scrollX": true,
+                "scrollY": false,
+                "buttons": [
+                    {
+                        extend: 'copyHtml5',
+                        text: '<span class="font-weight-normal"><i class="fas fa-copy"></i> Copiar</span>',
+                        titleAttr: 'Copy'
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: '<span class="font-weight-normal"><i class="fas fa-file-excel"></i> Excel</span>',
+                        titleAttr: 'Excel'
+                    }
+                ],
+
+                "language": {
+                    "zeroRecords": "No hay datos disponibles para los filtros seleccionados",
+                    "info": "Mostrandose _TOTAL_ registros",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrado de _MAX_ registros)",
+                    "search": "Buscar:"
+                }
+            });
+
+            $('#seguimiento-observaciones_ampliaciones').dataTable({
+                "dom": "<'row pb-1'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4 text-center'i><'col-sm-12 col-md-4'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 col-md-5'><'col-sm-12 col-md-7'p>>",
+                "order": [[1, 'asc']],
+                "searching": true,
+                "paging": true,
+                "scrollX": true,
+                "scrollY": false,
+                "buttons": [
+
+                ],
+
+                "language": {
+                    "zeroRecords": "No hay datos disponibles para los filtros seleccionados",
+                    "info": "Mostrandose _TOTAL_ registros",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrado de _MAX_ registros)",
+                    "search": "Buscar:"
+                },
+
+                "initComplete": function () {
+                    var customButton2 = $('<button type="button" style="background-color: #8FBC8F; color: white; border-color: #8FBC8F;" class="btn btn-custom"> Nueva Ampliación</button>');
+                    $('#seguimiento-observaciones_ampliaciones_wrapper .dt-buttons').append(customButton2);
+
+                    customButton2.hover(function () {
+                        $(this).css({
+                            'background-color': '#556B2F',
+                            'border-color': '#556B2F'
+                        });
+                    }, function () {
+                        $(this).css({
+                            'background-color': '#8FBC8F',
+                            'border-color': '#8FBC8F'
+                        });
+                    });
+
+                    $('#seguimiento-observaciones_ampliaciones').DataTable().draw();
+                }
+            });
+
+            $('#seguimiento-observaciones_errores').dataTable({
+                "dom": "<'row pb-1'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-4 text-center'i><'col-sm-12 col-md-4'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 col-md-5'><'col-sm-12 col-md-7'p>>",
+                "order": [[1, 'asc']],
+                "searching": true,
+                "paging": true,
+                "scrollX": true,
+                "scrollY": "52vh",
+                "buttons": [
+                    {
+                        extend: 'copyHtml5',
+                        text: '<span class="font-weight-normal"><i class="fas fa-copy"></i> Copiar</span>',
+                        titleAttr: 'Copy'
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: '<span class="font-weight-normal"><i class="fas fa-file-excel"></i> Excel</span>',
+                        titleAttr: 'Excel'
+                    }
+                ],
+
+                "language": {
+                    "zeroRecords": "No hay datos disponibles para los filtros seleccionados",
+                    "info": "Mostrandose _TOTAL_ registros",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrado de _MAX_ registros)",
+                    "search": "Buscar:"
+                }
+            });
+
+        $('.campos-ocultos').hide();
+
+
+
+        $('.cancelar_ampliacion').on('click', function () {
+
+            $('.campos-ocultos').hide();
+
+        });
+
+        $('.btn-custom').on('click', function () {
+
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('fechaRegistro').value = today;
+
+            $('.campos-ocultos').toggle();
+            console.log("cambios");
+        });
+
+
+
+
+
+
+            $('.gerencia').change(function () {
+
+
+                var selectedId = $(this).attr('id');
+                var selectedIndex = parseInt(selectedId.substr(-1));
+                var selectedValue = $(this).val();
+                 var laURLDeLaVista = '@Url.Action("ObtenerSubgerencias", "WebSeguimientoObservaciones")';
+
+
+                for (var i = selectedIndex + 1; i <= 5; i++) {
+                    $('#gerencia' + i).empty();
+                }
+
+                $('#unidad_responsable').val("");
+
+
+
+                $.ajax({
+                    cache: false,
+                    async: true,
+                    type: "GET",
+                    url: laURLDeLaVista,
+                    data: { idGerenciaAnterior: selectedValue },
+                    success: function (response) {
+                        var nextGerenciaIndex = selectedIndex + 1;
+                        var defaultSelectedValue = $('#gerencia' + nextGerenciaIndex).val();
+
+                        $('#gerencia' + nextGerenciaIndex).empty();
+
+                        if (response.length === 0) {
+
+                            var selectedText = $('#gerencia' + selectedIndex + ' option:selected').text();
+
+                            for (var i = nextGerenciaIndex; i <= 5; i++) {
+                                $('#gerencia' + i).append($('<option></option>').attr('value', selectedText).text(selectedText));
+                            }
+
+                            $('#unidad_responsable').val(selectedText);
+                            var gerencia5Texto = $('#gerencia5 option:selected').text();
+                            $('#unidad_responsable').val(gerencia5Texto);
+
+                        } else {
+
+                            $.each(response, function (index, subgerencia) {
+                                var option = $('<option></option>')
+                                    .attr('value', subgerencia.Value)
+                                    .text(subgerencia.Text);
+
+                                if (subgerencia.Value === defaultSelectedValue) {
+                                    option.attr('selected', 'selected');
+                                }
+
+                                $('#gerencia' + nextGerenciaIndex).append(option);
+                            });
+                            var gerencia5Texto = $('#gerencia5 option:selected').text();
+                            $('#unidad_responsable').val(gerencia5Texto);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+
+
+            });
+
+            $('.gerencia').on('focus', function () {
+
+
+
+
+                var selectedId = $(this).attr('id');
+                var selectedIndex = parseInt(selectedId.substr(-1));
+                var selectedValue = $(this).val();
+                var selectedText = $('#gerencia' + (selectedIndex - 1)).find('option:selected').text();
+                var laURLDeLaVista = '@Url.Action("ObtenerSubgerenciasPorNombre", "WebSeguimientoObservaciones")';
+
+
+
+                if (selectedText.trim() !== '') {
+                    for (var i = selectedIndex + 1; i <= 5; i++) {
+                        $('#gerencia' + i).empty();
+                    }
+
+                    $('#gerencia' + selectedIndex).empty();
+
+                    $.ajax({
+                        cache: false,
+                        async: true,
+                        type: "GET",
+                        url: laURLDeLaVista,
+
+
+                        data: { nombreGerenciaAnterior: selectedText },
+                        success: function (response) {
+                            $.each(response, function (index, subgerencia) {
+                                var option = $('<option></option>')
+                                    .attr('value', subgerencia.Value)
+                                    .text(subgerencia.Text);
+
+                                $('#gerencia' + selectedIndex).append(option);
+                            });
+                            var gerencia5Texto = $('#gerencia5 option:selected').text();
+                            $('#unidad_responsable').val(gerencia5Texto);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
+                }
+
+
+            });
+
+            $('#miBoton').on('click', function () {
+                guardarCambios();
+            });
+
+
+
+
+
+
+
+
+        });
+
+        //titulo observacion
+        function mostrarDetalleTituloObservacion(event) {
+
+            event.preventDefault();
+
+            var contenidoProyecto = document.getElementById('titulo_observacion').value;
+            document.getElementById('contenido-titulo-observacion').innerText = contenidoProyecto;
+            $('#modal-detalle-titulo-observacion').modal('show');
+        }
+
+        function cerrarModalDetalleTituloObservacion() {
+            $('#modal-detalle-titulo-observacion').modal('hide');
+        }
+
+        //observacion
+
+        function mostrarDetalleObservacion(event) {
+            event.preventDefault();
+
+            var contenidoProyecto = document.getElementById('observacion').value;
+            document.getElementById('contenido-observacion').innerText = contenidoProyecto;
+            $('#modal-detalle-observacion').modal('show');
+        }
+
+        function cerrarModalDetalleObservacion() {
+            $('#modal-detalle-observacion').modal('hide');
+        }
+
+        //recomendacion
+
+        function mostrarDetalleRecomendacion(event) {
+            event.preventDefault();
+
+            var contenidoProyecto = document.getElementById('recomendacion').value;
+            document.getElementById('contenido-recomendacion').innerText = contenidoProyecto;
+            $('#modal-detalle-recomendacion').modal('show');
+        }
+
+        function cerrarModalDetalleRecomendacion() {
+            $('#modal-detalle-recomendacion').modal('hide');
+        }
+
+        // ultima respuesta
+
+        function mostrarDetalleRespuesta(event) {
+            event.preventDefault();
+
+            var contenidoProyecto = document.getElementById('ultima_respuesta').value;
+            document.getElementById('contenido-respuesta').innerText = contenidoProyecto;
+            $('#modal-detalle-ultima-respuesta').modal('show');
+        }
+
+        function cerrarModalDetalleRespuesta() {
+            $('#modal-detalle-ultima-respuesta').modal('hide');
+        }
+
+        //ultima implementacion
+
+        function mostrarDetalleImplementacion(event) {
+            event.preventDefault();
+
+            var contenidoProyecto = document.getElementById('ultima_implementacion').value;
+            document.getElementById('contenido-implementacion').innerText = contenidoProyecto;
+            $('#modal-detalle-ultima-implementacion').modal('show');
+        }
+
+        function cerrarModalDetalleImplementacion() {
+            $('#modal-detalle-ultima-implementacion').modal('hide');
+    }
+
+    //primera respuesta
+    function mostrarDetalleprimera_respuesta(event) {
+        event.preventDefault();
+
+        var contenidoProyecto = document.getElementById('plan_de_accion').value;
+        document.getElementById('contenido-plan_de_accion').innerText = contenidoProyecto;
+        $('#modal-detalle-plan-de-accion').modal('show');
+    }
+
+    function cerrarModalDetalleprimera_respuesta() {
+        $('#modal-detalle-plan-de-accion').modal('hide');
+    }
+
+
+        //cierre
+
+        function mostrarDetalleCierre(event) {
+            event.preventDefault();
+
+            var contenidoProyecto = document.getElementById('cierre').value;
+            document.getElementById('contenido-cierre').innerText = contenidoProyecto;
+            $('#modal-detalle-cierre').modal('show');
+        }
+
+        function cerrarModalDetalleCierre() {
+            $('#modal-detalle-cierre').modal('hide');
+    }
+
+
+    function guardarAmpliacion() {
+
+        var fecha_registro = $('.fecha_registro').val();
+
+        var fecha_propuesta = $('.fecha_propuesta').val();
+        var motivo = $('.motivo').val();
+
+        var plan = $('.plan').val();
+
+        var aprovador = $('.aprovador').val();
+        var idObservacion = $('.tu_clase_observacion').val();
+
+        var laURLDeLaVista = '@Url.Action("PV_Ampliaciones_Guardar", "WebSeguimientoObservaciones")';
+        $.ajax({
+            cache: false,
+            async: true,
+            type: "POST",
+            url: laURLDeLaVista,
+            data: {
+                idObservacion: idObservacion,
+                fecha_registro: fecha_registro,
+                fecha_propuesta: fecha_propuesta,
+                motivo: motivo,
+                plan: plan,
+                aprovador: aprovador
+
+
+
+
+        },
+
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Cambios guardados',
+                        text: 'Se han guardado los cambios satisfactoriamente',
+                        confirmButtonText: 'Aceptar'
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ha ocurrido un error en la operación, inténtelo nuevamente',
+                        confirmButtonText: 'Aceptar'
+                    });
+                }
+                console.log(response);
+            },
+            error: function (xhr, status, error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Ha ocurrido un error en la operación por un error interno, inténtelo nuevamente. Detalles: ' + xhr.responseText,
+                    confirmButtonText: 'Aceptar'
+                });
+                console.error("Error en la petición AJAX:");
+                console.log(xhr);
+                console.log("Estado: " + status);
+                console.log("Error: " + error);
+
+
+            }
+
+        });
+
+
+
+    }
+
+    function guardarCambios() {
+
+        var idObservacion = $('.tu_clase_observacion').val();
+
+        var añoSeleccionado = parseInt($('.tu_clase_año').val());
+        var emisor = $('.tu_clase_emisor').val();
+
+        var unidadResponsable = $('.tu_clase_unidad_responsable').val();
+
+        var tipoNegocios = $('.tu_clase_tipo_negocios').val();
+
+        var informe = $('.tu_clase_informe').val();
+
+
+
+
+
+        var laURLDeLaVista = '@Url.Action("PV_DetalleFormulario_Guardar", "WebSeguimientoObservaciones")';
+        $.ajax({
+            cache: false,
+            async: true,
+            type: "POST",
+            url: laURLDeLaVista,
+            data: {
+
+                idObservacion: idObservacion,
+                añoSeleccionado: añoSeleccionado,
+                unidad_responsable: unidadResponsable,
+                tiponegocios: tipoNegocios,
+                informe: informe,
+
+                emisor: emisor
+
+
+        },
+
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Cambios guardados',
+                        text: 'Se han guardado los cambios satisfactoriamente',
+                        confirmButtonText: 'Aceptar'
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ha ocurrido un error en la operación, inténtelo nuevamente',
+                        confirmButtonText: 'Aceptar'
+                    });
+                }
+                console.log(response);
+            },
+            error: function (xhr, status, error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Ha ocurrido un error en la operación por un error interno, inténtelo nuevamente. Detalles: ' + xhr.responseText,
+                    confirmButtonText: 'Aceptar'
+                });
+                console.error("Error en la petición AJAX:");
+                console.log(xhr);
+                console.log("Estado: " + status);
+                console.log("Error: " + error);
+
+
+            }
+
+        });
+    }
+
+
+</script>
+
+
+
+
+
+
+
+

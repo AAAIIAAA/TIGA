@@ -1,0 +1,101 @@
+﻿@using WebTIGA;
+@model WebTIGA.Models.ContenedorModelos
+
+@{ 
+    var SP_DPA_Votacion_Evaluacion_v2 = Model.SP_DPA_Votacion_Evaluacion_v3.ToList();
+}
+
+<div class="container">
+    <div class="row justify-content-center align-items-center pb-4">
+        <div class="col-lg-9 form-inline">
+            <label style="width: 15%">Evaluación: </label>
+            <textarea class="form-control" style="width: 85%" disabled>@ViewBag.Evaluacion.Evaluacion</textarea>
+        </div>
+        <div class="col-lg-2 text-center" style="@(ViewBag.FlagEdicionPlan == 0 || ViewBag.VotacionObligatoria == 0 ? "display: none;" : "")">
+            <div class="btn-group btn-group-sm" style="@(ViewBag.HaVotado == 1 ? "display: none;" : "")">
+                <button type="button" class="btn btn-info font-weight-normal" onclick="llamarCrearVotacion(@ViewBag.EvaluacionPlan.ID_Evaluacion_Plan);" data-toggle="modal" data-target="#modal-crear-votacion" data-dismiss="modal">
+                    <i class="fas fa-plus"></i> Realizar Votación
+                </button>
+            </div>
+            <div class="btn-group btn-group-sm" style="@(ViewBag.HaVotado == 1 ? "" : "display: none;")">
+                <button type="button" class="btn btn-info font-weight-normal" onclick="llamarEditarVotacion(@ViewBag.EvaluacionPlan.ID_Evaluacion_Plan);" data-toggle="modal" data-target="#modal-editar-votacion" data-dismiss="modal">
+                    <i class="fas fa-edit"></i> Editar
+                </button>
+                <button type="button" class="btn btn-outline-danger font-weight-normal" onclick="llamarEliminarVotacion(@ViewBag.EvaluacionPlan.ID_Evaluacion_Plan);" data-toggle="modal" data-target="#modal-eliminar-votacion">
+                    <i class="fas fa-trash"></i> Eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-hover" style="font-size: 0.8rem !important">
+        <thead>
+            <tr>
+                <th class="text-center align-middle"></th>
+                <th class="text-center align-middle" style="width: 16%">Cambios y/o nuevos productos, servicios o normas</th>
+                <th class="text-center align-middle"> Fecha de última auditoría</th>
+                <th class="text-center align-middle">Calificativo de última auditoría</th>
+                <th class="text-center align-middle">Criticidad del proceso</th>
+                <th class="text-center align-middle">Observaciones regulatorias de la última visita</th>
+                <th class="text-center align-middle"> IFC inherente</th>
+                <th class="text-center align-middle">Riesgo tercerización de servicios</th>
+                <th class="text-center align-middle"> Riesgo tecnológico</th>
+
+               
+                <th class="text-center align-middle">Total</th>
+
+                <!--
+                 <th class="text-center align-middle" style="width: 16%">Criticidad del proceso</th>
+                 <th class="text-center align-middle">Activos en Riesgo</th>
+                 <th class="text-center align-middle">Riesgo Operativo o Fraude</th>
+                 <th class="text-center align-middle">Cambios en Productos o Servicios</th>
+                 <th class="text-center align-middle">Complejidad Administrativa</th>
+                 <th class="text-center align-middle">Rotación del Staff</th>
+                 <th class="text-center align-middle">Calificativo de Última Auditoría</th>
+                 <th class="text-center align-middle">Fecha de Última Auditoría</th>
+                 <th class="text-center align-middle">Disponibilidad de Información</th>
+                 <th class="text-center align-middle">Nivel de Automatización en Auditoría</th>
+                 <th class="text-center align-middle">Priorización</th>
+                 <th class="text-center align-middle">Total</th>
+
+                -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr @(SP_DPA_Votacion_Evaluacion_v2.Count == 0 ? "" : "hidden")>
+                <td colspan="10" class="text-center py-4">No se han registrado votaciones para la evaluación seleccionada</td>
+            </tr>
+            @foreach (var item in SP_DPA_Votacion_Evaluacion_v2)
+            {
+        <tr>
+            <th class="@(item.Tipo==1 ? "table-success" : "table-warning")">@item.Auditor</th>
+            <td>@item.Cambios_y_o_nuevos_productos__servicios_o_normas</td>
+            <td class="text-center align-middle">@item.Fecha_de_última_auditoría</td>
+            <td class="text-center align-middle">@item.Calificativo_de_última_auditoría</td>
+            <td class="text-center align-middle">@item.Criticidad_del_proceso</td>
+            <td class="text-center align-middle">@item.Observaciones_regulatorias_de_la_última_visita</td>
+            <td class="text-center align-middle">@item.IFC_inherente</td>
+            <td class="text-center align-middle">@item.Riesgo_tercerización_de_servicios</td>
+            <td class="text-center align-middle">@item.Riesgo_tecnológico</td>
+            
+
+
+            <th class="text-center align-middle">@((int)item.Total)</th>
+
+            
+        </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+    
+
+
+
+
+
+
+
+
+

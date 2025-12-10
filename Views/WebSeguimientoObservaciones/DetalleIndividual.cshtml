@@ -1,0 +1,381 @@
+﻿@model WebTIGA.Models.ContenedorModelos
+@{
+    Layout = "~/Views/Shared/_Layout_Vacaciones.cshtml";
+    ViewBag.Title = "DetalleIndividual";
+}
+    <html>
+
+
+
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+        <title>DataTables example - HTML5 export buttons</title>
+        <link rel="shortcut icon" type="image/png" href="/media/images/favicon.png">
+        <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+        <link rel="stylesheet" type="text/css" href="/media/css/site-examples.css?_=19472395a2969da78c8a4c707e72123a">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstr apcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+        <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    </head>
+    <body>
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="card text-white bg-secondary mb-3">
+                    <div class="card-header"><strong>GESTIÓN DE VACACIONES</strong>@Html.ActionLink("Regresar", "Principal", new { }, new { @class = "btn btn-info ", @style = "float: right;" })</div>
+                    <div class="card-body">
+                        @using (Html.BeginForm())
+                        {
+                            <div class="row">
+
+                                <div class="col-lg-6">
+
+
+
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+        <div class="row row-cols-1 row-cols-md-3">
+
+
+            <div class="col-lg-4">
+                <div class="card shadow ">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-info">DETALLE INDIVIDUAL</h6>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="card-body">
+
+                            <div class="col-lg-auto">
+                                @foreach (var file in Model.SP_WT_USUARIOS_ID)
+                                {
+                                    <label for="staticUsuario" class="col-md-5 col-form-label" style="color:black;font-weight:bold;">Matricula: </label>
+                                    <button class="form-control" disabled="disable" style="text-transform:uppercase ">@file.Matrícula</button>
+                                    <label for="staticUsuario" class="col-md-5 col-form-label" style="color:black;font-weight:bold;">Nombres: </label>
+                                    <button class="form-control" disabled="disable" style="text-transform:uppercase ">@file.Nombre_Apellido</button>
+                                    <label for="staticUsuario" class="col-md-5 col-form-label" style="color:black;font-weight:bold;">Equipo: </label>
+                                    <button class="form-control" disabled="disable" style="text-transform:uppercase ">@file.Equipo</button>
+                                    <label for="staticUsuario" class="col-md-5 col-form-label" style="color:black;font-weight:bold;">Estado: </label>
+                                    <button class="form-control" disabled="disable" style="text-transform:uppercase ">@file.Estado</button>
+                                    <label for="staticUsuario" class="col-md-5 col-form-label" style="color:black;font-weight:bold;">Ingreso: </label>
+                                    <button class="form-control" disabled="disable" style="text-transform:uppercase ">@file.FechaIngreso</button>
+
+                                } </br>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col mb-4">
+                <div class="card shadow ">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-info">CONTROL DE EJECUCIÓN</h6>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <div class="row">
+                                    <div class="col-lg-7">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+
+                                                <table class="display nowrap" id="example3" width="100%">
+                                                    <thead class="table table-dark">
+                                                        <tr>
+                                                            <th>Periodo</th>
+                                                            <th>Dias</th>
+
+
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody class="table thead-light">
+                                                        @foreach (var file in Model.SP_WT_CONTROL_PERIODO_DIAS_NUEVO)
+                                                        {
+                                                            <tr>
+                                                                <td>@file.Anio</td>
+                                                                <td>@file.Dias</td>
+
+
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-5">
+                                        <div class="col-lg-auto">
+                                            @foreach (var file in Model.SP_WT_VACACIONES_CONSOLIDADO_DETALLE)
+                                            {
+                                                <label for="staticUsuario" class="col-md-5 col-form-label" style="color:black;font-weight:bold;">Dias vencidos: </label>
+                                                <button class="form-control" disabled="disable" style="text-transform:uppercase ">@file.Días_Vencidos</button>
+                                                <label for="staticUsuario" class="col-md-5 col-form-label" style="color:black;font-weight:bold;">Dias pendientes: </label>
+                                                <button class="form-control" disabled="disable" style="text-transform:uppercase ">@file.Días_Pendientes</button>
+                                                <label for="staticUsuario" class="col-md-5 col-form-label" style="color:black;font-weight:bold;">Dias truncos: </label>
+                                                <button class="form-control" disabled="disable" style="text-transform:uppercase ">@file.Días_Truncos</button>
+                                            }
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        </br>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-info">DETALLE VACACIONES</h6>
+            </div>
+
+            @if (ViewBag.mensaje != null)
+            {
+
+                <div class="alert alert-success fade show" role="alert">
+                    <strong>Mensaje: </strong> @ViewBag.mensaje
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            }
+            else if (ViewBag.delete != null)
+            {
+                <div class="alert alert-warning fade show" role="alert">
+                    <strong>Mensaje: </strong> @ViewBag.delete
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            }
+            else if (ViewBag.create != null)
+            {
+                <div class="alert alert-success fade show" role="alert">
+                    <strong>Mensaje: </strong> @ViewBag.create
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            }
+            <div class="card-body">@Html.ActionLink("CREAR", "RegistrarVacaciones", new { }, new { @class = "btn btn-dark" }) </div>
+            <div class="card-body">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item text-secondary  nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Vacaciones Planificadas</a>
+                        <a class="nav-item text-secondary nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Vacaciones Ejecutadas</a>
+                        <a class="nav-item text-secondary nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Vacaciones Sistema</a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="card-body">
+                            <div class="table-responsive">
+
+                                <table class="display nowrap" id="example" width="100%">
+                                    <thead class="table table-dark">
+                                        <tr>
+                                            <th>Fecha inicio</th>
+                                            <th>Fecha fin</th>
+                                            <th>Dias tomados</th>
+                                            <th>Descripción</th>
+                                            <th>Ejecutado</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody class="table thead-light">
+                                        @foreach (var file in Model.SP_VACACIONES_REGISTRO)
+                                        {
+                                        <tr>
+                                            <td>@file.FechaInicio</td>
+                                            <td>@file.FechaFin</td>
+                                            <td>@file.Dias</td>
+                                            <td>@file.Descripción</td>
+                                            <td>@file.Ejecutado</td>
+                                            @if (@ViewBag.rol == 5)
+                                            {
+
+                                                 <td>@Html.ActionLink("Editar", "EditarVacaciones", new { id = file.ID }, new { @class = "badge badge-warning" })  @Html.ActionLink("Eliminar", "EliminarVacaciones", new { id = file.ID }, new { @class = "badge badge-danger" })</td>
+                                            }
+                                            else
+                                            { 
+                                                  <td></td>
+                                            
+                                            }
+
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+
+                                <table class="display nowrap" id="example1" width="100%">
+                                    <thead class="table table-dark">
+                                        <tr>
+                                            <th>Fecha inicio</th>
+                                            <th>Fecha fin</th>
+                                            <th>Dias tomados</th>
+                                            <th>Descripción</th>
+                                            <th>Ejecutado</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody class="table thead-light">
+                                        @foreach (var file in Model.SP_VACACIONES_EJECUTADA)
+                                        {
+                                            <tr>
+                                                <td>@file.FechaInicio</td>
+                                                <td>@file.FechaFin</td>
+                                                <td>@file.Dias</td>
+                                                <td>@file.Descripción</td>
+                                                <td>@file.Ejecutado</td>
+                                                <td>@Html.ActionLink("Editar", "EditarVacaciones", new { id = file.ID }, new { @class = "badge badge-warning" })  @Html.ActionLink("Eliminar", "EliminarVacaciones", new { id = file.ID }, new { @class = "badge badge-danger" })</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="display nowrap" id="example2" width="100%">
+                                    <thead class="table table-dark">
+                                        <tr>
+                                            <th>Fecha inicio</th>
+                                            <th>Fecha fin</th>
+                                            <th>Dias tomados</th>
+                                            <th>Descripción</th>
+                                            <th>Ejecutado</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody class="table thead-light">
+                                        @foreach (var file in Model.SP_VACACIONES_SISTEMA)
+                                        {
+                                            <tr>
+                                                <td>@file.FechaInicio</td>
+                                                <td>@file.FechaFin</td>
+                                                <td>@file.Dias</td>
+                                                <td>@file.Descripción</td>
+                                                <td>@file.Ejecutado</td>
+                                                <td>@Html.ActionLink("Editar", "EditarVacaciones", new { id = file.ID }, new { @class = "badge badge-warning" })  @Html.ActionLink("Eliminar", "EliminarVacaciones", new { id = file.ID }, new { @class = "badge badge-danger" })</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </body>
+
+    <script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script>
+    <script type="text/javascript" src="/media/js/site.js?_=5e8f232afab336abc1a1b65046a73460"></script>
+    <script type="text/javascript" src="/media/js/dynamic.php?comments-page=extensions%2Fbuttons%2Fexamples%2Fhtml5%2Fsimple.html" async=""></script>
+    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" language="javascript" src="../../../../examples/resources/demo.js"></script>
+    <script type="text/javascript" class="init">
+        $(document).ready(function () {
+            $('#example').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'excelHtml5',
+                ]
+            });
+        });
+    </script>
+
+    <script type="text/javascript" class="init">
+        $(document).ready(function () {
+            $('#example1').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'excelHtml5',
+                ]
+            });
+        });
+    </script>
+    <script type="text/javascript" class="init">
+        $(document).ready(function () {
+            $('#example2').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'excelHtml5',
+                ]
+            });
+        });
+    </script>
+    <script type="text/javascript" class="init">
+        $(document).ready(function () {
+            $('#example3').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'excelHtml5',
+                ]
+            });
+        });
+    </script>
+
+
+   </html>
