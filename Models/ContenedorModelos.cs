@@ -13,7 +13,7 @@ namespace WebTIGA.Models
         public IEnumerable<WebTIGA.Models.SP_TT_DETALLE_PROYECTO_ACTIVIDAD_Result> SP_TT_DETALLE_PROYECTO_ACTIVIDAD { get; set; }
         public IEnumerable<WebTIGA.Models.SP_TT_DETALLE_ETAPAS_FASES_ACTIVIDADES_Result> SP_TT_DETALLE_ETAPAS_FASES_ACTIVIDADES { get; set; }
         public IEnumerable<WebTIGA.Models.SP_TT_EQUIPO_ETAPAS_Result> SP_TT_EQUIPO_ETAPAS { get; set; }
-       // public IEnumerable<WebTIGA.Models.SP_TT_DETALLE_FILTRAR_PROYECTO_Result> SP_TT_DETALLE_FILTRAR_PROYECTO { get; set; }
+   
         public IEnumerable<WebTIGA.Models.SP_TT_DIAS_CONTROL_Result> SP_TT_DIAS_CONTROL { get; set; }
         public IEnumerable<WebTIGA.Models.SP_TT_ERROR_FASES_DISTRIBUCION_Result> SP_TT_ERROR_FASES_DISTRIBUCION { get; set; }
         public IEnumerable<WebTIGA.Models.SP_GRAF_MEDIDA_DE_TIEMPO2_Result> SP_GRAF_MEDIDA_DE_TIEMPO2 { get; set; }
@@ -167,36 +167,14 @@ namespace WebTIGA.Models
         public IEnumerable<WebTIGA.Models.View_DAC_Vista_List_Scripts> VIEW_LISTA_SCRIPTS { get; set; }
 
 
-        //public IEnumerable<WebTIGA.Models.SP_CONTROLES_EVALUADOS_Result1> SP_CONTROLES_EVALUADOS { get; set; }
-        //public IEnumerable<WebTIGA.Models.SP_WT_RESULTADO_AUDITORIA_Result> SP_WT_RESULTADO_AUDITORIA { get; set; }
-        //public IEnumerable<WebTIGA.Models.SP_WT_SEGUIMIENTO_OBSERVACIONES_Result> SP_WT_SEGUIMIENTO_OBSERVACIONES { get; set; }
-        //public IEnumerable<WebTIGA.Models.SP_WT_SEGUIMIENTO_OBSERVACIONES_2_Result> SP_WT_SEGUIMIENTO_OBSERVACIONES_2 { get; set; }
-        //public IEnumerable<WebTIGA.Models.SP_WT_DETALLE_RESULTADOS_AUDITORIA_1_Result> SP_WT_DETALLE_RESULTADOS_AUDITORIA_1 { get; set; }
-        //public IEnumerable<WebTIGA.Models.SP_WT_DETALLE_RESULTADOS_AUDITORIA_2_Result> SP_WT_DETALLE_RESULTADOS_AUDITORIA_2 { get; set; }
-        //public IEnumerable<WebTIGA.Models.SP_DETALLE_CONTROLES_EVALUADOS_1_Result> SP_DETALLE_CONTROLES_EVALUADOS_1 { get; set; }
-        //public IEnumerable<WebTIGA.Models.SP_DETALLE_CONTROLES_EVALUADOS_2_Result> SP_DETALLE_CONTROLES_EVALUADOS_2 { get; set; }
-        //public IEnumerable<WebTIGA.Models.SP_DETALLE_CONTROLES_EVALUADOS_3_Result> SP_DETALLE_CONTROLES_EVALUADOS_3 { get; set; }
-        //public IEnumerable<WebTIGA.Models.SP_WT_DETALLE_SEGUIMIENTO_OBSERVACIONES_1_Result> SP_WT_DETALLE_SEGUIMIENTO_OBSERVACIONES_1 { get; set; }
-        //public IEnumerable<WebTIGA.Models.SP_WT_DETALLE_SEGUIMIENTO_OBSERVACIONES_2_Result> SP_WT_DETALLE_SEGUIMIENTO_OBSERVACIONES_2 { get; set; }
-
-
-        //public IEnumerable<WebTIGA.Models.SP_WT_DETALLE_SEGUIMIENTO_OBSERVACIONES_DISTRIBUCION_EMISOR_2_Result> SP_WT_DETALLE_SEGUIMIENTO_OBSERVACIONES_DISTRIBUCION_EMISOR_2 { get; set; }
-        //public IEnumerable<WebTIGA.Models.SP_WT_DETALLE_SEGUIMIENTO_OBSERVACIONES_DISTRIBUCION_ESTADO_RIESGO_Result> SP_WT_DETALLE_SEGUIMIENTO_OBSERVACIONES_DISTRIBUCION_ESTADO_RIESGO { get; set; }
-
-        //public IEnumerable<WebTIGA.Models.SP_WT_DETALLE_SEGUIMIENTO_OBSERVACIONES_STOCK_ANTIGUEDAD_EMISION_Result> SP_WT_DETALLE_SEGUIMIENTO_OBSERVACIONES_STOCK_ANTIGUEDAD_EMISION { get; set; }
-
-        //public IEnumerable<WebTIGA.Models.SP_WT_DETALLE_SEGUIMIENTO_OBSERVACIONES_STOCK_ANTIGUEDAD_CRITICIDAD_Result> SP_WT_DETALLE_SEGUIMIENTO_OBSERVACIONES_STOCK_ANTIGUEDAD_CRITICIDAD { get; set; }
-
-        //public IEnumerable<WebTIGA.Models.SP_WT_DETALLE_SEGUIMIENTO_OBSERVACIONES_STOCK_ANTIGUEDAD_EMISOR_2_Result> SP_WT_DETALLE_SEGUIMIENTO_OBSERVACIONES_STOCK_ANTIGUEDAD_EMISOR_2 { get; set; }
-
+     
 
 
 
 
 
         public IEnumerable<WebTIGA.Models.SP_WT_REPORTES_Result1> SP_WT_REPORTES { get; set; }
-       // public IEnumerable<WebTIGA.Models.SP_WT_REPORTE_GENERAL_Result> SP_WT_REPORTE_GENERAL { get; set; }
-// public IEnumerable<WebTIGA.Models.SP_WT_REPORTE_CLAVE_Result> SP_WT_REPORTE_CLAVE { get; set; }
+     
         public IEnumerable<WebTIGA.Models.SP_WT_REPORTE_SOX_Result> SP_WT_REPORTE_SOX { get; set; }
         public IEnumerable<WebTIGA.Models.SP_WT_VACACIONES_CONSOLIDADO_Result> SP_WT_VACACIONES_CONSOLIDADO { get; set; }
         public IEnumerable<WebTIGA.Models.SP_WT_GANTT_VACACIONES_Result> SP_WT_GANTT_VACACIONES { get; set; }
@@ -218,16 +196,10 @@ namespace WebTIGA.Models
         public IEnumerable<WebTIGA.Models.SP_RE_EVOLUTIVO_AUDIT_VENCIDAS_BASE_Result> SP_RE_EVOLUTIVO_AUDIT_VENCIDAS_BASE { get; set; }
         public IEnumerable<WebTIGA.Models.SP_RE_EVOLUTIVO_VENCIDAS_EQUIPO_BASE_Result> SP_RE_EVOLUTIVO_VENCIDAS_EQUIPO_BASE { get; set; }
         public IEnumerable<WebTIGA.Models.SP_RE_EVOLUTIVO_TOP_Result> SP_RE_EVOLUTIVO_TOP { get; set; }
-       // public IEnumerable<WebTIGA.Models.SP_WT_RA_CONTROLES_EVALUADOS_Result> SP_CONTROLES_EVALUADOS { get; set; }
-      //  public IEnumerable<WebTIGA.Models.SP_WT_RA_RESULTADO_AUDITORIA_Result> SP_WT_RESULTADO_AUDITORIA { get; set; }
+   
         public IEnumerable<WebTIGA.Models.SP_WT_RA_SEGUIMIENTO_OBSERVACIONES_Result> SP_WT_SEGUIMIENTO_OBSERVACIONES { get; set; }
         public IEnumerable<WebTIGA.Models.SP_WT_RA_SEGUIMIENTO_OBSERVACIONES_2_Result> SP_WT_SEGUIMIENTO_OBSERVACIONES_2 { get; set; }
 
-        //public IEnumerable<WebTIGA.Models.SP_WT_RA_DETALLE_RESULTADOS_AUDITORIA_1_Result> SP_WT_DETALLE_RESULTADOS_AUDITORIA_1 { get; set; }
-       // public IEnumerable<WebTIGA.Models.SP_WT_RA_DETALLE_RESULTADOS_AUDITORIA_2_Result> SP_WT_DETALLE_RESULTADOS_AUDITORIA_2 { get; set; }
-        //public IEnumerable<WebTIGA.Models.SP_WT_RA_DETALLE_CONTROLES_EVALUADOS_1_Result> SP_DETALLE_CONTROLES_EVALUADOS_1 { get; set; }
-      //  public IEnumerable<WebTIGA.Models.SP_WT_RA_DETALLE_CONTROLES_EVALUADOS_2_Result> SP_DETALLE_CONTROLES_EVALUADOS_2 { get; set; }
-       // public IEnumerable<WebTIGA.Models.SP_WT_RA_DETALLE_CONTROLES_EVALUADOS_3_Result> SP_DETALLE_CONTROLES_EVALUADOS_3 { get; set; }
 
         public IEnumerable<WebTIGA.Models.SP_WT_RA_DETALLE_SEGUIMIENTO_OBSERVACIONES_1_Result> SP_WT_DETALLE_SEGUIMIENTO_OBSERVACIONES_1 { get; set; }
         public IEnumerable<WebTIGA.Models.SP_WT_RA_DETALLE_SEGUIMIENTO_OBSERVACIONES_2_Result> SP_WT_DETALLE_SEGUIMIENTO_OBSERVACIONES_2 { get; set; }
@@ -262,14 +234,12 @@ namespace WebTIGA.Models
 
         public IEnumerable<WebTIGA.Models.TG_Unidad_Responsable> TG_Unidad_Responsable { get; set; }
 
-        //public IEnumerable<WebTIGA.Models.TG_Estructura_Seguimiento_Historial> TG_Estructura_Seguimiento_Historial { get; set; }
-
+   
 
         public IEnumerable<WebTIGA.Models.TS_Unidad_Responsable_Contacto> TS_Unidad_Responsable_Contacto { get; set; }
         public IEnumerable<WebTIGA.Models.TS_Contacto> TS_Contacto { get; set; }
         public IEnumerable<WebTIGA.Models.TG_Contacto> TG_Contacto { get; set; }
 
-       // public IEnumerable<WebTIGA.Models.SP_WT_REPORTE_CLAVE_Result> SP_WT_REPORTE_CLAVE1 { get; set; }
 
         public IEnumerable<WebTIGA.Models.fn_TG_Get_Mapa_Aseguramiento_v3_Result> fn_TG_Get_Mapa_Aseguramiento_v3_Result { get; set; }
 
